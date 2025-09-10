@@ -1,7 +1,11 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ProfileController;
 
 // Employer side
 Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
@@ -35,5 +39,32 @@ Route::get('/my-jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+// Register
+Route::get('/register', [RegisterController::class, 'showForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+
+// Login
+Route::get('/login', [LoginController::class, 'showForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+// Logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Dashboard
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth')->name('dashboard');
+
+//Profile
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+
+
