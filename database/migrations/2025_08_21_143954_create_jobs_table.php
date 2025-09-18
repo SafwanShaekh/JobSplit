@@ -26,7 +26,7 @@ return new class extends Migration
             $table->dateTime('date_time'); // job ka time & date
             $table->string('duration'); // e.g. "3 hours", "2 days"
             $table->string('location'); // job location (Maps API later)
-            
+            $table->string('status')->default('open'); // open, completed
             $table->timestamps(); // created_at & updated_at
         });
     }

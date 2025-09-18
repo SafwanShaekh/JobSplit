@@ -20,7 +20,11 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
+        'address',
+        'bio',
+        'profile_picture',
     ];
 
     /**
@@ -45,4 +49,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    // Add this to your User.php model
+    // public function conversations()
+    // {
+    //     return $this->belongsToMany(Conversation::class);
+    // }
 }

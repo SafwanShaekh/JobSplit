@@ -1,3 +1,469 @@
+
+
+
+/* modals ki css */
+/* profile modal ki css */
+
+/* --- Professional Profile Modal Styles --- */
+
+.profile-modal-card {
+    text-align: center; /* Centers all content */
+    padding: 0;
+    overflow: hidden; /* Important for the rounded corners */
+}
+
+.profile-modal-header {
+    background-color: #f9fafb; /* A light grey background */
+    padding: 2rem 1.5rem;
+    position: relative;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Makes the image a circle */
+    object-fit: cover; /* Prevents image stretching */
+    border: 4px solid white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Centers the avatar */
+    margin-bottom: 1rem;
+}
+
+.profile-name {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.profile-email {
+    font-size: 0.875rem; /* 14px */
+    color: #6b7280;
+    margin-top: 0.25rem;
+}
+
+.profile-modal-footer {
+    padding: 1.5rem;
+    background-color: #ffffff;
+}
+/* --- New styles for Profile Modal Body --- */
+
+.profile-modal-body {
+    padding: 1.5rem;
+    text-align: left; /* Aligns text to the left */
+}
+
+.profile-detail-item {
+    display: flex;
+    align-items: flex-start; /* Good for multi-line bios */
+    margin-bottom: 1rem;
+}
+.profile-detail-item:last-child {
+    margin-bottom: 0;
+}
+
+.profile-detail-item strong {
+    flex-shrink: 0;
+    width: 120px; /* Creates a clean column */
+    color: #6b7280; /* A lighter color for the label */
+    font-weight: 500;
+}
+
+.profile-detail-item p {
+    margin: 0;
+    color: #111827;
+}
+
+.profile-modal-footer button {
+    background-color: #ffffff; /* A vibrant red */
+    color: rgb(0, 0, 0);
+    border: solid 1px #000000;
+    padding: 0.7rem 1.7rem;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.profile-modal-footer button:hover {
+    background-color: #ec3737;
+    color: white;
+    border-color: #000000;
+}
+/*  */
+
+/* Professional Modal Box Styling */
+/* feedback form ki css */
+.modal .modal_item {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Works well on mobile */
+    max-width: 600px; /* Adjust this for the perfect desktop size */
+
+    /* Animation Start State */
+    transform: scale(0.95) translateY(-10px);
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Animation End State (when 'open' class is added) */
+.modal .modal_item.open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+/*  */
+
+/* --- Professional Feedback Form Styles (RESPONSIVE Version) --- */
+
+/* Form Header */
+.feedback-modal-header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 1rem;
+}
+.feedback-modal-header h3 {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* A single question block (Default Mobile Styles) */
+.feedback-question {
+    display: flex;
+    flex-direction: column; /* Stacks items vertically on mobile */
+    align-items: flex-start; /* Aligns everything to the left */
+    padding: 1.25rem 0.5rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+.feedback-question:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.feedback-question p {
+    font-weight: 500;
+    color: #374151;
+    margin: 0;
+    margin-bottom: 0.75rem; /* Space between question and options on mobile */
+}
+
+/* Container for Yes/No options */
+.feedback-options {
+    display: flex;
+    gap: 0.75rem;
+    width: 100%; /* Makes options take full width on mobile */
+}
+.feedback-options label {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers text inside the label */
+    flex-grow: 1; /* Makes Yes/No options equal width */
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.feedback-options label:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+/* --- Styles for Custom Radio Buttons (No changes here) --- */
+.feedback-options input[type="radio"] { display: none; }
+.feedback-options input[type="radio"]:checked + span { font-weight: 600; }
+.feedback-options input[type="radio"]:checked + span::before {
+    border-color: #04b2b2;
+    background-color: #04b2b2;
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+}
+.feedback-options label span::before {
+    content: '';
+    display: inline-block;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    border: 2px solid #d1d5db;
+    background-position: center;
+    transition: all 0.2s ease;
+}
+
+/* Form Footer */
+.feedback-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+.feedback-modal-footer button {
+    border: solid 1px #7e7e7e;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.feedback-modal-footer button:hover {
+    background-color: #47e3ee;
+    border-color: #9ca3af;
+}
+/* feedback submitted tag ki css */
+/* --- Responsive Action Buttons for Applicant Card --- */
+
+/* This is the container for all the action buttons */
+.applicant-actions-container {
+    display: flex;
+    gap: 0.5rem; /* 8px */
+
+    /* Default Mobile styles: stack vertically and align to the right */
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Style for the submitted tag for consistency */
+.feedback-submitted-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem; /* 8px 16px */
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+    color: white;
+    background-color: #7f8c8d; /* Grey color */
+    border-radius: 6px;
+    cursor: not-allowed;
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+/* On desktop screens (768px and wider), switch to a horizontal layout */
+@media (min-width: 768px) {
+    .applicant-actions-container {
+        flex-direction: row; /* A row on desktop */
+        align-items: center; /* Vertically center the items */
+    }
+}
+
+/* --- Responsive Applicant Info Header --- */
+
+/* Default Mobile styles: stack vertically */
+.applicant-info-header {
+    display: flex;
+    flex-direction: column; /* Stacks name/description and bid amount */
+    gap: 0.5rem; /* Adds a small space between them */
+}
+
+/* On medium screens (640px and wider), switch to horizontal */
+@media (min-width: 640px) {
+    .applicant-info-header {
+        flex-direction: row; /* Side-by-side layout */
+        justify-content: space-between; /* Pushes them to opposite ends */
+        align-items: flex-start; /* Aligns them to the top */
+        gap: 1rem; /* Increases space for desktop */
+    }
+}
+/*  */
+
+/* --- Media Query for Desktop Screens --- */
+/* When screen is 768px or wider, apply these styles */
+@media (min-width: 768px) {
+    .feedback-question {
+        flex-direction: row; /* Switch to two-column layout */
+        justify-content: space-between;
+        align-items: center;
+    }
+    .feedback-question p {
+        margin-bottom: 0; /* Remove space for desktop */
+        padding-right: 1rem;
+    }
+    .feedback-options {
+        width: auto; /* Allow options to size naturally */
+    }
+}
+/*  */
+
+/* Ham burger ki css navbar */
+
+/* Mobile Menu Styles */
+.menu_mobile {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Initially hidden off-screen to the right */
+    width: 280px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    transition: right 0.4s ease-in-out;
+}
+
+.menu_mobile.active {
+    right: 0; /* Slides into view */
+}
+
+.menu_mobile_close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f1f1f1;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav_mobile_content {
+    padding: 20px;
+}
+
+.nav_mobile_content .logo {
+    display: block;
+    margin-bottom: 30px;
+}
+
+.nav_mobile_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav_mobile_list li a {
+    display: block;
+    padding: 12px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+/* Add this to the end of your style.css */
+
+.mobile-menu-divider {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 20px 0;
+}
+
+.nav_mobile_list .has-dropdown .mobile-dropdown-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.mobile-dropdown-content {
+    display: none; /* Hide dropdown by default */
+    padding-left: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.mobile-dropdown-content.open {
+    display: block; /* Show dropdown when open */
+}
+
+.mobile-dropdown-content .list_notification {
+    list-style: none;
+    padding: 0;
+}
+
+.mobile-dropdown-content .notification_item {
+    font-size: 14px;
+}
+.mobile-dropdown-content .notification_desc {
+    font-size: 13px;
+}
+
+.mobile-dropdown-link {
+    display: block;
+    padding: 10px 0;
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+.mobile-dropdown-link:last-child {
+    border-bottom: none;
+}
+/*  */
+
+/* Add this to the end of your style.css */
+
+/* Sidebar Toggle Button for Mobile */
+.sidebar-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f1f5f9;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    margin: 1.5rem; /* p-6 */
+    border: 1px solid #e2e8f0;
+}
+
+/* On screens larger than 1024px, hide the button */
+@media (min-width: 1024px) {
+    .sidebar-toggle-btn {
+        display: none;
+    }
+}
+
+/* Mobile Sidebar Styling */
+@media (max-width: 1023px) {
+    .dashboard_sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%; /* Hide off-screen by default */
+        height: 100vh;
+        z-index: 10000;
+        transition: left 0.3s ease-in-out;
+    }
+
+    .dashboard_sidebar.active {
+        left: 0; /* Slide in when active */
+    }
+
+    .sidebar-close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #f1f1f1;
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10001;
+    }
+}
+/*  */
+
+/* Add this to the end of your style.css */
+#map {
+    height: 400px;
+    width: 100%;
+}
+.dashboard_profile {
+    position: relative;
+    z-index: 1;
+}
+
 /* Reset */
 * {
   padding: 0;

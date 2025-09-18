@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.public')
 
 @section('content')
 
@@ -92,7 +92,29 @@
                             <div class="jobs_price">
                                 <span class="price text-title">{{ $job->pay }}</span>
                             </div>
-                            <a class="button-main -border -small">Apply</a>
+                            @auth
+                                <!-- {{-- Pehle check karein ke logged-in user job ka malik to nahi --}} -->
+                                @if(Auth::check() && Auth::id() != $job->user_id)
+
+                                    <!-- {{-- Ab check karein ke is user ne pehle se apply to nahi kiya --}} -->
+                                    @if(in_array($job->id, $appliedJobIds))
+
+                                        <!-- {{-- Agar apply kar chuka hai, to yeh disabled tag dikhayein --}} -->
+                                        <span class="inline-block bg-gray-200 text-gray-600 font-semibold py-2 px-4 rounded-lg cursor-not-allowed">
+                                            Already Applied
+                                        </span>
+
+                                    @else
+
+                                        <!-- {{-- Agar apply nahi kiya, to "Apply" ka button dikhayein --}} -->
+                                        <a href="{{ route('jobs.apply.create', $job->id) }}" class="button-main -border -small">
+                                            Apply
+                                        </a>
+
+                                    @endif
+
+                                @endif
+                            @endauth
                         </div>
                     </div>
                 </li>

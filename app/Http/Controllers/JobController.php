@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use Illuminate\Http\Request;
+use App\Models\Application; // New line to import Application model
+use Illuminate\Support\Facades\Auth; // New line to import Auth facade
 
 class JobController extends Controller
 {
@@ -34,7 +36,7 @@ class JobController extends Controller
 
     // Create job linked to logged-in user
     Job::create([  //Job::create. Mass assignment ka use karke job database me insert karna.
-        'user_id' => 1, //auth()->id(), //auth()->id(), KO TEMPORARY COMMIT KIA HAI JB LOGIN LAG JAYE TO 1 HATT JAYEGA OR UNCOMMIT HOGA 
+        'user_id' => auth()->id(), //auth()->id(), //auth()->id(), KO TEMPORARY COMMIT KIA HAI JB LOGIN LAG JAYE TO 1 HATT JAYEGA OR UNCOMMIT HOGA 
         'title' => $request->title,
         'description' => $request->description,
         'category' => $request->category,
@@ -56,7 +58,7 @@ class JobController extends Controller
 {
 
         // Latest jobs first, 6 per page
-     $jobs = Job::where('user_id', 1)->latest()->paginate(6); //auth()->id() jb login signup ban jaye uske baad 1 ki jaga ye lagega//
+     $jobs = Job::where('user_id', auth()->id())->latest()->paginate(6); //auth()->id() jb login signup ban jaye uske baad 1 ki jaga ye lagega//
 
     // Pass jobs to the Blade view
     return view('jobs.index', compact('jobs'));
@@ -96,40 +98,33 @@ public function destroy(Job $job)
 // Worker – Browse All Jobs
 public function browse(Request $request)
 {
+    // --- START: ADD THIS NEW CODE ---
+    
+    // Get an array of all job IDs the logged-in user has applied to.
+    // We use pluck() to get only the 'job_id' column.
+    $appliedJobIds = [];
+    if (Auth::check()) {
+        $appliedJobIds = Application::where('user_id', Auth::id())
+                                    ->pluck('job_id')
+                                    ->toArray();
+    }
+    
+    // --- END: ADD THIS NEW CODE ---
+
     $query = Job::query();
 
-    // Search by title/description
+    // ... (Your existing search and filter logic remains the same) ...
     if ($request->filled('search')) {
-        $query->where(function($q) use ($request) {
-            $q->where('title', 'LIKE', "%{$request->search}%")
-              ->orWhere('description', 'LIKE', "%{$request->search}%")
-              ->orWhere('category', 'LIKE', "%{$request->search}%");
-
-        });
+        //...
     }
+    // ... all your other filters ...
 
-    // Filter by location
-    if ($request->filled('location')) {
-        $query->where('location', 'LIKE', "%{$request->location}%");
-    }
+    $query->where('status', 'open');
 
-    // Filter by category
-    if ($request->filled('category')) {
-        $query->where('category', 'LIKE', "%{$request->category}%");
-    }
+    $jobs = $query->latest()->paginate(6)->appends($request->query());
 
-    // Filter by pay range
-    if ($request->filled('min_pay')) {
-        $query->where('pay', '>=', $request->min_pay);
-    }
-    if ($request->filled('max_pay')) {
-        $query->where('pay', '<=', $request->max_pay);
-    }
-
-    // Results with pagination
-    $jobs = $query->paginate(6)->appends($request->all());
-
-    return view('jobs.browse', compact('jobs'));
+    // Pass the new $appliedJobIds array to the view along with $jobs
+    return view('jobs.browse', compact('jobs', 'appliedJobIds')); // <-- UPDATE THIS LINE
 }
 
 
