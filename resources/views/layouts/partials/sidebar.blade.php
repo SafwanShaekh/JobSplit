@@ -17,6 +17,19 @@
             </ul>
         </div>
         <div class="area mt-6">
+             <span class="px-6 text-xs font-semibold text-secondary uppercase">Support</span>
+             <ul class="list_link flex flex-col gap-2 mt-2">
+                <li><a href="{{ route('complaints.index') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background">
+                    <span class="ph-duotone ph-notepad text-2xl text-secondary"></span>
+                    <strong class="text-title">My Complaints</strong></a>
+                </li>
+                <li><a href="{{ route('complaints.create') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background">
+                    <span class="ph-duotone ph-briefcase text-2xl text-secondary"></span>
+                    <strong class="text-title">File a Complaint</strong></a>
+                </li>
+            </ul>
+        </div>
+        <div class="area mt-6">
             <span class="px-6 text-xs font-semibold text-secondary uppercase">User</span>
             <ul class="list_link flex flex-col gap-2 mt-2">
                 <li><a href="{{ route('profile.show')}}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background"><span class="ph-duotone ph-user-circle text-2xl text-secondary"></span><strong class="text-title">My Profile</strong></a></li>
@@ -61,6 +74,19 @@
                 </ul>
             </div>
             <div class="area mt-6">
+                 <span class="px-6 text-xs font-semibold text-secondary uppercase">Support</span>
+                 <ul class="list_link flex flex-col gap-2 mt-2">
+                    <li><a href="{{ route('complaints.index') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background">
+                        <span class="ph-duotone ph-notepad text-2xl text-secondary"></span>
+                        <strong class="text-title">My Complaints</strong></a>
+                    </li>
+                    <li><a href="{{ route('complaints.create') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background">
+                        <span class="ph-duotone ph-briefcase text-2xl text-secondary"></span>
+                        <strong class="text-title">File a Complaint</strong></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="area mt-6">
                 <span class="px-6 text-xs font-semibold text-secondary uppercase">User</span>
                 <ul class="list_link flex flex-col gap-2 mt-2">
                     <li><a href="{{ route('profile.show')}}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background"><span class="ph-duotone ph-user-circle text-2xl text-secondary"></span><strong class="text-title">My Profile</strong></a></li>
@@ -78,6 +104,8 @@
         </div>
     </div>
 </div>
+{{-- ... @endsection ke baad ... --}}
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

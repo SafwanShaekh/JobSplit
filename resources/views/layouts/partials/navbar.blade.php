@@ -27,29 +27,30 @@
 
         <div class="list_action flex items-center gap-5">
 
-            <div class="notification_block relative max-sm:hidden">
-                <button class="relative block">
-                    <span class="ph ph-bell text-2xl block"></span>
-                    <span class="absolute -top-0.5 right-0.5 w-2 h-2 bg-primary rounded-full"></span>
-                </button>
-                <div class="notification_submenu absolute w-[400px] p-5 top-[3.25rem] right-0 bg-white rounded-xl shadow-lg">
-                    <h6 class="heading6 pb-3">Notifications</h6>
-                    <ul class="list_notification w-full">
-                        <li class="notification_item w-full py-3 border-t border-line duration-300 hover:bg-background">
-                            <a href="#!" class="flex gap-3 w-full">
-                                <span class="ic_noti flex flex-shrink-0 items-center justify-center w-8 h-8 rounded-full bg-surface">
-                                    <span class="ph-fill ph-bell text-lg text-secondary"></span>
-                                </span>
-                                <div class="notification_detail">
-                                    <p class="notification_desc text-secondary">John Smith applied for your job <span class="text-black">UI Designer</span>.</p>
-                                    <span class="notification_time caption2 text-placehover">25 mins ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        {{-- Add more notification items here --}}
-                    </ul>
+           @auth
+    <div class="notification_icon relative">
+        <div id="notification-bell" class="user_icon flex items-center justify-center relative w-10 h-10 rounded-full border border-line cursor-pointer">
+            <i class="ph ph-bell text-xl"></i>
+            @if(Auth::user()->unreadNotifications->count() > 0)
+                <span id="notification-badge" class="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-red-500 rounded-full">
+                    {{ Auth::user()->unreadNotifications->count() }}
+                </span>
+            @endif
+        </div>
+        <div class="notification_list dropdown-menu-list hidden absolute top-full right-0 mt-2 p-4 rounded-lg bg-white shadow-md w-[300px] max-h-[400px] overflow-y-auto">
+            @forelse(Auth::user()->unreadNotifications as $notification)
+                <div class="item p-2 border-b border-line">
+                    <p class="text-sm text-secondary">{{ $notification->data['message'] }}</p>
+                    <span class="text-xs text-secondary">{{ $notification->created_at->diffForHumans() }}</span>
                 </div>
-            </div>
+            @empty
+                <div class="item p-2 text-center text-secondary">
+                    <p>No new notifications</p>
+                </div>
+            @endforelse
+        </div>
+    </div>
+@endauth
     
             <div class="user_block relative max-sm:hidden">
                         <button class="user_infor flex items-center gap-2 text-white">               

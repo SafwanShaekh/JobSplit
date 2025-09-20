@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}" />
     <link rel="stylesheet" href="{{ asset('dist/output-tailwind.css')}}" />
     <link rel="stylesheet" href="{{ asset('dist/output-scss.css')}}"/>
-    <!-- ya map ka liya link ha  -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     @stack('styles')
     @livewireStyles 
@@ -34,9 +33,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-
             
-
             @yield('content')
 
             <div class="flex items-center justify-center w-full h-15 bg-white duration-300 shadow-md mt-auto">
@@ -51,10 +48,48 @@
     <script src="{{ asset('assets/js/slick.min.js') }}"></script>
     <script src="{{ asset('assets/js/leaflet.js') }}"></script>
     <script src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/main.js') }}"></script>
-    <!-- ya map ka liya link ha  -->
+    <script src="{{ asset('assets/js/main.js') }}"></script> 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    @livewireScripts
+
+    {{-- === YAHAN NAYI SCRIPT ADD KI GAYI HAI === --}}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const notificationBell = document.getElementById('notification-bell');
+        const notificationList = document.querySelector('.notification_list');
+        const notificationBadge = document.getElementById('notification-badge');
+
+        if (notificationBell) {
+            notificationBell.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevents the document click from firing immediately
+                notificationList.classList.toggle('hidden');
+
+                // If the list is now visible and badge exists, mark as read
+                if (!notificationList.classList.contains('hidden') && notificationBadge) {
+                    setTimeout(() => {
+                        fetch('{{ route("notifications.markAsRead") }}', {
+                            method: 'GET',
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            }
+                        }).then(() => {
+                            notificationBadge.style.display = 'none';
+                        });
+                    }, 2000); // Mark as read after 2 seconds
+                }
+            });
+        }
+        
+        // Hide dropdown if clicked outside
+        document.addEventListener('click', function(event) {
+            if (notificationList && !notificationList.classList.contains('hidden') && !notificationBell.contains(event.target)) {
+                notificationList.classList.add('hidden');
+            }
+        });
+    });
+    </script>
+    {{-- === END NAYI SCRIPT === --}}
+
     @stack('scripts')
 </body>
 </html>

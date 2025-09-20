@@ -25,6 +25,7 @@ class User extends Authenticatable
         'address',
         'bio',
         'profile_picture',
+        'is_banned',
     ];
 
     /**
@@ -47,6 +48,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_banned' => 'boolean', // Yeh add karna behtar hai
         ];
     }
     public function conversations()
@@ -95,4 +97,12 @@ class User extends Authenticatable
         // We round the average to one decimal place (e.g., 4.5)
         return round($this->feedbackReceived()->whereNotNull('rating')->avg('rating'), 1);
     }
+
+    //   * Get all of the complaints for the User.
+    //  */
+    public function complaints()
+    {
+        return $this->hasMany(Complaint::class);
+    }
 }
+

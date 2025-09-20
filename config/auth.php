@@ -40,6 +40,13 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        // --- YAHAN NAYA ADMIN GUARD ADD KIYA GAYA HAI ---
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins', // Yeh neeche 'providers' mein define kiya gaya hai
+        ],
+        // ---------------------------------------------
     ],
 
     /*
@@ -64,6 +71,15 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
+
+        // --- YAHAN NAYA ADMIN PROVIDER ADD KIYA GAYA HAI ---
+        // Yeh Laravel ko batata hai ke 'admins' table se data lena hai
+        // 'Admin' model ka istemal karke.
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+        // ---------------------------------------------------
 
         // 'users' => [
         //     'driver' => 'database',
@@ -113,3 +129,4 @@ return [
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
 ];
+
