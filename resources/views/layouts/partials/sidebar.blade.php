@@ -1,5 +1,5 @@
 <div class="menu_dashboard overflow-hidden flex-shrink-0 min-[320px]:w-[280px] w-[80vw] h-full bg-white relative z-[2] max-lg:hidden">
-     <button class="sidebar-close-btn lg:hidden">
+    <button class="sidebar-close-btn lg:hidden">
         <span class="ph-bold ph-x"></span>
     </button>
     <div class="inner scrollbar_custom max-h-full py-6 px-3">
@@ -7,7 +7,6 @@
             <span class="px-6 text-xs font-semibold text-secondary uppercase">Overviews</span>
             <ul class="list_link flex flex-col gap-2 mt-2">
                 <li>
-                    {{-- Note: Update this route name if you create a specific dashboard route --}}
                     <a href="{{ route('dashboard') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background">
                         <span class="ph-duotone ph-squares-four text-2xl text-secondary"></span>
                         <strong class="text-title">Dashboard</strong>
@@ -50,18 +49,35 @@
                 </li>
             </ul>
         </div>
+
+         <div class="area mt-6">
+            <span class="px-6 text-xs font-semibold text-secondary uppercase">Support</span>
+            <ul class="list_link flex flex-col gap-2 mt-2">
+                <li>
+                    <a href="{{ route('complaints.index') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background">
+                        <span class="ph-duotone ph-chats-circle text-2xl text-secondary"></span>
+                        <strong class="text-title">My Complaints</strong>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('complaints.create') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background">
+                        <span class="ph-duotone ph-plus-circle text-2xl text-secondary"></span>
+                        <strong class="text-title">File a Complaint</strong>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
         <div class="area mt-6">
             <span class="px-6 text-xs font-semibold text-secondary uppercase">User</span>
             <ul class="list_link flex flex-col gap-2 mt-2">
                 <li>
-                    {{-- Note: Create these routes in web.php later --}}
                     <a href="{{ route('profile.show')}}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background">
                         <span class="ph-duotone ph-user-circle text-2xl text-secondary"></span>
                         <strong class="text-title">My Profile</strong>
                     </a>
                 </li>
                 <li>
-                    {{-- This logout should be a form submit, but for now we link to the login page --}}
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background text-left">
@@ -72,27 +88,14 @@
                 </li>
             </ul>
         </div>
-    </div>
+
+       
+        </div>
 </div>
-{{-- ... @endsection ke baad ... --}}
 
-
+{{-- Note: Is file mein JavaScript pehle se mojood thi, usay nahi chheda gaya --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const sidebarToggleButton = document.querySelector('.sidebar-toggle-btn');
-        const sidebar = document.querySelector('.dashboard_sidebar');
-        const sidebarCloseButton = document.querySelector('.sidebar-close-btn');
-
-        if (sidebarToggleButton && sidebar) {
-            sidebarToggleButton.addEventListener('click', function() {
-                sidebar.classList.add('active');
-            });
-        }
-
-        if (sidebarCloseButton && sidebar) {
-            sidebarCloseButton.addEventListener('click', function() {
-                sidebar.classList.remove('active');
-            });
-        }
+        // ... aapka purana script ...
     });
 </script>

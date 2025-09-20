@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User; // <-- YEH LINE ADD KAREIN
 
 class LoginController extends Controller
 {
@@ -13,30 +14,46 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
-public function login(Request $request)
-{
-    $request->validate([
-        'login'    => 'required|string',   // 👈 ab sirf string validate karenge, email ki condition hata do
-        'password' => 'required|string',
-    ]);
 
-    $login_type = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+    public function login(Request $request)
+    {
+        // Step 1: Validate input
+        $request->validate([
+            'login'    => 'required|string',
+            'password' => 'required|string',
+        ]);
 
-    $credentials = [
-        $login_type => $request->login,
-        'password'  => $request->password,
-    ];
+        $login_type = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
 
-    if (Auth::attempt($credentials, $request->filled('remember'))) {
-        $request->session()->regenerate();
-        return redirect()->intended('dashboard');
+        // === NAYA BAN CHECK LOGIC ===
+        // Step 2: Pehle user ko dhoondein
+        $user = User::where($login_type, $request->login)->first();
+
+        // Step 3: Check karein ke user mojood hai aur banned to nahi
+        if ($user && $user->is_banned) {
+            // Agar user banned hai, to foran error de kar wapas bhej dein
+            return back()->withErrors([
+                'login' => 'Your account has been suspended. Please contact support.',
+            ])->withInput($request->only('login', 'remember'));
+        }
+        // === END BAN CHECK ===
+
+        // Step 4: Agar user banned nahi, tab login attempt karein
+        $credentials = [
+            $login_type => $request->login,
+            'password'  => $request->password,
+        ];
+
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
+            $request->session()->regenerate();
+            return redirect()->intended('dashboard');
+        }
+
+        // Step 5: Agar password ghalat hai ya user mojood nahi
+        return back()->withErrors([
+            'login' => 'Invalid credentials.',
+        ]);
     }
-
-    return back()->withErrors([
-        'login' => 'Invalid credentials.',
-    ]);
-}
-
 
     // Handle Logout
     public function logout()

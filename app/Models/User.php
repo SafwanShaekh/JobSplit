@@ -25,6 +25,7 @@ class User extends Authenticatable
         'address',
         'bio',
         'profile_picture',
+        'is_banned',
     ];
 
     /**
@@ -47,8 +48,20 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_banned' => 'boolean', // Yeh add karna behtar hai
         ];
     }
+
+    // === YEH FUNCTION ADD KIYA GAYA HAI ===
+    /**
+     * Get all of the complaints for the User.
+     */
+    public function complaints()
+    {
+        return $this->hasMany(Complaint::class);
+    }
+    // === END NEW FUNCTION ===
+
     // Add this to your User.php model
     // public function conversations()
     // {
