@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('q3_professional');
             $table->boolean('q4_hire_again');
             $table->boolean('q5_fair_price');
+            $table->tinyInteger('rating')->unsigned()->nullable();
             $table->timestamps();
         });
     }

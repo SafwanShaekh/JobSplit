@@ -43,7 +43,7 @@
                             <button onclick="openModal('feedbackModal-{{ $application->id }}')" class="btn btn-feedback">Feedback</button>
                         @endif
                     
-                        <a href="#" class="btn btn-chat">Chat</a>
+                        <a href="{{ route('chat.with', ['user' => $application->user->id]) }}" class="btn btn-chat">Chat</a>
                     </div>
                     
                         {{-- Include the two separate modal files --}}

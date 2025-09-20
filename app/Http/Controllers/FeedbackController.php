@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class FeedbackController extends Controller
 {
     public function store(Request $request, Application $application)
-    {
+    {   
         // Security: Sirf job ka malik he feedback de sakta hai
         if (auth()->id() !== $application->job->user_id) {
             abort(403, 'Unauthorized Action');
@@ -30,6 +30,7 @@ class FeedbackController extends Controller
             'q3' => 'required|in:yes,no',
             'q4' => 'required|in:yes,no',
             'q5' => 'required|in:yes,no',
+            'rating' => 'nullable|integer|between:1,5', // <-- 1. ADDED VALIDATION FOR RATING
         ]);
 
         // Feedback ko database mein save karein
@@ -43,6 +44,7 @@ class FeedbackController extends Controller
             'q3_professional' => $validated['q3'] === 'yes',
             'q4_hire_again' => $validated['q4'] === 'yes',
             'q5_fair_price' => $validated['q5'] === 'yes',
+            'rating' => $validated['rating'] ?? null, // <-- 2. ADDED RATING TO BE SAVED
         ]);
 
         return redirect()->back()->with('success', 'Feedback submitted successfully!');

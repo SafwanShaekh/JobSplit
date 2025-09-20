@@ -1,4 +1,303 @@
+/* rating stars ki css */
+/* Add these styles for the star rating colors */
 
+.text-yellow-400 {
+    color: #facc15; /* A nice gold/yellow color */
+}
+
+.text-gray-300 {
+    color: #d1d5db; /* A light gray color */
+}
+
+.star-rating-component .star {
+    font-size: 2.5rem;
+    color: #d1d5db;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star-rating-component .star.active {
+    color: #f59e0b;
+}
+/*  */
+/* public/css/chat.css */
+
+/* Using CSS Variables for easy color changes */
+:root {
+    --primary-color: #7A5CFA;
+    --background-color: #f5f5f5;
+    --container-bg: #ffffff;
+    --border-color: #e5e5e5;
+    --text-primary: #333;
+    --text-secondary: #888;
+    --message-sent-bg: linear-gradient(135deg, #7A5CFA, #5a3ecf);
+    --message-received-bg: #f1f1f1;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif; /* A more modern font */
+    background-color: var(--background-color);
+}
+
+.chat-container {
+    display: flex;
+    height: calc(100vh - 100px); /* Adjust based on your header */
+    width: 95%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: var(--container-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+    position: relative; /* <-- Add this line */
+    z-index: 1;         
+}
+
+/* --- Left Column: Conversation List --- */
+.conversation-list {
+    width: 350px;
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.conversation-list .header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.conversation-list h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+
+.search-container {
+    padding: 10px 20px;
+    position: relative;
+}
+.search-container .search-icon {
+    position: absolute;
+    right: 35px;
+    top: 22px;
+    color: var(--text-secondary);
+}
+.search-box {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background-color: #f9f9f9;
+}
+
+.users-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+.users-list li {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+.users-list li:hover {
+    background-color: #f5f5f5;
+}
+.users-list li.active {
+    background-color: #f0f4ff;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.user-info .name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.user-info .last-message {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+.time-details {
+    margin-left: auto;
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+.unread-badge {
+    background-color: #ff3d71;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+/* --- Right Column: Chat Window --- */
+.chat-window {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-window .header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.chat-window .header .user-info .location {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.back-button { display: none; }
+
+.messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #fafafa;
+}
+
+.date-separator {
+    text-align: center;
+    margin: 20px 0;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.message-container {
+    display: flex;
+    margin-bottom: 5px;
+}
+.message-bubble {
+    max-width: 60%;
+    padding: 12px 18px;
+    border-radius: 20px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+.message-time {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin: 4px 8px 10px;
+}
+
+.sent {
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.message-sent {
+    background: var(--message-sent-bg);
+    color: white;
+    border-bottom-right-radius: 5px;
+}
+
+.received {
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+.message-received {
+    background-color: var(--message-received-bg);
+    color: var(--text-primary);
+    border-bottom-left-radius: 5px;
+}
+
+.message-form {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--container-bg);
+}
+.message-form input {
+    flex-grow: 1;
+    border: none;
+    background: #f5f5f5;
+    padding: 12px 20px;
+    border-radius: 20px;
+    outline: none;
+}
+.message-form button {
+    background: var(--primary-color);
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    margin-left: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.message-form button:hover {
+    opacity: 0.9;
+}
+.message-form button svg {
+    color: white;
+}
+
+.chat-window .placeholder{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #aaa;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .chat-container { height: 100vh; width: 100%; margin: 0; border-radius: 0; }
+    .conversation-list { width: 100%; display: none; }
+    .chat-window { width: 100%; display: none; }
+    .chat-container.view-list .conversation-list { display: flex; }
+    .chat-container.view-chat .chat-window { display: flex; }
+    .back-button { display: block; margin-right: 15px; cursor: pointer; font-size: 1.5rem; }
+}
+/*  */
+/* public/css/chat.css */
+
+/* red dot css */
+.unread-dot {
+    background-color: #ff3d71; /* A bright red color */
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-top: 8px;
+    margin-left: 5px; /* Adjust spacing as needed */
+}
+
+/* Also, update .time-details to align items better */
+.time-details {
+    margin-left: auto;
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex; /* Add this */
+    flex-direction: column; /* Add this */
+    align-items: flex-end; /* Add this */
+}
 
 
 /* modals ki css */
@@ -451,6 +750,61 @@
         justify-content: center;
         z-index: 10001;
     }
+}
+/* Find the old #page-wrapper CSS and REPLACE it with this */
+
+#page-content-wrapper {
+    /* This makes the animations smooth */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                filter 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* This style is applied to the content area when the sidebar is open */
+body.sidebar-is-open #page-content-wrapper {
+    /* Scale down the content */
+    transform: scale(0.95);
+    /* Blur the content */
+    filter: blur(4px);
+    /* Optional: prevent clicking on the background */
+    pointer-events: none !important;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Ensure body doesn't scroll when menu is open */
+body.sidebar-is-open {
+    overflow: hidden;
+}
+/* Add this to your main CSS file */
+
+.menu_dashboard {
+    /* On desktop, it will behave normally */
+    /* On mobile, it needs these styles for the off-canvas effect */
+    height: 100vh;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* On mobile screens (less than 1024px) */
+@media (max-width: 1023px) {
+    .menu_dashboard {
+        /* Hide it off-screen to the left by default */
+        top: 0;
+        transform: translateX(-100%);
+    }
+
+    .menu_dashboard.active {
+        /* Slide it into view when the 'active' class is added */
+        transform: translateX(0);
+    }
+}
+
+/* Fix for sidebar appearing under other page content */
+#sidebar-overlay {
+    z-index: 999;
+}
+
+#dashboard-sidebar {
+    z-index: 1000;
 }
 /*  */
 

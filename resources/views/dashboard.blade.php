@@ -41,7 +41,7 @@
                 <li class="counter_item total_reviews flex items-center justify-between sm:gap-4 gap-3 sm:p-6 p-5 rounded-lg bg-white">
                     <div class="counter_content">
                         <span class="text-secondary">Total Reviews</span>
-                        <h4 class="number heading4 mt-1">4214</h4> {{-- We are leaving this one hardcoded as requested --}}
+                        <h4 class="number heading4 mt-1">{{ auth()->user()->rating_count }}</h4>
                     </div>
                     <div class="counter_icon flex flex-shrink-0 items-center justify-center sm:w-[72px] w-12 sm:h-[72px] h-12 rounded-full bg-gradient">
                         <span class="ph-fill ph-thumbs-up sm:text-3xl text-2xl text-white"></span>

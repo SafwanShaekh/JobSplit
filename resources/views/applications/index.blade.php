@@ -28,7 +28,7 @@
                             <span class="text-sm font-semibold capitalize py-2 px-4 rounded-lg bg-green-100 text-green-700">
                                 Status: {{ $application->status }}
                             </span>
-                            <a href="#" class="btn btn-chat">Chat</a>
+                            <a href="{{ route('chat.with', ['user' => $application->job->user->id]) }}" class="btn btn-chat">Chat</a>
                         </div>
                     @else
                         {{-- Otherwise, just show the status --}}

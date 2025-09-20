@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
@@ -81,6 +82,13 @@ Route::middleware('auth')->group(function () {
     
      // Add this line in routes/web.php
     Route::get('/dashboard/chart-data', [App\Http\Controllers\DashboardController::class, 'getChartData'])->middleware('auth')->name('dashboard.chart');
+
+    // Yeh route Chat button par lagega
+    Route::get('/chat/with/{user}', [ChatController::class, 'startConversation'])->name('chat.with')->middleware('auth');
+
+    Route::get('/chat', function () {
+        return view('chat.index'); // Ab yeh hamari nayi view file ko load karega
+    })->name('chat')->middleware('auth');
 
     // Logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

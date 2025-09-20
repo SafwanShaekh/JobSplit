@@ -17,6 +17,7 @@
     <!-- ya map ka liya link ha  -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     @stack('styles')
+    @livewireStyles 
 </head>
 <body class="lg:overflow-hidden">
 
@@ -26,7 +27,7 @@
       
         @include('layouts.partials.sidebar')
 
-        <div class="content_dashboard scrollbar_custom max-h-full w-full h-fit bg-surface">
+        <div id="page-content-wrapper" class="content_dashboard flex-1 scrollbar_custom max-h-full w-full h-fit bg-surface">
             
             @if(session('success'))
                 <div class="alert-success m-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
@@ -53,6 +54,7 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <!-- ya map ka liya link ha  -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    @livewireScripts
     @stack('scripts')
 </body>
 </html>

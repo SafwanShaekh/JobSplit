@@ -31,5 +31,6 @@ class Feedback extends Model
         'q3_professional',
         'q4_hire_again',
         'q5_fair_price',
+        'rating', 
     ];
 }
