@@ -4,7 +4,14 @@
 
     <div class="content_dashboard scrollbar_custom max-h-full w-full h-fit bg-surface">
         <div class="container w-full lg:py-15 sm:py-12 py-8">
-          
+          <button id="sidebar-toggle-btn" class="lg:hidden flex items-center gap-2 mb-4 ml-6 font-semibold text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <span>Menu</span>
+            </button>
         
             <h4 class="heading4 max-lg:mt-3">Dashboard</h4>
             <ul class="list_counter grid 2xl:grid-cols-4 grid-cols-2 sm:gap-7.5 gap-5 mt-7.5 w-full">

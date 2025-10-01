@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Message;
 
 class User extends Authenticatable
 {
@@ -26,6 +27,7 @@ class User extends Authenticatable
         'bio',
         'profile_picture',
         'is_banned',
+        'google_id',
     ];
 
     /**
@@ -61,16 +63,21 @@ class User extends Authenticatable
         return $this->hasMany(Message::class);
     }
 
+    // NAYA AUR BEHTAR CODE ✅
     public function getProfilePhotoUrlAttribute()
     {
-        // Check if the user has a profile picture path.
-        // I've updated this to use your column name: 'profile_picture'
-        if ($this->profile_picture) {
-            return asset('storage/' . $this->profile_picture);
+        // Agar profile_picture NULL hai to default avatar dikhayein
+        if (!$this->profile_picture) {
+            return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random';
         }
-
-        // If no photo, return the default initials avatar URL.
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random';
+    
+        // Check karein ke kya profile_picture ek poora URL hai (Google se)
+        if (str_starts_with($this->profile_picture, 'http')) {
+            return $this->profile_picture; // Agar URL hai to usay direct return kar dein
+        }
+    
+        // Warna, yeh local storage se file hai
+        return asset('storage/' . $this->profile_picture);
     }
     //  * Get all the feedback received by the user as a worker.
     //  */
@@ -103,6 +110,27 @@ class User extends Authenticatable
     public function complaints()
     {
         return $this->hasMany(Complaint::class);
+    }
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
+    }
+     public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
+    public function getUnreadMessagesCountAttribute()
+    {
+        // Get all conversation IDs where this user is a participant
+        $conversationIds = $this->conversations()->pluck('id');
+
+        // Count messages in those conversations that are unread and not sent by this user
+        return Message::whereIn('conversation_id', $conversationIds)
+                      ->where('user_id', '!=', $this->id)
+                      ->where('is_read', false)
+                      ->count();
     }
 }
 

@@ -3,135 +3,189 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\Application;
 use Illuminate\Http\Request;
-use App\Models\Application; // New line to import Application model
-use Illuminate\Support\Facades\Auth; // New line to import Auth facade
+use Illuminate\Support\Facades\Auth;
+
+// We no longer need the AuthorizesRequests trait
+// use Illuminate\Foundation\Auth\Access\AuthorizesRequests; 
 
 class JobController extends Controller
 {
+    // The 'use AuthorizesRequests;' line has been removed.
+
     /**
-     * Show form to create a new job
+     * Display jobs posted by the authenticated user in their dashboard.
+     */
+    public function index()
+    {
+        $jobs = Auth::user()->jobs()->latest()->paginate(10);
+        return view('jobs.index', compact('jobs'));
+    }
+
+    /**
+     * Display a paginated list of all open jobs with search and filtering for everyone.
+     */
+    public function browse(Request $request)
+    {
+        // Start with a base query
+        $query = Job::with('user')->latest();
+
+        $query->where('status', '!=', 'completed');
+
+        // ** YEH NAYI LOGIC HAI **
+        if ($request->filled('category')) {
+            // Agar category search ki hai, to sirf us category ki jobs dikhayein (status koi bhi ho)
+            $query->where('category', $request->category);
+        } else {
+            // Agar koi category nahi hai, to by default sirf 'open' jobs dikhayein
+            // $query->where('status', 'open');
+        }
+
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+        // ... more filter logic ...
+
+        $appliedJobIds = [];
+        if (Auth::check()) {
+            $appliedJobIds = Application::where('user_id', Auth::id())
+                                         ->pluck('job_id')
+                                         ->toArray();
+        }
+
+        $jobs = $query->paginate(9)->withQueryString();
+
+        // ** YEH NAYI LINE HAI **
+        // Category ka naam view ko bhejein taake custom message dikha sakein
+        $searchedCategory = $request->category;
+
+        // ** compact() MEIN NAYA VARIABLE ADD KIYA GAYA HAI **
+        return view('jobs.browse', compact('jobs', 'appliedJobIds', 'searchedCategory'));
+    }
+
+    /**
+     * Show the form to create a new job.
      */
     public function create()
     {
-        return view('jobs.create'); 
-        // Ye Blade file abhi banani hai
+        return view('jobs.create');
     }
 
     /**
-     * Store new job in database
+     * Store a new job in the database.
      */
     public function store(Request $request)
-{
-    // Validation of form inputs
-    $request->validate([  //  $request->validate Server-side validation. Agar invalid input → automatic error return.
-        'title' => 'required|string|max:255',
-        'description' => 'required|string',
-        'category' => 'required|string|max:255',
-        'pay' => 'required|numeric',
-        'date_time' => 'required|date',
-        'duration' => 'required|string|max:255',
-        'location' => 'required|string|max:255',
-    ]);
-
-    // Create job linked to logged-in user
-    Job::create([  //Job::create. Mass assignment ka use karke job database me insert karna.
-        'user_id' => auth()->id(), //auth()->id(), //auth()->id(), KO TEMPORARY COMMIT KIA HAI JB LOGIN LAG JAYE TO 1 HATT JAYEGA OR UNCOMMIT HOGA 
-        'title' => $request->title,
-        'description' => $request->description,
-        'category' => $request->category,
-        'pay' => $request->pay,
-        'date_time' => $request->date_time,
-        'duration' => $request->duration,
-        'location' => $request->location,
-    ]);
-
-    // Redirect back or to jobs list
-    return redirect()->route('jobs.index')->with('success', 'Job created successfully!');
-}
-
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255', 'description' => 'required|string',
+            'category' => 'required|string|max:255', 'pay' => 'required|numeric',
+            'date_time' => 'required|date', 'duration' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+        ]);
+        Auth::user()->jobs()->create($validatedData);
+        return redirect()->route('jobs.index')->with('success', 'Job created successfully!');
+    }
 
     /**
-     * // Employer – My Jobs
+     * Display the details of a specific job.
      */
-   public function index()
+     public function show(Job $job)
+    {
+        $appliedJobIds = []; // Pehle aek khali array banayein
+
+        // Check karein ke user logged-in hai ya nahi
+        if (Auth::check()) {
+            // Agar logged-in hai, to uski applications se job_id nikal lein
+            $appliedJobIds = Auth::user()
+                                ->applications()
+                                ->pluck('job_id')
+                                ->toArray();
+        }
+
+        // $job aur $appliedJobIds, dono variables ko view mein pass karein
+        return view('jobs.show', [
+            'job' => $job,
+            'appliedJobIds' => $appliedJobIds
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified job.
+     */
+    public function edit(Job $job)
+    {
+        // == NEW: Manual Authorization Check ==
+        if (auth()->id() !== $job->user_id) {
+            abort(403, 'This action is unauthorized.');
+        }
+
+        return view('jobs.edit', compact('job'));
+    }
+
+    /**
+     * Update the specified job in the database.
+     */
+    public function update(Request $request, Job $job)
+    {
+        // == NEW: Manual Authorization Check ==
+        if (auth()->id() !== $job->user_id) {
+            abort(403, 'This action is unauthorized.');
+        }
+
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255', 'description' => 'required',
+            'category' => 'required|string|max:255', 'pay' => 'required|numeric',
+            'date_time' => 'required|date', 'duration' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+        ]);
+        $job->update($validatedData);
+        return redirect()->route('jobs.index')->with('success', 'Job updated successfully!');
+    }
+
+    /**
+     * Remove the specified job from the database.
+     */
+    public function destroy(Job $job)
+    {
+        // == REPLACED authorize() with Manual Check ==
+        if (auth()->id() !== $job->user_id) {
+            abort(403, 'This action is unauthorized.');
+        }
+
+        $job->delete();
+        return redirect()->route('jobs.index')->with('success', 'Job deleted successfully!');
+    }
+    
+    /**
+     * Update the status of a job.
+     */
+    // in app/Http/Controllers/JobController.php
+
+public function updateStatus(Request $request, Job $job)
 {
+    // Authorization check
+    if (auth()->id() !== $job->user_id) {
+        abort(403, 'This action is unauthorized.');
+    }
 
-        // Latest jobs first, 6 per page
-     $jobs = Job::where('user_id', auth()->id())->latest()->paginate(6); //auth()->id() jb login signup ban jaye uske baad 1 ki jaga ye lagega//
-
-    // Pass jobs to the Blade view
-    return view('jobs.index', compact('jobs'));
-}
-
-//edit wale page pr lekar jayega edit button click pr
-public function edit(Job $job)
-{
-    return view('jobs.edit', compact('job'));
-}
-
-//update ka function chalega or update button se data db main update ho jayega after validation
-public function update(Request $request, Job $job)
-{
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'required',
-        'category' => 'required|string|max:255',
-        'pay' => 'required|numeric',
-        'date_time' => 'required|date',
-        'duration' => 'required|string|max:255',
-        'location' => 'required|string|max:255',
+    // Validation
+    $validated = $request->validate([
+        'status' => 'required|in:open,closed,completed',
     ]);
 
-    $job->update($request->all());
-
-    return redirect()->route('jobs.index')->with('success', 'Job updated successfully!');
-}
-
-//delete ka function chalega
-public function destroy(Job $job)
-{
-    $job->delete();
-    return redirect()->route('jobs.index')->with('success', 'Job deleted successfully!');
-}
-
-// Worker – Browse All Jobs
-public function browse(Request $request)
-{
-    // --- START: ADD THIS NEW CODE ---
-    
-    // Get an array of all job IDs the logged-in user has applied to.
-    // We use pluck() to get only the 'job_id' column.
-    $appliedJobIds = [];
-    if (Auth::check()) {
-        $appliedJobIds = Application::where('user_id', Auth::id())
-                                    ->pluck('job_id')
-                                    ->toArray();
+    // If a job is being re-opened from 'closed' to 'open'...
+    if ($job->status === 'closed' && $validated['status'] === 'open') {
+        
+        // THIS IS THE FIX:
+        // Only reset the status for applicants who were 'rejected'.
+        // This will leave the 'approved' applicant untouched.
+        $job->applications()->where('status', 'rejected')->update(['status' => 'pending']);
     }
-    
-    // --- END: ADD THIS NEW CODE ---
 
-    $query = Job::query();
+    // Update the job status
+    $job->update(['status' => $validated['status']]);
 
-    // ... (Your existing search and filter logic remains the same) ...
-    if ($request->filled('search')) {
-        //...
-    }
-    // ... all your other filters ...
-
-    $query->where('status', 'open');
-
-    $jobs = $query->latest()->paginate(6)->appends($request->query());
-
-    // Pass the new $appliedJobIds array to the view along with $jobs
-    return view('jobs.browse', compact('jobs', 'appliedJobIds')); // <-- UPDATE THIS LINE
+    return redirect()->route('jobs.index')->with('success', 'Job status has been updated successfully!');
 }
-
-
-
-//JOB DETAILS WALA PAGE KHULEGA
-    public function show(Job $job)
-    {
-        return view('jobs.show', compact('job'));
-    }
 }

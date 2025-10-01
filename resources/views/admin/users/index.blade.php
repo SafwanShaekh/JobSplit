@@ -209,12 +209,51 @@
     </div>
 </div>
 
+{{-- === DELETE CONFIRMATION MODAL === --}}
 <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
-    {{-- ... Modal ka baqi code pehle jaisa hi hai ... --}}
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: var(--card-color); color: var(--text-color);">
+            <div class="modal-header" style="border-bottom-color: var(--border-color);">
+                <h5 class="modal-title" id="deleteUserModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to permanently delete this user? This action cannot be undone.
+            </div>
+            <div class="modal-footer" style="border-top-color: var(--border-color);">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                
+                {{-- Form for deletion --}}
+                <form id="deleteUserForm" method="POST" action="">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    // ... Script ka baqi code pehle jaisa hi hai ...
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteUserModal = document.getElementById('deleteUserModal');
+    
+    // Jab modal khulne wala ho, to yeh event trigger hota hai
+    deleteUserModal.addEventListener('show.bs.modal', function (event) {
+        
+        // Button dhoondein jisne modal ko khola
+        const button = event.relatedTarget;
+        
+        // Button ke 'data-action' attribute se URL hasil karein
+        const actionUrl = button.getAttribute('data-action');
+        
+        // Modal ke andar wala form dhoondein
+        const deleteForm = deleteUserModal.querySelector('#deleteUserForm');
+        
+        // Form ka 'action' us URL par set kar dein
+        deleteForm.setAttribute('action', actionUrl);
+    });
+});
 </script>
 
 @endsection

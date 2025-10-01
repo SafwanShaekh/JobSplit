@@ -7,6 +7,7 @@ use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\ApplicationStatusNotification;
 
 class JobApplicantsController extends Controller
 {
@@ -60,13 +61,15 @@ class JobApplicantsController extends Controller
             $application->update(['status' => 'approved']);
         
             // 2. Is job ki baaqi saari applications ka status 'rejected' karein
-            $job->applications()->where('id', '!=', $application->id)->update(['status' => 'rejected']);
+            // $job->applications()->where('id', '!=', $application->id)->update(['status' => 'rejected']);
         
-            // 3. Job ka status 'completed' karein
-            $job->update(['status' => 'completed']);
+            
         
+            // Job applicant ko notify karein
+            $applicant = $application->user; 
+            $applicant->notify(new ApplicationStatusNotification($application, $application->status));
         });
     
-        return redirect()->route('job-applicants.show', $job)->with('success', 'Applicant approved successfully! The job is now closed.');
+        return redirect()->route('job-applicants.show', $job)->with('success', 'Applicant approved successfully!');
     }
 }

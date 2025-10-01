@@ -11,41 +11,55 @@
 <script>
     document.addEventListener('livewire:initialized', () => {
         
-        // --- This is the scroll functionality (no changes here) ---
-        Livewire.on('scroll-to-bottom', (event) => {
+        Livewire.on('scroll-to-bottom', () => {
             const messageArea = document.getElementById('message-area');
             if (messageArea) {
-                messageArea.scrollTop = messageArea.scrollHeight;
+                setTimeout(() => { messageArea.scrollTop = messageArea.scrollHeight; }, 50);
             }
         });
 
-        // =========================================================
-        // == NEW & IMPROVED LOCATION BUTTON SCRIPT (EVENT DELEGATION) ==
-        // =========================================================
-        document.body.addEventListener('click', function(event) {
-            // Check if the element that was clicked is our location button
-            const locationButton = event.target.closest('#share-location-btn');
+        const handleInteraction = (event) => {
+            const conversationButton = event.target.closest('.conversation-button');
+            if (conversationButton) {
+                // 👇 THE FIX IS RIGHT HERE
+                event.preventDefault();
+                event.stopPropagation();
 
-            // If it is our button, run the geolocation logic
-            if (locationButton) {
-                if (!navigator.geolocation) {
-                    alert('Geolocation is not supported by your browser.');
-                    return;
+                const conversationId = conversationButton.dataset.conversationId;
+                const componentRoot = document.getElementById('chat-component-root');
+                if (componentRoot) {
+                    const component = Livewire.first(componentRoot);
+                    component.call('viewConversation', conversationId);
                 }
-
-                navigator.geolocation.getCurrentPosition((position) => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    
-                    // Dispatch event to Livewire component
-                    Livewire.dispatch('sendLocation', { latitude: latitude, longitude: longitude });
-
-                }, () => {
-                    alert('Unable to retrieve your location. Please allow location access.');
-                });
+                return;
             }
-        });
-        // ===========================================
+
+            const locationButton = event.target.closest('#share-location-btn');
+            if (locationButton) {
+                // 👇 AND ALSO HERE FOR THE LOCATION BUTTON
+                event.preventDefault();
+                event.stopPropagation();
+                
+                if (!navigator.geolocation) {
+                    return alert('Geolocation is not supported by your browser.');
+                }
+                navigator.geolocation.getCurrentPosition(
+                    (position) => Livewire.dispatch('sendLocation', { 
+                        latitude: position.coords.latitude, 
+                        longitude: position.coords.longitude 
+                    }),
+                    () => alert('Unable to retrieve your location. Please allow location access.')
+                );
+            }
+        };
+
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        if (isTouchDevice) {
+            document.body.addEventListener('touchend', handleInteraction);
+        } else {
+            document.body.addEventListener('click', handleInteraction);
+        }
     });
 </script>
 @endpush

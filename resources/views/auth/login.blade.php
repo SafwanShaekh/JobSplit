@@ -1,316 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-    
 <head>
-    <link rel="stylesheet" href="{{ asset('assets/bootstrap.min.css') }}">
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="FreelanHub - Job Board & Freelance Marketplace" />
-        <title>FreelanHub - Job Board & Freelance Marketplace</title>
-        <link rel="shortcut icon" href="/public/assets/images/fav.png" type="image/x-icon" />
-        <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css')}}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/leaflet.css')}}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/slick.css')}}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}" />
-        <link rel="stylesheet" href="{{ asset('dist/output-tailwind.css')}}" />
-        <link rel="stylesheet" href="{{ asset('dist/output-scss.css')}}" />
-    </head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - FreelanHub</title>
+    
+    {{-- Main CSS & Tailwind --}}
+    <link rel="shortcut icon" href="{{ asset('assets/images/fav.png') }}" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/leaflet.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/slick.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}" />
+    <link rel="stylesheet" href="{{ asset('dist/output-tailwind.css')}}" />
+    <link rel="stylesheet" href="{{ asset('dist/output-scss.css')}}" />
 
+    {{-- Phosphor Icons --}}
+    <script src="https://unpkg.com/@phosphor-icons/web@2.0.3/dist/phosphor.js"></script>
 
-    <body>
-      
+    <style>
+        
+        .logo {
+            width: 100%;
+            max-width: 500px; /* Adjust as needed */
+            height: 90%;
+            max-height: 500px; /* Adjust as needed */
+            object-fit: contain; /* Maintain aspect ratio */
+            display: flex;
+            align-items: center;
+            margin-left: -60px; /* Adjust as needed */
+            margin-right: -15%; /* Adjust as needed */
+            margin-top: 5px; /* Adjust as needed */
+            justify-content: flex-start; /* Align to the left */
 
-        <section class="lg:py-20 sm:py-14 py-10 bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
-    <div class="container flex items-center justify-center">
-        <div class="content sm:w-[448px] w-full bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8">
-            
-            <h3 class="heading3 text-center text-2xl font-semibold text-gray-800 dark:text-gray-100">Log In</h3>
+            background: none; /* Or your navbar's background color */
+            /* Optional: a subtle bottom border */
+        }
+        @media (max-width: 760px) {
+            .logo{
+                height: 60%;
+            }
+        }
 
-            @error('login')
-                <div class="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center" role="alert">
-                    <span>{{ $message }}</span>
+        /* This CSS is the same as the register page for consistency */
+        :root {
+            --freelanhub-blue: #2c5282; --freelanhub-light-blue: #3182ce;
+            --freelanhub-dark: #1a202c; --freelanhub-gray-text: #718096;
+            --freelanhub-border: #e2e8f0;
+            --freelanhub-gradient: linear-gradient(90deg, #2dd4bf, #06b6d4);
+        }
+        body { background-color: #f7fafc; overflow-x: hidden; }
+        .auth-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+        .auth-content { background-color: white; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); padding: 40px; max-width: 1100px; width: 100%; display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; overflow: hidden; animation: fadeInScale 0.8s ease-out forwards; }
+        @media (max-width: 1024px) { .auth-content { grid-template-columns: 1fr; } }
+        .auth-illustration { text-align: center; padding: 20px; display: flex; flex-direction: column; justify-content: center; }
+        .auth-illustration img { max-width: 100%; height: auto; border-radius: 12px; animation: floatImage 4s ease-in-out infinite alternate; }
+        .auth-illustration h2 { font-size: 1.8rem; font-weight: 700; color: var(--freelanhub-dark); margin-top: 25px; line-height: 1.3; }
+        .auth-illustration p { color: var(--freelanhub-gray-text); margin-top: 10px; }
+        .auth-form-wrapper h3 { font-size: 2rem; font-weight: 700; }
+        .form-group input { border: 1px solid var(--freelanhub-border); border-radius: 8px; padding: 12px 18px; transition: all 0.2s ease-in-out; background-color: #fdfdff; width: 100%; }
+        .form-group input:focus { border-color: var(--freelanhub-light-blue); box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2); }
+        .button-main { background: var(--freelanhub-gradient); padding: 15px 25px; border-radius: 10px; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); display: flex; align-items: center; justify-content: center; }
+        .button-main:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); }
+
+        /* Enhancement Styles */
+        .password-wrapper { position: relative; }
+        .password-toggle-icon { position: absolute; top: 50%; right: 15px; transform: translateY(-50%); cursor: pointer; color: #a0aec0; }
+        .button-main.loading { cursor: not-allowed; opacity: 0.8; }
+        .button-main .spinner { display: none; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; }
+        .button-main.loading .spinner { display: inline-block; }
+        .button-main.loading .button-text { display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .social-login a { border: 1px solid var(--freelanhub-border); border-radius: 8px; transition: all 0.2s ease; }
+        .social-login a:hover { border-color: var(--freelanhub-light-blue); background-color: #f7fafc; }
+        .social-login img { height: 20px; width: 20px; }
+        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.98) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        @keyframes floatImage { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
+    </style>
+</head>
+<body>
+
+    <header class="header-auth bg-white shadow-sm sticky w-full top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="header_inner flex items-center justify-between h-16">
+                <a href="{{ url('/') }}"><img src="{{ asset('assets/images/JobSplit logo.png') }}" alt="logo" class="logo" /></a>
+                <div class="text-sm">
+                    <span class="text-gray-600">Don't have an account?</span>
+                    <a class="text-primary font-medium hover:underline ml-1" href="{{ route('register') }}">Sign Up</a>
                 </div>
-            @enderror
-            <form class="form mt-6" method="POST" action="{{ route('login') }}">
-                @csrf
+            </div>
+        </div>
+    </header>
 
-                <div class="form-group">
-                    <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email or Phone*</label>
-                    <input id="username" 
-                           type="text"
-                           name="login"
-                           value="{{ old('login') }}"
-                           class="form-control w-full mt-2 border border-gray-300 dark:border-gray-600 px-4 h-[50px] rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-gray-700 dark:text-white"
-                           placeholder="Enter email or phone number"
-                           required autofocus/>
-                </div>
+    <div class="auth-container">
+        <div class="auth-content">
+            <div class="auth-illustration max-lg:hidden">
+                <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Illustration of people collaborating" />
+                <h2 class="mt-8">Welcome Back to the Hub of Jobs</h2>
+                <p>Log in to manage your pending works by connecting with professionals, and find your next opportunity.</p>
+            </div>
 
-                <div class="form-group mt-6">
-                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password*</label>
-                    <input id="password"
-                           type="password" 
-                           name="password"
-                           class="form-control w-full mt-2 border border-gray-300 dark:border-gray-600 px-4 h-[50px] rounded-lg focus:ring-2 focus:ring-primary focus:outline-none dark:bg-gray-700 dark:text-white"
-                           placeholder="Enter password"
-                           required />
-                </div>
-
-                <div class="flex items-center justify-between mt-6 text-sm">
-                    <div class="flex items-center gap-2">
-                        <input id="checkbox" type="checkbox" name="remember" class="rounded text-primary dark:bg-gray-700"/>
-                        <label for="checkbox" class="text-gray-600 dark:text-gray-300">Remember me</label>
+            <div class="auth-form-wrapper">
+                <h3 class="mb-2">Welcome Back!</h3>
+                <p class="text-secondary text-lg mb-8">Please enter your details to log in.</p>
+                
+                @error('login')
+                    <div class="mb-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
+                        <p>{{ $message }}</p>
                     </div>
-                    <a class="text-primary hover:underline" href="#">Forgot password?</a>
-                </div>
+                @enderror
 
-                <div class="mt-6">
-                    <button class="bg-primary text-white font-semibold py-3 px-6 rounded-lg w-full hover:bg-primary/90 transition duration-300" type="submit">
-                        Login
-                    </button>
-                </div>
+                <form id="login-form" method="POST" action="{{ route('login') }}" class="space-y-6">
+                    @csrf
+                    <div class="form-group">
+                        <label for="login" class="block text-sm font-semibold text-gray-700 mb-2">Email or Phone*</label>
+                        <input id="login" type="text" name="login" value="{{ old('login') }}" placeholder="Enter your email or phone" required>
+                    </div>
 
-                <div class="flex items-center justify-center gap-2 mt-6 text-sm">
-                    <span class="text-gray-600 dark:text-gray-300">Not registered yet?</span>
-                    <a class="text-primary font-medium hover:underline" href="{{ route('register') }}">Sign Up</a>
-                </div>
+                    <div class="form-group">
+                        <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password*</label>
+                        <div class="password-wrapper">
+                            <input id="password" type="password" name="password" placeholder="Enter your password" required>
+                            <i class="ph ph-eye-slash password-toggle-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-sm">
+                        <label for="remember" class="flex items-center text-gray-600 cursor-pointer">
+                            <input id="remember" type="checkbox" name="remember" class="rounded text-primary focus:ring-primary"/>
+                            <span class="ml-2">Remember me</span>
+                        </label>
+                        <a href="{{ route('password.request') }}" class="text-primary hover:underline font-medium">Forgot Password?</a>
+                    </div>
 
-                <div class="relative text-center py-6">
-                    <span class="px-4 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">or sign in with</span>
-                    <div class="absolute top-1/2 left-0 w-full h-px bg-gray-300 dark:bg-gray-600 -z-10"></div>
-                </div>
+                    <div>
+                        <button id="submit-button" class="button-main w-full mt-3" type="submit">
+                            <span class="button-text">Log In</span>
+                            <span class="spinner"></span>
+                        </button>
+                    </div>
 
-                <div class="grid sm:grid-cols-3 gap-3">
-                    <a class="bg-gray-100 dark:bg-gray-700 h-12 flex items-center justify-center gap-3 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-black hover:text-white transition" href="#!"><span class="ph-fill ph-facebook-logo text-[#3B5998] text-2xl"></span><strong class="text-sm">Facebook</strong></a>
-                    <a class="bg-gray-100 dark:bg-gray-700 h-12 flex items-center justify-center gap-3 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-black hover:text-white transition" href="#!"><span class="ph ph-google-logo text-[#FF4B26] text-2xl"></span><strong class="text-sm">Google</strong></a>
-                    <a class="bg-gray-100 dark:bg-gray-700 h-12 flex items-center justify-center gap-3 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-black hover:text-white transition" href="#!"><span class="ph ph-x-logo text-2xl"></span><strong class="text-sm">Twitter</strong></a>
-                </div>
-            </form>
+                    <div class="relative text-center py-4">
+                        <span class="px-4 bg-white text-gray-500 text-sm">or log in with</span>
+                        <div class="absolute top-1/2 left-0 w-full h-px bg-gray-300 -z-10"></div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-3 gap-3 social-login">
+                        <a href="{{ route('auth.google') }}" class="py-2 flex items-center justify-center gap-2"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo"><strong>Google</strong></a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</section>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Password Toggle Visibility ---
+        document.querySelectorAll('.password-toggle-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('input');
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                this.classList.toggle('ph-eye');
+                this.classList.toggle('ph-eye-slash');
+            });
+        });
 
-        <div class="menu_mobile">
-            <button class="menu_mobile_close flex items-center justify-center absolute top-5 left-5 w-8 h-8 rounded-full bg-surface">
-                <span class="ph-bold ph-x"></span>
-            </button>
-            <div class="heading flex items-center justify-center mt-5">
-                <a href="index-2.html" class="logo">
-                    <img src="assets/images/logo.png" alt="logo" class="h-8" />
-                </a>
-            </div>
-            <form class="form-search relative mt-4 mx-5">
-                <button class="absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer">
-                    <i class="ph ph-magnifying-glass text-xl block"></i>
-                </button>
-                <input type="text" placeholder="What are you looking for?" class="h-12 rounded-lg border border-line text-sm w-full pl-10 pr-4" required />
-            </form>
-            <div class="mt-4">
-                <ul class="nav_mobile">
-                    <li class="nav_item py-2">
-                        <a href="#!" class="text-xl font-semibold flex items-center justify-between">
-                            Homepages
-                            <span class="text-right">
-                                <i class="ph ph-caret-right text-xl"></i>
-                            </span>
-                        </a>
-                        <div class="sub_nav_mobile">
-                            <button class="back_btn flex items-center gap-3">
-                                <i class="ph ph-caret-left text-xl"></i>
-                                Back
-                            </button>
-                            <div class="list-nav-item w-full pt-2 pb-6">
-                                <ul>
-                                    <li class="nav_item"><a href="index-2.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 01 </a></li>
-                                    <li class="nav_item"><a href="freelancer2.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 02 </a></li>
-                                    <li class="nav_item"><a href="freelancer3.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 03 </a></li>
-                                    <li class="nav_item"><a href="freelancer4.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 04 </a></li>
-                                    <li class="nav_item"><a href="freelancer5.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 05 </a></li>
-                                    <li class="nav_item"><a href="freelancer6.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 06 </a></li>
-                                    <li class="nav_item"><a href="freelancer7.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 07 </a></li>
-                                    <li class="nav_item"><a href="freelancer8.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 08 </a></li>
-                                    <li class="nav_item"><a href="jobs9.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Jobs 09 </a></li>
-                                    <li class="nav_item"><a href="jobs10.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Jobs 10 </a></li>
-                                    <li class="nav_item"><a href="jobs11.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Jobs 11 </a></li>
-                                    <li class="nav_item"><a href="jobs12.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Jobs 12 </a></li>
-                                    <li class="nav_item"><a href="rtl13.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home RTL 13 </a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav_item py-2">
-                        <a href="#!" class="text-xl font-semibold flex items-center justify-between">
-                            For Candidates
-                            <span class="text-right"><i class="ph ph-caret-right text-xl"></i></span>
-                        </a>
-                        <div class="sub_nav_mobile">
-                            <button class="back_btn flex items-center gap-3"><i class="ph ph-caret-left text-xl"></i> Back </button>
-                            <div class="list-nav-item w-full pt-2 pb-6">
-                                <ul>
-                                    <li class="nav_item"><a href="#!" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize">Browse jobs <span class="text-right"><i class="ph ph-caret-right text-xl"></i></span></a>
-                                        <div class="sub_nav_mobile2">
-                                            <button class="back_btn flex items-center gap-3"><i class="ph ph-caret-left text-xl"></i> Back</button>
-                                            <div class="list-nav-item w-full pt-2 pb-6">
-                                                <ul>
-                                                    <li class="nav_item"><a href="jobs-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs default </a></li>
-                                                    <li class="nav_item"><a href="jobs-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs grid </a></li>
-                                                    <li class="nav_item"><a href="jobs-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs list </a></li>
-                                                    <li class="nav_item"><a href="jobs-top-map.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs top map </a></li>
-                                                    <li class="nav_item"><a href="jobs-half-map-grid1.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs half map grid 1 </a></li>
-                                                    <li class="nav_item"><a href="jobs-half-map-grid2.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs half map grid 2 </a></li>
-                                                    <li class="nav_item"><a href="jobs-fullwidth.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs fullwidth </a></li>
-                                                    <li class="nav_item"><a href="jobs-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs detail 1 </a></li>
-                                                    <li class="nav_item"><a href="jobs-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs detail 2 </a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav_item"><a href="#!" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize">Browse Projects <span class="text-right"><i class="ph ph-caret-right text-xl"></i></span></a>
-                                        <div class="sub_nav_mobile2">
-                                            <button class="back_btn flex items-center gap-3"><i class="ph ph-caret-left text-xl"></i> Back</button>
-                                            <div class="list-nav-item w-full pt-2 pb-6">
-                                                <ul>
-                                                    <li class="nav_item"><a href="project-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> project default </a></li>
-                                                    <li class="nav_item"><a href="project-grid-3col.html" class="inline-block text-xl font-semibold py-2 capitalize"> project grid 3 columns </a></li>
-                                                    <li class="nav_item"><a href="project-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> project list </a></li>
-                                                    <li class="nav_item"><a href="project-top-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> project top map grid </a></li>
-                                                    <li class="nav_item"><a href="project-top-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> project top map list </a></li>
-                                                    <li class="nav_item"><a href="project-half-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> project half map grid </a></li>
-                                                    <li class="nav_item"><a href="project-half-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> project half map list </a></li>
-                                                    <li class="nav_item"><a href="project-fullwidth.html" class="inline-block text-xl font-semibold py-2 capitalize"> project fullwidth </a></li>
-                                                    <li class="nav_item"><a href="project-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> project detail 1 </a></li>
-                                                    <li class="nav_item"><a href="project-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> project detail 2 </a></li>
-                                                    <li class="nav_item"><a href="project-detail3.html" class="inline-block text-xl font-semibold py-2 capitalize"> project detail 3 </a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav_item"><a href="#!" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize">Browse Employer <span class="text-right"><i class="ph ph-caret-right text-xl"></i></span></a>
-                                        <div class="sub_nav_mobile2">
-                                            <button class="back_btn flex items-center gap-3"><i class="ph ph-caret-left text-xl"></i> Back</button>
-                                            <div class="list-nav-item w-full pt-2 pb-6">
-                                                <ul>
-                                                    <li class="nav_item"><a href="employers-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers default </a></li>
-                                                    <li class="nav_item"><a href="employers-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers grid </a></li>
-                                                    <li class="nav_item"><a href="employers-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers list </a></li>
-                                                    <li class="nav_item"><a href="employers-sidebar-grid-3cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers sidebar grid 3 cols </a></li>
-                                                    <li class="nav_item"><a href="employers-sidebar-grid-2cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers sidebar grid 2 cols </a></li>
-                                                    <li class="nav_item"><a href="employers-sidebar-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers sidebar list </a></li>
-                                                    <li class="nav_item"><a href="employers-top-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers top map grid </a></li>
-                                                    <li class="nav_item"><a href="employers-top-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers top map list </a></li>
-                                                    <li class="nav_item"><a href="employers-half-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers half map grid </a></li>
-                                                    <li class="nav_item"><a href="employers-half-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers half map list </a></li>
-                                                    <li class="nav_item"><a href="employers-fullwidth.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers fullwidth </a></li>
-                                                    <li class="nav_item"><a href="employers-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers detail 1 </a></li>
-                                                    <li class="nav_item"><a href="employers-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers detail 2 </a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav_item"><a href="become-seller.html" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize"> Become a seller </a></li>
-                                    <li class="nav_item"><a href="candidates-dashboard.html" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize"> Candidates Dashboard </a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav_item py-2">
-                        <a href="#!" class="text-xl font-semibold flex items-center justify-between">For Employers <span class="text-right"><i class="ph ph-caret-right text-xl"></i></span></a>
-                        <div class="sub_nav_mobile">
-                            <button class="back_btn flex items-center gap-3"><i class="ph ph-caret-left text-xl"></i> Back</button>
-                            <div class="list-nav-item w-full pt-2 pb-6">
-                                <ul>
-                                    <li class="nav_item"><a href="#!" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize">Browse services <span class="text-right"><i class="ph ph-caret-right text-xl"></i></span></a>
-                                        <div class="sub_nav_mobile2">
-                                            <button class="back_btn flex items-center gap-3"><i class="ph ph-caret-left text-xl"></i> Back</button>
-                                            <div class="list-nav-item w-full pt-2 pb-6">
-                                                <ul>
-                                                    <li class="nav_item"><a href="services-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> services default </a></li>
-                                                    <li class="nav_item"><a href="services-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> services grid </a></li>
-                                                    <li class="nav_item"><a href="services-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> services list </a></li>
-                                                    <li class="nav_item"><a href="services-sidebar-grid-3cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> services sidebar grid 3 cols </a></li>
-                                                    <li class="nav_item"><a href="services-sidebar-grid-2cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> services sidebar grid 2 cols </a></li>
-                                                    <li class="nav_item"><a href="services-sidebar-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> services sidebar list </a></li>
-                                                    <li class="nav_item"><a href="services-fullwidth-grid-5cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> services fullwidth grid 5 cols </a></li>
-                                                    <li class="nav_item"><a href="services-fullwidth-grid-4cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> services fullwidth grid 4 cols </a></li>
-                                                    <li class="nav_item"><a href="services-fullwidth-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> services fullwidth list </a></li>
-                                                    <li class="nav_item"><a href="services-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> services detail 1 </a></li>
-                                                    <li class="nav_item"><a href="services-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> services detail 2 </a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav_item"><a href="#!" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize">Browse candidates <span class="text-right"><i class="ph ph-caret-right text-xl"></i></span></a>
-                                        <div class="sub_nav_mobile2">
-                                            <button class="back_btn flex items-center gap-3"><i class="ph ph-caret-left text-xl"></i> Back</button>
-                                            <div class="list-nav-item w-full pt-2 pb-6">
-                                                <ul>
-                                                    <li class="nav_item"><a href="candidates-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates default </a></li>
-                                                    <li class="nav_item"><a href="candidates-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates grid </a></li>
-                                                    <li class="nav_item"><a href="candidates-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates list </a></li>
-                                                    <li class="nav_item"><a href="candidates-sidebar-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates sidebar grid </a></li>
-                                                    <li class="nav_item"><a href="candidates-sidebar-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates sidebar list </a></li>
-                                                    <li class="nav_item"><a href="candidates-top-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates top map grid </a></li>
-                                                    <li class="nav_item"><a href="candidates-top-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates top map list </a></li>
-                                                    <li class="nav_item"><a href="candidates-half-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates half map grid </a></li>
-                                                    <li class="nav_item"><a href="candidates-half-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates half map list </a></li>
-                                                    <li class="nav_item"><a href="candidates-fullwidth-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates fullwidth grid </a></li>
-                                                    <li class="nav_item"><a href="candidates-fullwidth-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates fullwidth list </a></li>
-                                                    <li class="nav_item"><a href="candidates-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates detail 1 </a></li>
-                                                    <li class="nav_item"><a href="candidates-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates detail 2 </a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav_item"><a href="become-buyer.html" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize"> Become a buyer </a></li>
-                                    <li class="nav_item"><a href="employers-dashboard.html" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize"> employer Dashboard </a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav_item py-2">
-                        <a href="#!" class="text-xl font-semibold flex items-center justify-between">Blogs <span class="text-right"><i class="ph ph-caret-right text-xl"></i></span></a>
-                        <div class="sub_nav_mobile">
-                            <button class="back_btn flex items-center gap-3"><i class="ph ph-caret-left text-xl"></i> Back</button>
-                            <div class="list-nav-item w-full pt-2 pb-6">
-                                <ul>
-                                    <li class="nav_item"><a href="blog-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> Blog default </a></li>
-                                    <li class="nav_item"><a href="blog-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> Blog grid </a></li>
-                                    <li class="nav_item"><a href="blog-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> Blog list </a></li>
-                                    <li class="nav_item"><a href="blog-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> Blog detail 1 </a></li>
-                                    <li class="nav_item"><a href="blog-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> Blog detail 2 </a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav_item py-2">
-                        <a href="#!" class="text-xl font-semibold flex items-center justify-between">Pages <span class="text-right"><i class="ph ph-caret-right text-xl"></i></span></a>
-                        <div class="sub_nav_mobile">
-                            <button class="back_btn flex items-center gap-3"><i class="ph ph-caret-left text-xl"></i> Back</button>
-                            <div class="list-nav-item w-full pt-2 pb-6">
-                                <ul>
-                                    <li class="nav_item"><a href="about1.html" class="inline-block text-xl font-semibold py-2 capitalize"> About Us 1 </a></li>
-                                    <li class="nav_item"><a href="about2.html" class="inline-block text-xl font-semibold py-2 capitalize"> About Us 2 </a></li>
-                                    <li class="nav_item"><a href="pricing.html" class="inline-block text-xl font-semibold py-2 capitalize"> Pricing Plan </a></li>
-                                    <li class="nav_item"><a href="contact1.html" class="inline-block text-xl font-semibold py-2 capitalize"> Contact Us 1 </a></li>
-                                    <li class="nav_item"><a href="contact2.html" class="inline-block text-xl font-semibold py-2 capitalize"> Contact Us 2 </a></li>
-                                    <li class="nav_item"><a href="faqs.html" class="inline-block text-xl font-semibold py-2 capitalize"> Faqs </a></li>
-                                    <li class="nav_item"><a href="term-of-use.html" class="inline-block text-xl font-semibold py-2 capitalize"> Terms of use </a></li>
-                                    <li class="nav_item"><a href="error-404.html" class="inline-block text-xl font-semibold py-2 capitalize"> Error 404 </a></li>
-                                    <li class="nav_item"><a href="login.html" class="inline-block text-xl font-semibold py-2 capitalize active"> Login </a></li>
-                                    <li class="nav_item"><a href="register.html" class="inline-block text-xl font-semibold py-2 capitalize"> Register </a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <script src="{{ asset('assets/js/jquery.min.js')}}"></script>
-        <script src="{{ asset('assets/js/phosphor-icons.js')}}"></script>
-        <script src="{{ asset('assets/js/slick.min.js')}}"></script>
-        <script src="{{ asset('assets/js/leaflet.js')}}"></script>
-        <script src="{{ asset('assets/js/swiper-bundle.min.js')}}"></script>
-        <script src="{{ asset('assets/js/main.js')}}"></script>
-    </body>
-
+        // --- Form Submission Loading State ---
+        const loginForm = document.getElementById('login-form');
+        const submitButton = document.getElementById('submit-button');
+        if(loginForm && submitButton) {
+            loginForm.addEventListener('submit', function() {
+                submitButton.classList.add('loading');
+                submitButton.disabled = true;
+            });
+        }
+    });
+    </script>
+</body>
 </html>

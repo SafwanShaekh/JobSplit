@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\WelcomeNotification;
 
 class RegisterController extends Controller
 {
@@ -33,7 +34,10 @@ class RegisterController extends Controller
         'email' => $request->email,
         'phone' => $request->phone,
         'password' => Hash::make($request->password),
+        
     ]);
+        // Send Welcome Notification
+        $user->notify(new WelcomeNotification($user));
 
     Auth::login($user);
 

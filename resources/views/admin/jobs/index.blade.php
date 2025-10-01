@@ -185,13 +185,13 @@
         </table>
     </div>
     
-    <div class="d-flex justify-content-between align-items-center mt-4">
+    <!-- <div class="d-flex justify-content-between align-items-center mt-4">
         <div class="pagination-info">
             Showing {{ $jobs->firstItem() }} to {{ $jobs->lastItem() }} of {{ $jobs->total() }} entries
         </div>
         <div>
             {{ $jobs->links() }}
-        </div>
+        </div> -->
     </div>
 </div>
 

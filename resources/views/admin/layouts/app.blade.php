@@ -181,6 +181,21 @@
             box-shadow: 0 4px 10px var(--badge-shadow-color);
             animation: pulse-red 2s infinite cubic-bezier(0.66, 0, 0, 1);
         }
+
+                /* CONTACT NOTIFICATION BADGE KI STYLING */
+        #contact-badge {
+            /* Saari styling complaints-badge jaisi hi hai */
+            background: linear-gradient(45deg, var(--badge-bg-start), var(--badge-bg-end)) !important;
+            color: var(--badge-text-color) !important;
+            font-weight: 600;
+            padding: .35em .65em;
+            border-radius: 50rem;
+            min-width: 25px;
+            text-align: center;
+            line-height: 1;
+            box-shadow: 0 4px 10px var(--badge-shadow-color);
+            animation: pulse-red 2s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
     </style>
     @stack('styles')
 </head>
@@ -198,8 +213,14 @@
                 </a>
                 <a href="{{ route('admin.profile') }}" class="list-group-item"><i class="fas fa-user-circle fa-fw me-2"></i>Profile</a>
                 <a href="{{ route('admin.reports.index') }}" class="list-group-item"><i class="fas fa-file-alt fa-fw me-2"></i>Reports</a>
+                <a href="{{ route('admin.contact.index') }}" class="list-group-item">
+                    <i class="fas fa-envelope fa-fw me-2"></i>
+                        Contact Details
+                    <span class="badge" id="contact-badge" style="display: none;">0</span>
+                </a>            
             </div>
-            <div class="mt-auto"> <form method="POST" action="{{ route('admin.logout') }}">
+            <div class="mt-auto"> 
+                <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
                     <button type="submit" class="btn btn-sm logout-btn"><i class="fas fa-sign-out-alt fa-fw me-2"></i>Logout</button>
                 </form>
@@ -224,6 +245,43 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+    // URL ko is tarah se define karna sab se behtar hai
+const contactCountUrl = '{{ route("admin.contact.count") }}';
+const contactIndexUrl = '{{ route("admin.contact.index") }}'; // Yeh Nayi Line Hai
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Contact messages ka count fetch karna
+    function fetchContactMessagesCount() {
+        
+        // --- YEH RAHA FIX ---
+        // Pehle check karein ke user contact page par to nahi hai
+        if (window.location.href === contactIndexUrl) {
+            const badge = document.getElementById('contact-badge');
+            if (badge) {
+                badge.textContent = '0';
+                badge.style.display = 'none';
+            }
+            return; // Function ko yahin rok dein, server se puchne ki zaroorat nahi
+        }
+
+        // Agar doosre page par hai, tab server se count fetch karein
+        fetch(contactCountUrl)
+        .then(response => response.ok ? response.json() : Promise.reject('Network response was not ok.'))
+        .then(data => {
+            const badge = document.getElementById('contact-badge');
+            if(badge) {
+                badge.textContent = data.count;
+                badge.style.display = data.count > 0 ? 'inline-block' : 'none';
+            }
+        }).catch(error => console.error('Error fetching contact messages:', error));
+    }
+
+    // Page load par aur har 10 second baad count fetch karega
+    fetchContactMessagesCount();
+    setInterval(fetchContactMessagesCount, 10000); 
+});
+
         // URL ko is tarah se define karna sab se behtar hai
         const complaintsCountUrl = '{{ url("admin/complaints/count") }}';
         
@@ -247,7 +305,7 @@
                 }).catch(error => console.error('Error fetching complaints:', error));
             }
             fetchComplaintsCount();
-            setInterval(fetchComplaintsCount, 30000); // Har 30 second baad check karega
+            setInterval(fetchComplaintsCount, 10000); // Har 10 second baad check karega
 
             // --- THEME TOGGLE SCRIPT ---
             const themeToggle = document.getElementById('theme-toggle');

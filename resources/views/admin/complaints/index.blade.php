@@ -100,12 +100,14 @@
     .user-info { display: flex; align-items: center; gap: 1rem; }
     .user-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--accent-blue); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; text-transform: uppercase; }
     
-    .complaint-message {
+    .complaint-details strong { color: var(--current-text-primary); }
+    .complaint-details .complaint-message {
         max-width: 400px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         color: var(--current-text-secondary);
+        font-size: 0.9rem;
     }
     
     /* === STATUS BADGES === */
@@ -115,18 +117,13 @@
     }
     .status-resolved { background-color: rgba(28, 200, 138, 0.2); color: #1cc88a; }
     .status-pending { background-color: rgba(246, 194, 62, 0.2); color: #f6c23e; }
+    /* NAYA STATUS BADGE ADD KIYA GAYA HAI */
+    .status-in-progress { background-color: rgba(90, 192, 222, 0.2); color: #5ac0de; }
 
     /* === PAGINATION STYLING === */
     .pagination .page-link { background-color: transparent; border-color: var(--current-border-color); color: var(--current-text-secondary); margin: 0 2px; border-radius: 0.375rem; }
-    .pagination .page-link:hover { background-color: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
-    .pagination .page-item.active .page-link { background-color: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
-    .pagination .page-item.disabled .page-link { color: #6c757d; border-color: var(--current-border-color); }
+    .pagination .page-link:hover, .pagination .page-item.active .page-link { background-color: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
 
-    /* Custom Modal */
-    .modal-content { background-color: var(--current-card-bg); color: var(--current-text-primary); border: 1px solid var(--current-border-color); }
-    .modal-header, .modal-footer { border-color: var(--current-border-color); }
-    .btn-close { filter: brightness(0) invert(1); }
-    html[data-theme='light'] .btn-close { filter: none; }
 </style>
 
 <div class="data-container">
@@ -134,7 +131,7 @@
     <div class="table-header">
         <h1>Complaints Management</h1>
         <form action="{{ route('admin.complaints.index') }}" method="GET" class="search-form d-flex gap-2">
-            <input type="text" name="search" class="form-control" placeholder="Search by user or message..." value="{{ request('search') }}">
+            <input type="text" name="search" class="form-control" placeholder="Search by user, subject, or message..." value="{{ request('search') }}">
             <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
         </form>
     </div>
@@ -148,7 +145,7 @@
             <thead>
                 <tr>
                     <th>User</th>
-                    <th>Complaint Message</th>
+                    <th>Complaint Details</th>
                     <th>Status</th>
                     <th class="text-end">Actions</th>
                 </tr>
@@ -163,24 +160,36 @@
                             </div>
                             <div>
                                 <div class="fw-bold">{{ $complaint->user->name ?? 'N/A' }}</div>
-                                <div class="text-muted">{{ $complaint->user->email ?? 'User deleted' }}</div>
+                                <div class="text-muted small">{{ $complaint->user->email ?? 'User deleted' }}</div>
                             </div>
                         </div>
                     </td>
                     <td>
-                        <div class="complaint-message" title="{{ $complaint->message }}">
-                            {{ $complaint->message }}
+                        <div class="complaint-details">
+                            <strong>{{ $complaint->subject }}</strong>
+                            <p class="complaint-message" title="{{ $complaint->message }}">{{ $complaint->message }}</p>
                         </div>
                     </td>
                     <td>
-                        <span class="status-badge status-{{ $complaint->status }}">{{ $complaint->status }}</span>
+                        {{-- NAYA STATUS CHECK ADD KIYA GAYA HAI --}}
+                        <span class="status-badge status-{{ str_replace(' ', '-', $complaint->status) }}">{{ $complaint->status }}</span>
                     </td>
                     <td class="text-end">
+                        {{-- ACTION BUTTONS KA NAYA LOGIC --}}
                         @if ($complaint->status == 'pending')
-                            <form action="{{ route('admin.complaints.resolve', $complaint) }}" method="POST">
+                            <form action="{{ route('admin.complaints.in-progress', $complaint) }}" method="POST" class="d-inline">
                                 @csrf
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    <i class="fas fa-check-circle me-1"></i> Mark as Resolved
+                                <button type="submit" class="btn btn-info btn-sm" title="Mark as In Progress">
+                                    <i class="fas fa-spinner me-1"></i> In Progress
+                                </button>
+                            </form>
+                        @endif
+
+                        @if ($complaint->status != 'resolved')
+                            <form action="{{ route('admin.complaints.resolve', $complaint) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-success btn-sm" title="Mark as Resolved">
+                                    <i class="fas fa-check-circle me-1"></i> Resolve
                                 </button>
                             </form>
                         @else
@@ -197,9 +206,9 @@
         </table>
     </div>
     
-    <div class="d-flex justify-content-end mt-4">
+    <!-- <div class="d-flex justify-content-end mt-4">
         {{ $complaints->appends(request()->query())->links() }}
-    </div>
+    </div> -->
 </div>
 
 @endsection

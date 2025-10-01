@@ -5,8 +5,7 @@ namespace App\Livewire;
 use App\Models\Conversation;
 use App\Models\Message;
 use Livewire\Component;
-use Livewire\Attributes\On; // <-- 1. Add this use statement at the top
-
+use Livewire\Attributes\On;
 
 class Chat extends Component
 {
@@ -17,7 +16,6 @@ class Chat extends Component
 
     public function mount()
     {
-        // ✅ 1. Order conversations by the most recently updated
         $this->conversations = Conversation::where('sender_id', auth()->id())
                                           ->orWhere('receiver_id', auth()->id())
                                           ->orderBy('updated_at', 'desc')
@@ -28,9 +26,8 @@ class Chat extends Component
     {
         $this->selectedConversation = Conversation::findOrFail($conversationId);
         
-        // ✅ 3. Mark messages as read when conversation is opened
         Message::where('conversation_id', $this->selectedConversation->id)
-                ->where('user_id', '!=', auth()->id()) // Only mark messages from the other user
+                ->where('user_id', '!=', auth()->id())
                 ->update(['is_read' => true]);
 
         $this->mobileView = 'chat';
@@ -42,7 +39,6 @@ class Chat extends Component
         $this->mobileView = 'list';
     }
     
-    // Your new sendMessage function
     public function sendMessage()
     {
         if (empty($this->newMessage) || !$this->selectedConversation) {
@@ -54,20 +50,34 @@ class Chat extends Component
             'user_id' => auth()->id(),
             'body' => $this->newMessage,
         ]);
-
+        
         $this->selectedConversation->touch();
         $this->newMessage = '';
-
-        // Explicitly re-fetch the conversations list
         $this->conversations = Conversation::where('sender_id', auth()->id())
                                           ->orWhere('receiver_id', auth()->id())
                                           ->orderBy('updated_at', 'desc')
                                           ->get();
-
-        // ✅ Naya event dispatch karein taake browser ko pata chale
         $this->dispatch('scroll-to-bottom');
     }
 
+    #[On('sendLocation')]
+    public function sendLocation($latitude, $longitude)
+    {
+        if ($this->selectedConversation) {
+            $url = "https://maps.google.com/?q={$latitude},{$longitude}";
+            Message::create([
+                'conversation_id' => $this->selectedConversation->id,
+                'user_id' => auth()->id(),
+                'body' => $url,
+            ]);
+            $this->selectedConversation->touch();
+            $this->conversations = Conversation::where('sender_id', auth()->id())
+                                              ->orWhere('receiver_id', auth()->id())
+                                              ->orderBy('updated_at', 'desc')
+                                              ->get();
+            $this->dispatch('scroll-to-bottom');
+        }
+    }
 
     public function render()
     {
@@ -83,29 +93,5 @@ class Chat extends Component
         return view('livewire.chat', [
             'messages' => $messages
         ]);
-    }
-
-     #[On('sendLocation')]
-    public function sendLocation($latitude, $longitude)
-    {
-        if ($this->selectedConversation) {
-            // Create a more standard Google Maps URL
-            $url = "https://maps.google.com/?q={$latitude},{$longitude}";
-        
-            // Create and save the message
-            Message::create([
-                'conversation_id' => $this->selectedConversation->id,
-                'user_id' => auth()->id(),
-                'body' => $url,
-            ]);
-        
-            $this->selectedConversation->touch();
-            $this->conversations = Conversation::where('sender_id', auth()->id())
-                                              ->orWhere('receiver_id', auth()->id())
-                                              ->orderBy('updated_at', 'desc')
-                                              ->get();
-        
-            $this->dispatch('scroll-to-bottom');
-        }
     }
 }

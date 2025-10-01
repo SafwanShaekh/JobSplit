@@ -54,5 +54,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin.auth' => \App\Http\Middleware\AdminAuthenticate::class, // Yeh line add karein
+        'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class, // <-- ADD THIS LINE
+
     ];
 }

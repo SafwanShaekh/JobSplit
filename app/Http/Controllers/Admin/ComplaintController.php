@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Complaint;
+use App\Notifications\ComplaintInProgressNotification;
 use App\Notifications\ComplaintResolvedNotification; // Ise add karein
 use Illuminate\Http\Request;
 use Carbon\Carbon; // Ise add karein
@@ -30,6 +31,17 @@ class ComplaintController extends Controller
             ->withQueryString();
 
         return view('admin.complaints.index', compact('complaints'));
+    }
+
+    public function markAsInProgress(Complaint $complaint)
+    {
+        $complaint->status = 'in progress';
+        $complaint->save();
+
+        // User ko 'in progress' ki notification bhejें
+        $complaint->user->notify(new ComplaintInProgressNotification($complaint));
+
+        return back()->with('success', 'Complaint marked as In Progress and user notified.');
     }
 
     /**

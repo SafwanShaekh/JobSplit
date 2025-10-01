@@ -1,2687 +1,807 @@
-<!DOCTYPE html>
-<html lang="en">
-    
-<!-- Mirrored from freelanhub.vercel.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Aug 2025 10:55:41 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
-<head>
-    <link rel="stylesheet" href="{{ asset('assets/bootstrap.min.css') }}">
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="FreelanHub - Job Board & Freelance Marketplace" />
-        <title>FreelanHub - Job Board & Freelance Marketplace</title>
-        <link rel="shortcut icon" href="/public/assets/images/fav.png" type="image/x-icon" />
-        <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css')}}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/leaflet.css')}}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/slick.css')}}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}" />
-        <link rel="stylesheet" href="{{ asset('dist/output-tailwind.css')}}" />
-        <link rel="stylesheet" href="{{ asset('dist/output-scss.css')}}" />
-    </head>
+@extends('layouts.public')
 
-    <body>
-        <!-- Header -->
-        <header id="header" class="header relative">
-            <div class="header_inner absolute flex items-center justify-between top-0 left-0 right-0 z-[1] w-full sm:h-20 h-16 min-[1600px]:px-15 lg:px-9 px-4 border-b border-light">
-                <div class="left flex items-center gap-15 max-[1600px]:gap-6 h-full">
-                    <h1>
-                        <a href="index-2.html">
-                            <img src="assets/images/logo-white.png" alt="logo-white" class="logo-white md:h-[42px] h-8 w-auto" />
-                            <img src="assets/images/logo.png" alt="logo" class="logo-black md:h-[42px] h-8 w-auto hidden" />
-                        </a>
-                    </h1>
-                    <div class="category_block flex items-center relative h-full">
-                        <button class="category_btn max-2xl:hidden flex items-center gap-1 px-3 py-2 rounded-lg bg-light text-white duration-300">
-                            <span class="ph ph-stack text-2xl text-primary"></span>
-                            <span>Categories</span>
-                        </button>
-                        <div class="category_nav flex">
-                            <ul class="category_list flex-shrink-0 w-[300px] h-full py-5 border-r border-line" role="tablist">
-                                <li class="category_item w-full">
-                                    <button class="category_link tab_btn flex items-center gap-3 w-full px-7 py-4 duration-300 active" id="category_tab01" role="tab" aria-controls="category_01" aria-selected="true">
-                                        <span class="ph-fill ph-desktop text-2xl"></span>
-                                        <strong class="category_name text-title">Graphic & Design</strong>
-                                    </button>
-                                </li>
-                                <li class="category_item w-full">
-                                    <button class="category_link tab_btn flex items-center gap-3 w-full px-7 py-4 duration-300" id="category_tab02" role="tab" aria-controls="category_02" aria-selected="false">
-                                        <span class="ph-fill ph-megaphone-simple text-2xl"></span>
-                                        <strong class="category_name text-title">Digital Marketing</strong>
-                                    </button>
-                                </li>
-                                <li class="category_item w-full">
-                                    <button class="category_link tab_btn flex items-center gap-3 w-full px-7 py-4 duration-300" id="category_tab03" role="tab" aria-controls="category_03" aria-selected="false">
-                                        <span class="ph-fill ph-brackets-angle text-2xl"></span>
-                                        <strong class="category_name text-title">Programming & Tech</strong>
-                                    </button>
-                                </li>
-                                <li class="category_item w-full">
-                                    <button class="category_link tab_btn flex items-center gap-3 w-full px-7 py-4 duration-300" id="category_tab04" role="tab" aria-controls="category_04" aria-selected="false">
-                                        <span class="ph-fill ph-pencil-simple-line text-2xl"></span>
-                                        <strong class="category_name text-title">Wrting & Translation</strong>
-                                    </button>
-                                </li>
-                                <li class="category_item w-full">
-                                    <button class="category_link tab_btn flex items-center gap-3 w-full px-7 py-4 duration-300" id="category_tab05" role="tab" aria-controls="category_05" aria-selected="false">
-                                        <span class="ph-fill ph-video text-2xl"></span>
-                                        <strong class="category_name text-title">Videos & Animation</strong>
-                                    </button>
-                                </li>
-                                <li class="category_item w-full">
-                                    <button class="category_link tab_btn flex items-center gap-3 w-full px-7 py-4 duration-300" id="category_tab06" role="tab" aria-controls="category_06" aria-selected="false">
-                                        <span class="ph-fill ph-music-notes text-2xl"></span>
-                                        <strong class="category_name text-title">Mussic & Audio</strong>
-                                    </button>
-                                </li>
-                                <li class="category_item w-full">
-                                    <button class="category_link tab_btn flex items-center gap-3 w-full px-7 py-4 duration-300" id="category_tab07" role="tab" aria-controls="category_07" aria-selected="false">
-                                        <span class="ph-fill ph-head-circuit text-2xl"></span>
-                                        <strong class="category_name text-title">AI Services</strong>
-                                    </button>
-                                </li>
-                                <li class="category_item w-full">
-                                    <button class="category_link tab_btn flex items-center gap-3 w-full px-7 py-4 duration-300" id="category_tab08" role="tab" aria-controls="category_08" aria-selected="false">
-                                        <span class="ph-fill ph-camera text-2xl"></span>
-                                        <strong class="category_name text-title">Photography</strong>
-                                    </button>
-                                </li>
-                            </ul>
-                            <div id="category_01" class="category_list_detail tab_list grid grid-cols-4 gap-y-10 w-full h-fit py-8 px-10 active" role="tabpanel" aria-labelledby="category_tab01" aria-hidden="false">
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Websites</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Website Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Website Maintenance</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">WordPress</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Shopify</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Application</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Web Applications</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Game Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Chatbot Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Desktop Applications</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Software</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Software Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">APIs & Integrations</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">AI Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Plugins Development</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Mobile Apps</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Mobile App Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Cross-platform Apps</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Android App Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">IOS App Development</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Website Platforms</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Wix</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Webflow</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">GoDaddy</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">WooCommerce</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">cybersecurity</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Support & IT</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Cloud Computing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">DevOps Engineering</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Cybersecurity</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Miscellaneous</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Blockchain & Solutions</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Cryptocurrencies</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Electronics Engineering</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Online Coding Lessons</a>
-                                </div>
-                            </div>
-                            <div id="category_02" class="category_list_detail tab_list grid grid-cols-4 gap-y-10 w-full h-fit py-8 px-10" role="tabpanel" aria-labelledby="category_tab02" aria-hidden="true">
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">SEO</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">On-Page SEO</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Off-Page SEO</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Technical SEO</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Local SEO</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Content Marketing</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Content Strategy</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Blog Writing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Video Content</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Infographic Design</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Social Media Marketing</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Facebook Marketing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Instagram Marketing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">LinkedIn Marketing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Twitter Marketing</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Email Marketing</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Email Campaigns</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Newsletter Design</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Automation</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Drip Campaigns</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Paid Advertising</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Google Ads</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Facebook Ads</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Instagram Ads</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">LinkedIn Ads</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Analytics</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Google Analytics</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Conversion Tracking</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Data Analysis</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Reporting</a>
-                                </div>
-                            </div>
-                            <div id="category_03" class="category_list_detail tab_list grid grid-cols-4 gap-y-10 w-full h-fit py-8 px-10" role="tabpanel" aria-labelledby="category_tab03" aria-hidden="true">
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Web Development</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Website Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Website Maintenance</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">WordPress</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Shopify</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Mobile Development</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Mobile App Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Cross-platform Apps</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Android App Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">iOS App Development</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Software Development</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Software Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">APIs & Integrations</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">AI Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Plugins Development</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Game Development</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Game Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Game Design</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">AR/VR Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Mobile Game Development</a>
-                                </div>
-                            </div>
-                            <div id="category_04" class="category_list_detail tab_list grid grid-cols-4 gap-y-10 w-full h-fit py-8 px-10" role="tabpanel" aria-labelledby="category_tab04" aria-hidden="true">
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Articles & Blog Posts</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">SEO Writing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Blog Posts</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Website Content</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Article Writing</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Technical Writing</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">User Manuals</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Technical Documentation</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Research Papers</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">White Papers</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Translation Services</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Document Translation</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Website Translation</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Legal Translation</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Medical Translation</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Creative Writing</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Scriptwriting</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Storytelling</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Poetry</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Ghostwriting</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Editing & Proofreading</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Proofreading</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Copy Editing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Content Editing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Editorial Feedback</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Business Writing</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Business Plans</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Proposals</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Reports</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Presentations</a>
-                                </div>
-                            </div>
-                            <div id="category_05" class="category_list_detail tab_list grid grid-cols-4 gap-y-10 w-full h-fit py-8 px-10" role="tabpanel" aria-labelledby="category_tab05" aria-hidden="true">
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Video Editing</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Post-Production</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Color Correction</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Video Stitching</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Sound Design</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Animation</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">2D Animation</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">3D Animation</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Motion Graphics</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Stop Motion</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Video Production</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Filming</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Directing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Scriptwriting</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Storyboarding</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Music Videos</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Concept Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Filming & Editing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Special Effects</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Color Grading</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Intros & Outros</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">YouTube Intros</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Logo Animation</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">End Screens</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Channel Trailers</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Live Action</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Explainer Videos</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Commercials</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Product Demos</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Corporate Videos</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Visual Effects</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Compositing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Green Screen</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Rotoscoping</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">3D Tracking</a>
-                                </div>
-                            </div>
-                            <div id="category_06" class="category_list_detail tab_list grid grid-cols-4 gap-y-10 w-full h-fit py-8 px-10" role="tabpanel" aria-labelledby="category_tab06" aria-hidden="true">
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Music Production</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Beat Making</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Remixing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Songwriting</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Jingles & Intros</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Audio Engineering</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Mixing & Mastering</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Sound Design</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Audio Editing</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Restoration & Repair</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Voice Over</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Narration</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Character Voices</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Podcast Intros</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Commercials</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Music Lessons</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Instrumental Lessons</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Vocal Coaching</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Music Theory</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Songwriting Lessons</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Jingles & Drops</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Radio Jingles</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">DJ Drops</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Podcast Intros</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">TV & Film Jingles</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Sound Effects</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Custom Sound Effects</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Foley</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Game Sound Effects</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Podcast Sound Effects</a>
-                                </div>
-                            </div>
-                            <div id="category_07" class="category_list_detail tab_list grid grid-cols-4 gap-y-10 w-full h-fit py-8 px-10" role="tabpanel" aria-labelledby="category_tab07" aria-hidden="true">
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Machine Learning</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Model Training</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Data Analysis</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Predictive Analytics</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Natural Language Processing</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">AI Development</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Chatbot Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">AI Solutions</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Custom AI Applications</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Machine Learning Algorithms</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Data Science</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Data Visualization</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Data Engineering</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Big Data Solutions</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Data Mining</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Automation</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Process Automation</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">RPA Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Automation Tools</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Workflow Automation</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Computer Vision</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Image Recognition</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Object Detection</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Facial Recognition</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Video Analysis</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Speech Recognition</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Voice Assistants</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Speech to Text</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Text to Speech</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Voice Command Systems</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">AI Consulting</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Strategy Development</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Implementation Guidance</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">AI Roadmaps</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Technical Support</a>
-                                </div>
-                            </div>
-                            <div id="category_08" class="category_list_detail tab_list grid grid-cols-4 gap-y-10 w-full h-fit py-8 px-10" role="tabpanel" aria-labelledby="category_tab08" aria-hidden="true">
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Portrait Photography</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Headshots</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Family Portraits</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Event Photography</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Fashion Photography</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Commercial Photography</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Product Photography</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Food Photography</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Real Estate Photography</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Advertising Photography</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Travel Photography</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Landscape Photography</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Cityscape Photography</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Street Photography</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Adventure Photography</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Aerial Photography</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Drone Photography</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Aerial Videography</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Real Estate Aerials</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Event Aerials</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Wedding Photography</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Engagement Photos</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Wedding Day Photos</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Bridal Portraits</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Reception Photos</a>
-                                </div>
-                                <div class="item flex flex-col gap-2.5">
-                                    <strong class="text-button">Photo Editing</strong>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Retouching</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Color Correction</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Photo Restoration</a>
-                                    <a href="jobs-default.html" class="w-fit caption1 line-before line-black">Background Removal</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="right flex items-center gap-6 h-full">
-                    <div class="navigator h-full max-[1400px]:hidden">
-                        <ul class="list flex items-center gap-5 h-full">
-                            <li class="h-full relative">
-                                <a href="#!" class="flex items-center gap-1 h-full text-white duration-300 active">
-                                    <span class="text-title relative">Homepages</span>
-                                    <span class="ph-bold ph-caret-down"></span>
-                                </a>
-                                <div class="sub_menu sub_menu_home overflow-x-hidden fixed w-full left-0 top-20 py-10 bg-white rounded-lg">
-                                    <ul class="container grid grid-cols-5 gap-5">
-                                        <li>
-                                            <a href="index-2.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md active">
-                                                <img src="assets/images/components/home1.webp" alt="home1" class="w-full rounded" />
-                                                <span>Home Freelancer 01</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="freelancer2.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home2.webp" alt="home2" class="w-full rounded" />
-                                                <span>Home Freelancer 02</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="freelancer3.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home3.webp" alt="home3" class="w-full rounded" />
-                                                <span>Home Freelancer 03</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="freelancer4.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home4.webp" alt="home4" class="w-full rounded" />
-                                                <span>Home Freelancer 04</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="freelancer5.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home5.webp" alt="home5" class="w-full rounded" />
-                                                <span>Home Freelancer 05</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="freelancer6.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home6.webp" alt="home6" class="w-full rounded" />
-                                                <span>Home Freelancer 06</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="freelancer7.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home7.webp" alt="home7" class="w-full rounded" />
-                                                <span>Home Freelancer 07</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="freelancer8.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home8.webp" alt="home8" class="w-full rounded" />
-                                                <span>Home Freelancer 08</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="jobs9.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home9.webp" alt="home9" class="w-full rounded" />
-                                                <span>Home Jobs 09</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="jobs10.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home10.webp" alt="home10" class="w-full rounded" />
-                                                <span>Home Jobs 10</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="jobs11.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home11.webp" alt="home11" class="w-full rounded" />
-                                                <span>Home Jobs 11</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="jobs12.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home12.webp" alt="home12" class="w-full rounded" />
-                                                <span>Home Jobs 12</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="rtl13.html" class="link flex flex-col items-center gap-2 text-button p-2 rounded-lg bg-white duration-300 shadow-md">
-                                                <img src="assets/images/components/home13.webp" alt="home13" class="w-full rounded" />
-                                                <span>Home RTL 13</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="h-full relative">
-                                <a href="#!" class="flex items-center gap-1 h-full text-white duration-300">
-                                    <span class="text-title relative">For Candidates</span>
-                                    <span class="ph-bold ph-caret-down"></span>
-                                </a>
-                                <div class="sub_menu absolute p-3 -left-10 w-max bg-white rounded-lg">
-                                    <ul>
-                                        <li>
-                                            <a href="#!" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300">
-                                                Browse jobs
-                                                <span class="ph-bold ph-caret-right"></span>
-                                            </a>
-                                            <div class="sub_menu_two absolute p-3 top-0 left-full z-[1] w-max bg-white rounded-lg">
-                                                <ul>
-                                                    <li>
-                                                        <a href="jobs-default.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> jobs default </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="jobs-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> jobs grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="jobs-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> jobs list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="jobs-top-map.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> jobs top map </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="jobs-half-map-grid1.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> jobs half map grid 1 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="jobs-half-map-grid2.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> jobs half map grid 2 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="jobs-fullwidth.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> jobs fullwidth </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="jobs-detail1.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> jobs detail 1 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="jobs-detail2.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> jobs detail 2 </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="#!" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300">
-                                                Browse Projects
-                                                <span class="ph-bold ph-caret-right"></span>
-                                            </a>
-                                            <div class="sub_menu_two absolute p-3 top-0 left-full z-[1] w-max bg-white rounded-lg">
-                                                <ul>
-                                                    <li>
-                                                        <a href="project-default.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> project default </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-grid-3col.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> project grid 3 columns </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> project list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-top-map-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> project top map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-top-map-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> project top map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-half-map-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> project half map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-half-map-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> project half map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-fullwidth.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> project fullwidth </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-detail1.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> project detail 1 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-detail2.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> project detail 2 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-detail3.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> project detail 3 </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="#!" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300">
-                                                Browse Employer
-                                                <span class="ph-bold ph-caret-right"></span>
-                                            </a>
-                                            <div class="sub_menu_two absolute p-3 top-0 left-full z-[1] w-max bg-white rounded-lg">
-                                                <ul>
-                                                    <li>
-                                                        <a href="employers-default.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers default </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-sidebar-grid-3cols.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers sidebar grid 3 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-sidebar-grid-2cols.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers sidebar grid 2 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-sidebar-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers sidebar list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-top-map-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers top map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-top-map-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers top map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-half-map-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers half map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-half-map-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers half map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-fullwidth.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers fullwidth </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-detail1.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers detail 1 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-detail2.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> employers detail 2 </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="become-seller.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Become a seller </a>
-                                        </li>
-                                        <li>
-                                            <a href="candidates-dashboard.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Candidates Dashboard </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="h-full relative">
-                                <a href="#!" class="flex items-center gap-1 h-full text-white duration-300">
-                                    <span class="text-title relative">For Employers</span>
-                                    <span class="ph-bold ph-caret-down"></span>
-                                </a>
-                                <div class="sub_menu absolute p-3 -left-10 w-max bg-white rounded-lg">
-                                    <ul>
-                                        <li>
-                                            <a href="#!" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300">
-                                                Browse Services
-                                                <span class="ph-bold ph-caret-right"></span>
-                                            </a>
-                                            <div class="sub_menu_two absolute p-3 top-0 left-full z-[1] w-max bg-white rounded-lg">
-                                                <ul>
-                                                    <li>
-                                                        <a href="services-default.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> services default </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> services grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> services list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-sidebar-grid-3cols.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> services sidebar grid 3 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-sidebar-grid-2cols.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> services sidebar grid 2 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-sidebar-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> services sidebar list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-fullwidth-grid-5cols.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> services fullwidth grid 5 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-fullwidth-grid-4cols.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> services fullwidth grid 4 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-fullwidth-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> services fullwidth list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-detail1.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> services detail 1 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-detail2.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> services detail 2 </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="#!" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300">
-                                                Browse Candidates
-                                                <span class="ph-bold ph-caret-right"></span>
-                                            </a>
-                                            <div class="sub_menu_two absolute p-3 top-0 left-full z-[1] w-max bg-white rounded-lg">
-                                                <ul>
-                                                    <li>
-                                                        <a href="candidates-default.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates default </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-sidebar-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates sidebar grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-sidebar-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates sidebar list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-top-map-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates top map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-top-map-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates top map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-half-map-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates half map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-half-map-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates half map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-fullwidth-grid.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates fullwidth grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-fullwidth-list.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates fullwidth list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-detail1.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates detail 1 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-detail2.html" class="link block text-button py-[11px] pl-6 pr-[45px] rounded duration-300"> candidates detail 2 </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="become-buyer.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Become a buyer </a>
-                                        </li>
-                                        <li>
-                                            <a href="employers-dashboard.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Employer Dashboard </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="h-full relative">
-                                <a href="#!" class="flex items-center gap-1 h-full text-white duration-300">
-                                    <span class="text-title relative">Blogs</span>
-                                    <span class="ph-bold ph-caret-down"></span>
-                                </a>
-                                <div class="sub_menu absolute p-3 -left-10 w-max bg-white rounded-lg">
-                                    <ul>
-                                        <li>
-                                            <a href="blog-default.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Blog default </a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-grid.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Blog grid </a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-list.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Blog list </a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-detail1.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Blog detail 1 </a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-detail2.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Blog detail 2 </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="h-full relative">
-                                <a href="#!" class="flex items-center gap-1 h-full text-white duration-300">
-                                    <span class="text-title relative">Pages</span>
-                                    <span class="ph-bold ph-caret-down"></span>
-                                </a>
-                                <div class="sub_menu absolute p-3 -left-10 w-max bg-white rounded-lg">
-                                    <ul>
-                                        <li>
-                                            <a href="about1.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> About Us 1 </a>
-                                        </li>
-                                        <li>
-                                            <a href="about2.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> About Us 2 </a>
-                                        </li>
-                                        <li>
-                                            <a href="pricing.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Pricing Plan </a>
-                                        </li>
-                                        <li>
-                                            <a href="contact1.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Contact Us 1 </a>
-                                        </li>
-                                        <li>
-                                            <a href="contact2.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Contact Us 2 </a>
-                                        </li>
-                                        <li>
-                                            <a href="faqs.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Faqs </a>
-                                        </li>
-                                        <li>
-                                            <a href="term-of-use.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Terms of use </a>
-                                        </li>
-                                        <li>
-                                            <a href="error-404.html" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Error 404 </a>
-                                        </li>
-                                        <li>
-                                            
+@section('content')
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-container">
+      <div>
+        <h1 class="hero-title">Find Your Dream Job Today</h1>
+        <p class="hero-subtitle">Discover thousands of opportunities from top companies. Your perfect career is just a click away.</p>
+                {{-- Is poore form se purane search-box ko replace karein --}}
+        <form class="search-box" action="{{ route('jobs.browse') }}" method="GET">
+            <input type="text" name="search" class="search-input" placeholder="Job title, keywords, or company">
 
-                                            <a href="{{ route('login') }}" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Login </a>
-                                        </li>
-                                        <li>
-                                            
-                                            <a href="{{ route('register') }}" class="link flex items-center justify-between gap-2 w-full text-button py-[11px] px-6 rounded duration-300"> Register </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="list_action flex items-center gap-7">
-                        <a href="become-seller.html" class="button-main bg-white text-black max-sm:hidden">Become A Seller</a>
-                        <div class="list_icon flex items-center gap-3">
-                            <a href="{{ route('login') }}" class="flex items-center gap-1 text-title text-white duration-300 hover:text-primary">
-                                <span class="ph-bold ph-user"></span>
-                                <span>Login</span>
-                            </a>
-                            <a href="{{ route('register') }}" class="flex items-center gap-1 text-title text-white duration-300 hover:text-primary">
-                                <span class="ph-bold ph-plus-circle"></span>
-                                <span>Sign up</span>
-                            </a>
-                        </div>
-                        <button class="humburger_btn min-[1400px]:hidden">
-                            <span class="ph-bold ph-list text-white text-2xl block">
-                                <span class="blind">button open menu mobile</span>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </header>
+            <select name="category" class="search-select">
+                <option value="">All Categories</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category }}">{{ $category }}</option>
+                @endforeach
+            </select>
 
-        <!-- Slider -->
-        <section class="slider">
-            <div class="slider_inner relative md:h-[700px] max-md:py-28 overflow-hidden">
-                <div class="slider_bg absolute top-0 left-0 w-full h-full z-[-1]" aria-hidden="true">
-                    <img src="assets/images/slider/slider1.webp" alt="slider1" class="w-full h-full object-cover" />
-                </div>
-                <div class="container h-full">
-                    <div class="slider_content flex flex-col items-start justify-center sm:pt-20 pt-16 md:w-[720px] w-full h-full">
-                        <h2 class="heading1 text-white animate animate_top" style="--i: 1">Find the right freelance service, right away</h2>
-                        <p class="body2 text-white mt-5 animate animate_top" style="--i: 2">Find skilled freelancers for any project. Discover top services and hire the best talent.</p>
-                        <div class="form_search z-[1] w-full md:mt-10 mt-7 animate animate_top" style="--i: 3">
-                            <form class="form_inner flex items-center justify-between max-sm:flex-wrap gap-6 gap-y-4 relative w-full p-3 rounded-lg bg-white">
-                                <div class="form_input relative w-full">
-                                    <span class="icon_search ph-bold ph-magnifying-glass absolute top-1/2 -translate-y-1/2 left-2 text-xl"></span>
-                                    <input type="text" class="input_search w-full h-full pl-10" placeholder="Job title, key words or company" required />
-                                </div>
-                                <div class="select_block flex-shrink-0 sm:pr-16 pr-7 sm:pl-6 pl-3 sm:border-l border-line">
-                                    <div class="select">
-                                        <span class="selected" data-title="All Categories">All Categories</span>
-                                        <ul class="list_option bg-white">
-                                            <li data-item="Graphic & Design">Graphic & Design</li>
-                                            <li data-item="Wrting">Wrting</li>
-                                            <li data-item="Videos">Videos</li>
-                                            <li data-item="Digital Marketing">Digital Marketing</li>
-                                        </ul>
-                                    </div>
-                                    <span class="icon_down ph ph-caret-down sm:text-2xl text-xl right-0"></span>
-                                </div>
-                                <button type="submit" class="button-main max-sm:w-1/3 text-center flex-shrink-0">Search</button>
-                            </form>
-                        </div>
-                        <div class="list_tags flex flex-wrap items-center gap-3 mt-5 animate animate_top" style="--i: 4">
-                            <strong class="text-button-sm text-white">Top Services:</strong>
-                            <a href="jobs-default.html" class="tag -small -border border-opacity-20 text-button-sm text-white hover:text-black hover:bg-white">Graphics</a>
-                            <a href="jobs-default.html" class="tag -small -border border-opacity-20 text-button-sm text-white hover:text-black hover:bg-white">Website</a>
-                            <a href="jobs-default.html" class="tag -small -border border-opacity-20 text-button-sm text-white hover:text-black hover:bg-white">Logo</a>
-                            <a href="jobs-default.html" class="tag -small -border border-opacity-20 text-button-sm text-white hover:text-black hover:bg-white">Developement</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            <button type="submit" class="search-btn"><i class="fas fa-search"></i> Search</button>
+        </form>
+      </div>
+      <div class="hero-image">
+        <img src="{{ asset('assets/images/home 2.jpg ') }}" alt="Professional person">
+      </div>
+    </div>
+  </section>
 
+    <!-- How it Works -->
+  <section class="how-it-works section">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-subtitle">Simple steps to land your dream job</p>
+    <div class="steps">
+      <div class="step-card-animation-wrapper">
+        <div class="step-card">
+            <i class="fas fa-search"></i>
+            <h3>Search</h3>
+            <p>Find jobs by title, skill, or company in just a few clicks.</p>
+        </div>
+      </div>
+
+      <div class="step-card-animation-wrapper">
+      <div class="step-card">
+        <i class="fas fa-paper-plane"></i
+        ><h3>Apply</h3>
+        <p>Submit your application easily and track status online.</p>
+      </div>
+      </div>
+
+      <div class="step-card-animation-wrapper">
+      <div class="step-card">
+        <i class="fas fa-briefcase"></i>
+        <h3>Get Hired</h3>
+        <p>Connect with top employers and start your new career.</p>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!--featured Jobs-->
+<section class="jobs-section">
+    <div class="container">
         
-
-        <!-- Top Categories -->
-        <section class="top_categories lg:pt-20 sm:pt-14 pt-10">
-            <div class="container">
-                <div class="heading flex items-end justify-between flex-wrap gap-4">
-                    <div class="left animate animate_top" style="--i: 1">
-                        <h3 class="heading3">Top Categories</h3>
-                        <p class="body2 text-secondary mt-3">Explore a wide range of services organized by category</p>
-                    </div>
-                    <a href="jobs-default.html" class="text-button pb-0.5 border-b-2 border-primary duration-300 hover:text-primary animate animate_top" style="--i: 2">All Categories</a>
-                </div>
-                <div class="list grid xl:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-7.5 md:mt-10 mt-7">
-                    <div class="category_item p-7.5 rounded-20 bg-white shadow-md duration-300 hover:shadow-xl animate animate_top" style="--i: 1">
-                        <div class="icon pb-4 w-fit line-before line-2px">
-                            <span class="icon-graphic text-5xl"></span>
-                        </div>
-                        <h6 class="heading6 mt-5">Graphic & Design</h6>
-                        <div class="list_category flex flex-col gap-2.5 mt-3">
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Logo Design</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Brand Identity Design</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Advertising Graphic Design</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Web Graphics Design</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Packaging Design</a>
-                        </div>
-                    </div>
-                    <div class="category_item p-7.5 rounded-20 bg-white shadow-md duration-300 hover:shadow-xl animate animate_top" style="--i: 2">
-                        <div class="icon pb-4 w-fit line-before line-2px">
-                            <span class="icon-writing text-5xl"></span>
-                        </div>
-                        <h6 class="heading6 mt-5">Wrting</h6>
-                        <div class="list_category flex flex-col gap-2.5 mt-3">
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Content Writing</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Blog Writing</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Article Writing</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Technical Writing</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Editing and Proofreading</a>
-                        </div>
-                    </div>
-                    <div class="category_item p-7.5 rounded-20 bg-white shadow-md duration-300 hover:shadow-xl animate animate_top" style="--i: 3">
-                        <div class="icon pb-4 w-fit line-before line-2px">
-                            <span class="icon-video text-5xl"></span>
-                        </div>
-                        <h6 class="heading6 mt-5">Videos</h6>
-                        <div class="list_category flex flex-col gap-2.5 mt-3">
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Video Production</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Video Editing</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Motion Graphics</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Product Demonstrations</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Video Marketing Strategy</a>
-                        </div>
-                    </div>
-                    <div class="category_item p-7.5 rounded-20 bg-white shadow-md duration-300 hover:shadow-xl animate animate_top" style="--i: 4">
-                        <div class="icon pb-4 w-fit line-before line-2px">
-                            <span class="icon-marketing text-5xl"></span>
-                        </div>
-                        <h6 class="heading6 mt-5">Digital Marketing</h6>
-                        <div class="list_category flex flex-col gap-2.5 mt-3">
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Social Media Marketing</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Search Engine Optimization</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Pay-Per-Click Advertising</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Email Marketing</a>
-                            <a href="jobs-default.html" class="inline-block w-fit line-before text-secondary hover:text-black">Digital Advertising Campaigns</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Feature services -->
-        <section class="feature_services lg:py-20 sm:py-14 py-10">
-            <div class="container">
-                <div class="heading flex flex-col items-center">
-                    <h3 class="heading3 text-center animate animate_top" style="--i: 1">Feature services</h3>
-                    <p class="body2 text-secondary text-center mt-3 animate animate_top" style="--i: 2">Discover our featured services designed to elevate your experience</p>
-                    <div class="heading_menu border-b border-line md:mt-7 mt-5 animate animate_top" style="--i: 3">
-                        <div class="menu_tab">
-                            <ul class="menu flex gap-7" role="tablist">
-                                <li class="indicator absolute bottom-0 h-0.5 bg-primary rounded-full duration-300" role="presentation"></li>
-                                <li class="tab_item" role="presentation">
-                                    <button class="tab_btn -before py-1 text-button hover:text-primary duration-300 active" id="services_tab01" role="tab" aria-controls="services_01" aria-selected="true">Graphic & Design</button>
-                                </li>
-                                <li class="tab_item" role="presentation">
-                                    <button class="tab_btn -before py-1 text-button hover:text-primary duration-300" id="services_tab02" role="tab" aria-controls="services_02" aria-selected="false">Digital Marketing</button>
-                                </li>
-                                <li class="tab_item" role="presentation">
-                                    <button class="tab_btn -before py-1 text-button hover:text-primary duration-300" id="services_tab03" role="tab" aria-controls="services_03" aria-selected="false">Development</button>
-                                </li>
-                                <li class="tab_item" role="presentation">
-                                    <button class="tab_btn -before py-1 text-button hover:text-primary duration-300" id="services_tab04" role="tab" aria-controls="services_04" aria-selected="false">UI/UX Design</button>
-                                </li>
-                                <li class="tab_item" role="presentation">
-                                    <button class="tab_btn -before py-1 text-button hover:text-primary duration-300" id="services_tab05" role="tab" aria-controls="services_05" aria-selected="false">Writing</button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div id="services_01" class="tab_list active" role="tabpanel" aria-labelledby="services_tab01" aria-hidden="false">
-                    <ul class="list grid xl:grid-cols-4 sm:grid-cols-2 gap-7.5 md:mt-10 mt-7">
-                        <li class="item animate animate_top" style="--i: 1">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/1.webp" alt="1" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">Graphic & Design</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">Professional seo services to boost your website's visibility</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-1.webp" alt="IMG-1" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Floyd Miles</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 2">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/2.webp" alt="2" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">Development</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will create stunning logo designs for your business</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-2.webp" alt="IMG-2" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Cameron</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 3">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/3.webp" alt="3" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">UI/UX Design</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will design UI UX design for App in Figma</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-3.webp" alt="IMG-3" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Theresa Webb</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 4">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/4.webp" alt="4" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">Digital Marketing</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will translate your documents with accuracy and precision</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-4.webp" alt="IMG-4" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Marvin McKinney</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 5">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/5.webp" alt="5" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">Development</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will do background illustration and environment concept art</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-5.webp" alt="IMG-5" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Kristin Watson</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 6">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/6.webp" alt="6" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">UI/UX Design</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will draw vector line art illustration image</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-6.webp" alt="IMG-6" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Courtney Henry</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 7">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/7.webp" alt="7" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">UI/UX Design</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will design wordpress website with elementor pro</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-7.webp" alt="IMG-7" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Arlene McCoy</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 8">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/8.webp" alt="8" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">Digital Marketing</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will do figma UI UX design for websites & landing page</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-8.webp" alt="IMG-8" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Robert Fox</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div id="services_02" class="tab_list" role="tabpanel" aria-labelledby="services_tab02" aria-hidden="true">
-                    <ul class="list grid xl:grid-cols-4 sm:grid-cols-2 gap-7.5 md:mt-10 mt-7">
-                        <li class="item animate animate_top" style="--i: 1">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/2.webp" alt="2" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">Development</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will create stunning logo designs for your business</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-2.webp" alt="IMG-2" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Cameron</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 2">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/3.webp" alt="3" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">UI/UX Design</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will design UI UX design for App in Figma</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-3.webp" alt="IMG-3" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Theresa Webb</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 3">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/4.webp" alt="4" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">Digital Marketing</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will translate your documents with accuracy and precision</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-4.webp" alt="IMG-4" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Marvin McKinney</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 4">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/5.webp" alt="5" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">Development</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will do background illustration and environment concept art</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-5.webp" alt="IMG-5" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Kristin Watson</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div id="services_03" class="tab_list" role="tabpanel" aria-labelledby="services_tab03" aria-hidden="true">
-                    <ul class="list grid xl:grid-cols-4 sm:grid-cols-2 gap-7.5 md:mt-10 mt-7">
-                        <li class="item animate animate_top" style="--i: 1">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/6.webp" alt="6" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">UI/UX Design</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will draw vector line art illustration image</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-6.webp" alt="IMG-6" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Courtney Henry</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 2">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/7.webp" alt="7" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">UI/UX Design</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will design wordpress website with elementor pro</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-7.webp" alt="IMG-7" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Arlene McCoy</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div id="services_04" class="tab_list" role="tabpanel" aria-labelledby="services_tab04" aria-hidden="true">
-                    <ul class="list grid xl:grid-cols-4 sm:grid-cols-2 gap-7.5 md:mt-10 mt-7">
-                        <li class="item animate animate_top" style="--i: 1">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/2.webp" alt="2" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">Development</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will create stunning logo designs for your business</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-2.webp" alt="IMG-2" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Cameron</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 2">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/3.webp" alt="3" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">UI/UX Design</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will design UI UX design for App in Figma</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-3.webp" alt="IMG-3" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Theresa Webb</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div id="services_05" class="tab_list" role="tabpanel" aria-labelledby="services_tab05" aria-hidden="true">
-                    <ul class="list grid xl:grid-cols-4 sm:grid-cols-2 gap-7.5 md:mt-10 mt-7">
-                        <li class="item animate animate_top" style="--i: 1">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/4.webp" alt="4" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">Digital Marketing</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will translate your documents with accuracy and precision</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-4.webp" alt="IMG-4" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Marvin McKinney</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="item animate animate_top" style="--i: 2">
-                            <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-                                <button class="add_wishlist_btn">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                                <a href="services-detail1.html" class="service_thumb">
-                                    <img src="assets/images/service/5.webp" alt="5" class="w-full" />
-                                </a>
-                                <div class="service_info py-5 px-4">
-                                    <div class="flex items-center justify-between">
-                                        <a href="services-default.html" class="tag caption2 bg-surface hover:bg-primary hover:text-white">Development</a>
-                                        <div class="rate flex items-center gap-1">
-                                            <span class="ph-fill ph-star text-yellow text-xs"></span>
-                                            <strong class="service_rate text-button-sm">4.9</strong>
-                                            <span class="service_rate_quantity caption1 text-secondary">(482)</span>
-                                        </div>
-                                    </div>
-                                    <a href="services-detail1.html" class="service_title text-title pt-2 duration-300 hover:text-primary">I will do background illustration and environment concept art</a>
-                                    <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
-                                        <a href="candidates-detail1.html" class="service_author flex items-center gap-2">
-                                            <img src="assets/images/avatar/IMG-5.webp" alt="IMG-5" class="service_author_avatar w-8 h-8 rounded-full" />
-                                            <span class="service_author_name -style-1">Kristin Watson</span>
-                                        </a>
-                                        <div class="service_price whitespace-nowrap">
-                                            <span class="text-secondary">From </span>
-                                            <span class="price text-title">$75</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- How it work -->
-        <section class="process lg:py-20 sm:py-14 py-10 bg-[#FAF7F1]">
-            <div class="container">
-                <h3 class="heading3 text-center animate animate_top" style="--i: 1">How It Work On Employers</h3>
-                <p class="body2 text-secondary text-center mt-3 animate animate_top" style="--i: 2">Recruitment made easy in 100 seconds</p>
-                <ul class="list grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-7.5 md:mt-10 mt-7">
-                    <li class="item animate animate_top" style="--i: 1">
-                        <span class="icon-job text-4xl"></span>
-                        <h6 class="heading6 mt-4">Post Your Job</h6>
-                        <p class="mt-1">Create a job listing with details like requirements and budget.</p>
-                    </li>
-                    <li class="item animate animate_top" style="--i: 2">
-                        <span class="icon-applicant text-4xl"></span>
-                        <h6 class="heading6 mt-4">Review Applicants</h6>
-                        <p class="mt-1">Receive and evaluate applications from freelancers.</p>
-                    </li>
-                    <li class="item animate animate_top" style="--i: 3">
-                        <span class="icon-choose text-4xl"></span>
-                        <h6 class="heading6 mt-4">Choose a Freelancer</h6>
-                        <p class="mt-1">Conduct interviews or discussions to choose the best candidate.</p>
-                    </li>
-                    <li class="item animate animate_top" style="--i: 4">
-                        <span class="icon-manage text-4xl"></span>
-                        <h6 class="heading6 mt-4">Manage the Project</h6>
-                        <p class="mt-1">Collaborate with the selected freelancer to complete the project.</p>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Benefit -->
-        <section class="benefit lg:py-20 sm:py-14 py-10">
-            <div class="container">
-                <div class="benefit_inner flex max-lg:flex-col-reverse items-center justify-between gap-y-8">
-                    <div class="benefit_content xl:w-[570px] lg:w-5/12 w-full">
-                        <h3 class="heading3 animate animate_top" style="--i: 1">FreelanHub! The best choice?</h3>
-                        <p class="body2 mt-3 animate animate_top" style="--i: 2">Streamline your hiring process with strategic channels to reach qualified candidates</p>
-                        <ul class="list_benefit flex flex-col gap-6 mt-8">
-                            <li class="benefit_item flex gap-4 animate animate_top" style="--i: 3">
-                                <span class="ph ph-wallet flex-shrink-0 text-4xl text-primary"></span>
-                                <div class="benefit_info">
-                                    <h6 class="title heading6">Stick to your budget</h6>
-                                    <p class="desc mt-1">Reduce your time-to-hire by up to 75% and free up headspace for other HR priorities.</p>
-                                </div>
-                            </li>
-                            <li class="benefit_item flex gap-4 animate animate_top" style="--i: 4">
-                                <span class="ph ph-certificate flex-shrink-0 text-4xl text-primary"></span>
-                                <div class="benefit_info">
-                                    <h6 class="title heading6">Get quality work done quickly</h6>
-                                    <p class="desc mt-1">Hand your project over to a talented freelancer in minutes, get long-lasting results.</p>
-                                </div>
-                            </li>
-                            <li class="benefit_item flex gap-4 animate animate_top" style="--i: 5">
-                                <span class="ph ph-phone-call flex-shrink-0 text-4xl text-primary"></span>
-                                <div class="benefit_info">
-                                    <h6 class="title heading6">Support On 24/7</h6>
-                                    <p class="desc mt-1">Our round-the-clock support team is available to help anytime, anywhere.</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="benefit_bg relative lg:w-5/12 sm:w-[45%] w-[85%] lg:pl-3 lg:pr-15">
-                        <img src="assets/images/components/benefit1.webp" alt="benefit1" class="w-full rounded-20" />
-                        <div class="flag_benefit flex items-center gap-3 absolute sm:top-44 top-36 lg:right-0 -right-8 p-3 bg-white rounded-xl shadow-xl animate animate_left" style="--i: 1">
-                            <span class="ph ph-lightning sm:text-4xl text-3xl text-primary flex-shrink-0"></span>
-                            <div class="flag_info">
-                                <h6 class="heading6">+20k</h6>
-                                <span class="caption1">Daily website traffic</span>
-                            </div>
-                        </div>
-                        <div class="flag_benefit flex items-center gap-3 absolute bottom-15 sm:-left-28 -left-7 p-3 bg-white rounded-xl shadow-xl animate animate_right" style="--i: 2">
-                            <div class="flag_info pl-[14px] border-l-2 border-primary">
-                                <h6 class="heading6">+10k</h6>
-                                <span class="caption1">Job applications this month</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects -->
-        <section class="projects lg:py-20 sm:py-14 py-10 bg-surface">
-            <div class="container">
-                <h3 class="heading3 text-center animate animate_top" style="--i: 1">Latest Projects</h3>
-                <p class="body2 text-secondary text-center mt-3 animate animate_top" style="--i: 2">Discover our latest project with cutting-edge features. Explore now!</p>
-                <ul class="list grid md:grid-cols-2 grid-cols-1 lg:gap-7.5 gap-5 md:mt-10 mt-7">
-                    <li class="project_item p-6 rounded-lg bg-white duration-300 shadow-md animate animate_top" style="--i: 1">
-                        <div class="project_innner">
-                            <div class="project_info flex justify-between gap-3 pb-4 border-b border-line">
-                                <div class="project_content">
-                                    <a href="project-detail1.html" class="project_name heading6 duration-300 hover:underline">Figma mockup needed for a new website for Electrical contractor business website</a>
-                                    <div class="project_related_info flex flex-wrap items-center gap-3 mt-3">
-                                        <div class="project_date flex items-center gap-1">
-                                            <span class="ph ph-calendar-blank text-xl text-secondary"></span>
-                                            <span class="caption1 text-secondary">2 days ago</span>
-                                        </div>
-                                        <div class="flex items-center gap-1">
-                                            <span class="ph ph-map-pin text-xl text-secondary"></span>
-                                            <span class="project_address -style-1 caption1 text-secondary">Las Vegas, USA</span>
-                                        </div>
-                                        <div class="project_spent flex items-center gap-1">
-                                            <span class="caption1 text-secondary">$</span>
-                                            <span class="caption1 text-secondary">2.8K</span>
-                                            <span class="caption1 text-secondary">spent</span>
-                                        </div>
-                                    </div>
-                                    <p class="project_desc mt-3 text-secondary">I am looking for a talented UX/UI Designer to create screens for my basic product idea. The project involves designing a web application, you may be missing out on some big opportunities.</p>
-                                    <div class="list_tag flex items-center gap-2.5 flex-wrap mt-3">
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Graphic Design</a>
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Website Design</a>
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Figma</a>
-                                    </div>
-                                </div>
-                                <button class="add_wishlist_btn -relative -border">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                            </div>
-                            <div class="project_more_info flex items-center justify-between pt-4">
-                                <div class="project_proposals">
-                                    <span class="text-secondary">Proposals: </span>
-                                    <span class="proposals">50+</span>
-                                </div>
-                                <div class="project_price">
-                                    <span class="price text-title">$170</span>
-                                    <span class="text-secondary">/fixed-price</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project_action mt-3">
-                            <a href="project-detail1.html" class="project_apply_btn button-main -border w-full">Apply now</a>
-                        </div>
-                    </li>
-                    <li class="project_item p-6 rounded-lg bg-white duration-300 shadow-md animate animate_top" style="--i: 2">
-                        <div class="project_innner">
-                            <div class="project_info flex justify-between gap-3 pb-4 border-b border-line">
-                                <div class="project_content">
-                                    <a href="project-detail1.html" class="project_name heading6 duration-300 hover:underline">I need you to design a email confirming for a ticket buying in a beautiful modern way for mobile</a>
-                                    <div class="project_related_info flex flex-wrap items-center gap-3 mt-3">
-                                        <div class="project_date flex items-center gap-1">
-                                            <span class="ph ph-calendar-blank text-xl text-secondary"></span>
-                                            <span class="caption1 text-secondary">2 days ago</span>
-                                        </div>
-                                        <div class="flex items-center gap-1">
-                                            <span class="ph ph-map-pin text-xl text-secondary"></span>
-                                            <span class="project_address -style-1 caption1 text-secondary">Las Vegas, USA</span>
-                                        </div>
-                                        <div class="project_spent flex items-center gap-1">
-                                            <span class="caption1 text-secondary">$</span>
-                                            <span class="caption1 text-secondary">2.8K</span>
-                                            <span class="caption1 text-secondary">spent</span>
-                                        </div>
-                                    </div>
-                                    <p class="project_desc mt-3 text-secondary">I am looking for a talented UX/UI Designer to create screens for my basic product idea. The project involves designing a web application, you may be missing out on some big opportunities.</p>
-                                    <div class="list_tag flex items-center gap-2.5 flex-wrap mt-3">
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Graphic Design</a>
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Website Design</a>
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Figma</a>
-                                    </div>
-                                </div>
-                                <button class="add_wishlist_btn -relative -border">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                            </div>
-                            <div class="project_more_info flex items-center justify-between pt-4">
-                                <div class="project_proposals">
-                                    <span class="text-secondary">Proposals: </span>
-                                    <span class="proposals">50+</span>
-                                </div>
-                                <div class="project_price">
-                                    <span class="price text-title">$170</span>
-                                    <span class="text-secondary">/fixed-price</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project_action mt-3">
-                            <a href="project-detail1.html" class="project_apply_btn button-main -border w-full">Apply now</a>
-                        </div>
-                    </li>
-                    <li class="project_item p-6 rounded-lg bg-white duration-300 shadow-md animate animate_top" style="--i: 3">
-                        <div class="project_innner">
-                            <div class="project_info flex justify-between gap-3 pb-4 border-b border-line">
-                                <div class="project_content">
-                                    <a href="project-detail1.html" class="project_name heading6 duration-300 hover:underline">Website Design (Web & Responsive) for an Online Tutoring Website</a>
-                                    <div class="project_related_info flex flex-wrap items-center gap-3 mt-3">
-                                        <div class="project_date flex items-center gap-1">
-                                            <span class="ph ph-calendar-blank text-xl text-secondary"></span>
-                                            <span class="caption1 text-secondary">2 days ago</span>
-                                        </div>
-                                        <div class="flex items-center gap-1">
-                                            <span class="ph ph-map-pin text-xl text-secondary"></span>
-                                            <span class="project_address -style-1 caption1 text-secondary">Las Vegas, USA</span>
-                                        </div>
-                                        <div class="project_spent flex items-center gap-1">
-                                            <span class="caption1 text-secondary">$</span>
-                                            <span class="caption1 text-secondary">2.8K</span>
-                                            <span class="caption1 text-secondary">spent</span>
-                                        </div>
-                                    </div>
-                                    <p class="project_desc mt-3 text-secondary">I am looking for a talented UX/UI Designer to create screens for my basic product idea. The project involves designing a web application, you may be missing out on some big opportunities.</p>
-                                    <div class="list_tag flex items-center gap-2.5 flex-wrap mt-3">
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Graphic Design</a>
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Website Design</a>
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Figma</a>
-                                    </div>
-                                </div>
-                                <button class="add_wishlist_btn -relative -border">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                            </div>
-                            <div class="project_more_info flex items-center justify-between pt-4">
-                                <div class="project_proposals">
-                                    <span class="text-secondary">Proposals: </span>
-                                    <span class="proposals">50+</span>
-                                </div>
-                                <div class="project_price">
-                                    <span class="price text-title">$50-$70</span>
-                                    <span class="text-secondary">/hours</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project_action mt-3">
-                            <a href="project-detail1.html" class="project_apply_btn button-main -border w-full">Apply now</a>
-                        </div>
-                    </li>
-                    <li class="project_item p-6 rounded-lg bg-white duration-300 shadow-md animate animate_top" style="--i: 4">
-                        <div class="project_innner">
-                            <div class="project_info flex justify-between gap-3 pb-4 border-b border-line">
-                                <div class="project_content">
-                                    <a href="project-detail1.html" class="project_name heading6 duration-300 hover:underline">UX/UI Designer | Web Designer to Redesign the First Screen of the Main Page</a>
-                                    <div class="project_related_info flex flex-wrap items-center gap-3 mt-3">
-                                        <div class="project_date flex items-center gap-1">
-                                            <span class="ph ph-calendar-blank text-xl text-secondary"></span>
-                                            <span class="caption1 text-secondary">2 days ago</span>
-                                        </div>
-                                        <div class="flex items-center gap-1">
-                                            <span class="ph ph-map-pin text-xl text-secondary"></span>
-                                            <span class="project_address -style-1 caption1 text-secondary">Las Vegas, USA</span>
-                                        </div>
-                                        <div class="project_spent flex items-center gap-1">
-                                            <span class="caption1 text-secondary">$</span>
-                                            <span class="caption1 text-secondary">2.8K</span>
-                                            <span class="caption1 text-secondary">spent</span>
-                                        </div>
-                                    </div>
-                                    <p class="project_desc mt-3 text-secondary">I am looking for a talented UX/UI Designer to create screens for my basic product idea. The project involves designing a web application, you may be missing out on some big opportunities.</p>
-                                    <div class="list_tag flex items-center gap-2.5 flex-wrap mt-3">
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Graphic Design</a>
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Website Design</a>
-                                        <a href="project-default.html" class="project_tag tag bg-surface caption1 hover:text-white hover:bg-primary">Figma</a>
-                                    </div>
-                                </div>
-                                <button class="add_wishlist_btn -relative -border">
-                                    <span class="ph ph-heart text-xl"></span>
-                                    <span class="ph-fill ph-heart text-xl"></span>
-                                    <span class="blind">button add to wishlist</span>
-                                </button>
-                            </div>
-                            <div class="project_more_info flex items-center justify-between pt-4">
-                                <div class="project_proposals">
-                                    <span class="text-secondary">Proposals: </span>
-                                    <span class="proposals">50+</span>
-                                </div>
-                                <div class="project_price">
-                                    <span class="price text-title">$20-$30</span>
-                                    <span class="text-secondary">/hours</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project_action mt-3">
-                            <a href="project-detail1.html" class="project_apply_btn button-main -border w-full">Apply now</a>
-                        </div>
-                    </li>
-                </ul>
-                <div class="view_all md:mt-10 mt-7 text-center animate animate_top" style="--i: 5">
-                    <a href="project-default.html" class="text-button pb-0.5 border-b-2 border-primary duration-300 hover:text-primary">View All Projects</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials -->
-        <section class="testimonials lg:py-20 sm:py-14 py-10">
-            <div class="container">
-                <h3 class="heading3 text-center animate animate_top" style="--i: 1">Testimonials</h3>
-                <p class="body2 text-secondary text-center mt-3 animate animate_top" style="--i: 2">Discover exceptional experiences through testimonials from our satisfied customers.</p>
-                <div class="swiper -section swiper-list-testimonials style-2 md:pt-10 pt-7">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="testimonials_item p-7.5 bg-white rounded-lg duration-300 shadow-md animate animate_top" style="--i: 1">
-                                <strong class="text-title">Choosing FreelanHub was the best decision we made for our business. Their expertise in SEO and digital marketing has significantly boosted our traffic and conversions.</strong>
-                                <div class="testimonials_info flex items-center mt-5 gap-5">
-                                    <div class="testimonials_avatar w-15 h-15 rounded-full overflow-hidden">
-                                        <img src="assets/images/avatar/IMG-1.webp" alt="IMG-1" class="w-full h-full object-cover" />
-                                    </div>
-                                    <div class="testimonials_user">
-                                        <h6 class="testimonials_name heading6">Liam Anderson</h6>
-                                        <span class="caption1 text-secondary">Head of Recruitment</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="testimonials_item p-7.5 bg-white rounded-lg duration-300 shadow-md animate animate_top" style="--i: 2">
-                                <strong class="text-title">Choosing FreelanHub was the best decision we made for our business. Their expertise in SEO and digital marketing has significantly boosted our traffic and conversions.</strong>
-                                <div class="testimonials_info flex items-center mt-5 gap-5">
-                                    <div class="testimonials_avatar w-15 h-15 rounded-full overflow-hidden">
-                                        <img src="assets/images/avatar/IMG-2.webp" alt="IMG-2" class="w-full h-full object-cover" />
-                                    </div>
-                                    <div class="testimonials_user">
-                                        <h6 class="testimonials_name heading6">Emily Johnson</h6>
-                                        <span class="caption1 text-secondary">Head of Recruitment</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="testimonials_item p-7.5 bg-white rounded-lg duration-300 shadow-md animate animate_top" style="--i: 3">
-                                <strong class="text-title">Choosing FreelanHub was the best decision we made for our business. Their expertise in SEO and digital marketing has significantly boosted our traffic and conversions.</strong>
-                                <div class="testimonials_info flex items-center mt-5 gap-5">
-                                    <div class="testimonials_avatar w-15 h-15 rounded-full overflow-hidden">
-                                        <img src="assets/images/avatar/IMG-3.webp" alt="IMG-3" class="w-full h-full object-cover" />
-                                    </div>
-                                    <div class="testimonials_user">
-                                        <h6 class="testimonials_name heading6">Alexander Peter</h6>
-                                        <span class="caption1 text-secondary">Head of Recruitment</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="testimonials_item p-7.5 bg-white rounded-lg duration-300 shadow-md animate animate_top" style="--i: 4">
-                                <strong class="text-title">Choosing FreelanHub was the best decision we made for our business. Their expertise in SEO and digital marketing has significantly boosted our traffic and conversions.</strong>
-                                <div class="testimonials_info flex items-center mt-5 gap-5">
-                                    <div class="testimonials_avatar w-15 h-15 rounded-full overflow-hidden">
-                                        <img src="assets/images/avatar/IMG-4.webp" alt="IMG-4" class="w-full h-full object-cover" />
-                                    </div>
-                                    <div class="testimonials_user">
-                                        <h6 class="testimonials_name heading6">Emily Johnson</h6>
-                                        <span class="caption1 text-secondary">Head of Recruitment</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Counter -->
-        <section class="counter lg:py-15 sm:py-12 py-8 bg-[#FAF7F1]">
-            <div class="container flex max-lg:flex-wrap items-center justify-between max-lg:gap-y-8">
-                <div class="item max-lg:flex max-lg:flex-col max-lg:w-1/2 animate animate_top" style="--i: 1">
-                    <h2 class="heading2 pb-1 text-center">2,5M+</h2>
-                    <span class="body1 text-center">Jobs Available</span>
-                </div>
-                <div class="line flex-shrink-0 w-px h-20 bg-line max-lg:hidden"></div>
-                <div class="item max-lg:flex max-lg:flex-col max-lg:w-1/2 animate animate_top" style="--i: 2">
-                    <h2 class="heading2 pb-1 text-center">177k+</h2>
-                    <span class="body1 text-center">New Jobs This Week!</span>
-                </div>
-                <div class="line flex-shrink-0 w-px h-20 bg-line max-lg:hidden"></div>
-                <div class="item max-lg:flex max-lg:flex-col max-lg:w-1/2 animate animate_top" style="--i: 3">
-                    <h2 class="heading2 pb-1 text-center">298k+</h2>
-                    <span class="body1 text-center">Companies Hiring</span>
-                </div>
-                <div class="line flex-shrink-0 w-px h-20 bg-line max-lg:hidden"></div>
-                <div class="item max-lg:flex max-lg:flex-col max-lg:w-1/2 animate animate_top" style="--i: 4">
-                    <h2 class="heading2 pb-1 text-center">5M+</h2>
-                    <span class="body1 text-center">Total Freelancers</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Blog -->
-        <section class="blog lg:py-20 sm:py-14 py-10">
-            <div class="container">
-                <h3 class="heading3 text-center animate animate_top" style="--i: 1">Guide To Help You Grow</h3>
-                <p class="body2 text-secondary text-center mt-3 animate animate_top" style="--i: 2">Find the right career opportunity for you</p>
-                <ul class="list_blog grid lg:grid-cols-3 sm:grid-cols-2 lg:gap-7.5 gap-6 md:mt-10 mt-7">
-                    <li class="blog_item animate animate_top" style="--i: 1">
-                        <a href="blog-detail1.html" class="blog_thumb block overflow-hidden rounded-xl">
-                            <img src="assets/images/blog/1.webp" alt="1" class="blog_img w-full" />
-                        </a>
-                        <div class="blog_info flex items-center gap-2 mt-5">
-                            <span class="blog_date caption1">February 28, 2024</span>
-                            <div class="line w-px h-3 bg-line"></div>
-                            <a href="blog-default.html" class="caption1 duration-300 hover:text-primary">Freelancers</a>
-                        </div>
-                        <a href="blog-detail1.html" class="heading5 blog_title mt-3 hover:underline">Boosting your freelancing game: AI tools for enhanced efficiency</a>
-                        <p class="blog_desc mt-2 text-secondary">AI tools have emerged as a powerful ally for freelancers across diverse fields.</p>
-                    </li>
-                    <li class="blog_item animate animate_top" style="--i: 2">
-                        <a href="blog-detail1.html" class="blog_thumb block overflow-hidden rounded-xl">
-                            <img src="assets/images/blog/2.webp" alt="2" class="blog_img w-full" />
-                        </a>
-                        <div class="blog_info flex items-center gap-2 mt-5">
-                            <span class="blog_date caption1">February 28, 2024</span>
-                            <div class="line w-px h-3 bg-line"></div>
-                            <a href="blog-default.html" class="caption1 duration-300 hover:text-primary">Developement</a>
-                        </div>
-                        <a href="blog-detail1.html" class="heading5 blog_title mt-3 hover:underline">5 ways to enhance your business website in 2024</a>
-                        <p class="blog_desc mt-2 text-secondary">If it's been a while since your last website upgrade, you may be missing out on some big opportunities.</p>
-                    </li>
-                    <li class="blog_item max-lg:hidden animate animate_top" style="--i: 3">
-                        <a href="blog-detail1.html" class="blog_thumb block overflow-hidden rounded-xl">
-                            <img src="assets/images/blog/3.webp" alt="3" class="blog_img w-full" />
-                        </a>
-                        <div class="blog_info flex items-center gap-2 mt-5">
-                            <span class="blog_date caption1">February 28, 2024</span>
-                            <div class="line w-px h-3 bg-line"></div>
-                            <a href="blog-default.html" class="caption1 duration-300 hover:text-primary">Marketing</a>
-                        </div>
-                        <a href="blog-detail1.html" class="heading5 blog_title mt-3 hover:underline">How No-Code Solutions Let You Build Apps Without Coding Skills</a>
-                        <p class="blog_desc mt-2 text-secondary">In this blog article by our partner Appy Pie, we're exploring what no-code app development.</p>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Banner -->
-        <section class="banner lg:pb-20 sm:pb-14 pb-10">
-            <div class="container">
-                <div class="banner_inner relative sm:px-16 px-8 py-16 overflow-hidden rounded-xl animate animateZoomOutUp" style="--i: 5">
-                    <div class="banner_bg absolute top-0 left-0 w-full h-full z-[-1]">
-                        <img src="assets/images/components/banner1.webp" alt="banner1" class="w-full h-full object-cover" />
-                    </div>
-                    <div class="banner_content">
-                        <h4 class="heading4 text-white animate animate_top" style="--i: 1">Embrace Independence <br class="max-sm:hidden" />Start Your Freelance Journey Now</h4>
-                        <p class="desc mt-2 text-white animate animate_top" style="--i: 2">Connect with your Desginer in minutes</p>
-                        <div class="md:mt-7 mt-5 animate animate_top" style="--i: 3">
-                            <a href="become-seller.html" class="button-main bg-white">Become A Seller</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scroll to top -->
-        <button class="scroll-to-top-btn"><span class="ph-bold ph-caret-up"></span></button>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer_inner bg-feature">
-                <div class="container">
-                    <div class="footer_heading flex flex-wrap items-center justify-between gap-4 w-full md:pt-10 pt-7 md:pb-5 pb-4 border-b border-light">
-                        <a href="index-2.html" class="footer_logo">
-                            <img src="assets/images/logo-white.png" alt="logo-white" class="h-[42px] w-auto" />
-                        </a>
-                        <div class="list_social flex flex-wrap items-center gap-4">
-                            <span class="text-subtitle text-white">Follow Us:</span>
-                            <div class="list flex flex-wrap items-center gap-3">
-                                <a href="https://www.facebook.com/" target="_blank" class="w-10 h-10 flex items-center justify-center border border-light text-white rounded-full duration-300 hover:bg-white hover:text-black">
-                                    <span class="icon-facebook text-lg"></span>
-                                    <span class="blind">link to facebook</span>
-                                </a>
-                                <a href="https://www.linkedin.com/" target="_blank" class="w-10 h-10 flex items-center justify-center border border-light text-white rounded-full duration-300 hover:bg-white hover:text-black">
-                                    <span class="icon-linkedin text-lg"></span>
-                                    <span class="blind">link to linkedin</span>
-                                </a>
-                                <a href="https://www.twitter.com/" target="_blank" class="w-10 h-10 flex items-center justify-center border border-light text-white rounded-full duration-300 hover:bg-white hover:text-black">
-                                    <span class="icon-twitter text-lg"></span>
-                                    <span class="blind">link to twitter</span>
-                                </a>
-                                <a href="https://www.instagram.com/" target="_blank" class="w-10 h-10 flex items-center justify-center border border-light text-white rounded-full duration-300 hover:bg-white hover:text-black">
-                                    <span class="icon-instagram text-lg"></span>
-                                    <span class="blind">link to instagram</span>
-                                </a>
-                                <a href="https://www.pinterest.com/" target="_blank" class="w-10 h-10 flex items-center justify-center border border-light text-white rounded-full duration-300 hover:bg-white hover:text-black">
-                                    <span class="icon-pinterest text-lg"></span>
-                                    <span class="blind">link to pinterest</span>
-                                </a>
-                                <a href="https://www.youtube.com/" target="_blank" class="w-10 h-10 flex items-center justify-center border border-light text-white rounded-full duration-300 hover:bg-white hover:text-black">
-                                    <span class="icon-youtube text-lg"></span>
-                                    <span class="blind">link to youtube</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer_content flex max-xl:flex-wrap items-start justify-between gap-y-8 md:py-10 py-7">
-                        <div class="footer_nav max-md:w-1/2">
-                            <strong class="nav_heading text-button-sm text-white">Categories</strong>
-                            <ul class="list_nav flex flex-col gap-3 mt-4">
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="jobs-default.html">Graphics & Design</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="jobs-default.html">Digital Marketing</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="jobs-default.html">Writing & Translation</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="jobs-default.html">Video & Animation</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="jobs-default.html">Music & Audio</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="jobs-default.html">Programming & Tech</a></li>
-                            </ul>
-                        </div>
-                        <div class="footer_nav max-md:w-1/2">
-                            <strong class="nav_heading text-button-sm text-white">For Candidates</strong>
-                            <ul class="list_nav flex flex-col gap-3 mt-4">
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="candidates-dashboard.html">Candidate Dashboard</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="jobs-default.html">Browse jobs</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="employers-default.html">Browse employers</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="candidates-proposals.html">My Proposals</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="candidates-my-services.html">My Services</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="candidates-jobs-alerts.html">Job Alerts</a></li>
-                            </ul>
-                        </div>
-                        <div class="footer_nav max-md:w-1/2">
-                            <strong class="nav_heading text-button-sm text-white">For Employer</strong>
-                            <ul class="list_nav flex flex-col gap-3 mt-4">
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="employers-dashboard.html">Employer Dashboard</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="candidates-default.html">Browse Candidates</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="services-default.html">Browse services</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="employers-submit-jobs.html">Submit jobs</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="employers-jobs.html">My Jobs</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="employers-applicants-jobs.html">Applicants jobs</a></li>
-                            </ul>
-                        </div>
-                        <div class="footer_nav max-md:w-1/2">
-                            <strong class="nav_heading text-button-sm text-white">Support</strong>
-                            <ul class="list_nav flex flex-col gap-3 mt-4">
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="term-of-use.html">Help & Support</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="become-seller.html">Selling On FreelanHub</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="become-buyer.html">Buying On FreelanHub</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="about1.html">Services</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="faqs.html">FAQs</a></li>
-                                <li><a class="caption1 capitalize line-before line-white text-placehover hover:text-white duration-300" href="contact1.html">Contact Us</a></li>
-                            </ul>
-                        </div>
-                        <div class="flex-shrink-0 max-xl:w-full">
-                            <div class="company-contact sm:w-[340px]">
-                                <strong class="heading block text-button-sm text-white">Subscribe</strong>
-                                <form class="send-block mt-4 flex items-center h-[46px] rounded-lg overflow-hidden">
-                                    <input class="caption1 text-secondary h-full w-full pr-4 pl-3" type="email" placeholder="Your email address" required />
-                                    <button class="flex items-center justify-center w-[46px] h-[46px] bg-primary flex-shrink-0">
-                                        <span class="ph ph-paper-plane-tilt text-white"></span>
-                                        <span class="blind">button submit</span>
-                                    </button>
-                                </form>
-                                <strong class="heading block text-button-sm text-white mt-5">Download App</strong>
-                                <div class="list-download flex items-start gap-3 mt-4">
-                                    <a href="https://play.google.com/" target="_blank">
-                                        <img src="assets/images/download/gg_play.png" alt="gg_play" />
-                                    </a>
-                                    <a href="https://www.apple.com/app-store/" target="_blank">
-                                        <img src="assets/images/download/app_store.png" alt="app_store" />
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer_bottom flex items-center justify-between max-sm:flex-col gap-2 py-2 border-t border-light">
-                        <div class="left-block flex items-center">
-                            <div class="copyright text-placehover caption1">©2024 FreelanHub. All Rights Reserved.</div>
-                        </div>
-                        <div class="nav-link flex items-center gap-2.5">
-                            <a class="text-placehover caption1 hover-underline" href="term-of-use.html">Terms Of Services</a>
-                            <span class="text-placehover caption1">|</span>
-                            <a class="text-placehover caption1 hover-underline" href="term-of-use.html">Privacy Policy</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-
-        <!-- Menu mobile -->
-        <div class="menu_mobile">
-            <button class="menu_mobile_close flex items-center justify-center absolute top-5 left-5 w-8 h-8 rounded-full bg-surface">
-                <span class="ph-bold ph-x"></span>
-            </button>
-            <div class="heading flex items-center justify-center mt-5">
-                <a href="index-2.html" class="logo">
-                    <img src="assets/images/logo.png" alt="logo" class="h-8" />
-                </a>
-            </div>
-            <form class="form-search relative mt-4 mx-5">
-                <button class="absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer">
-                    <i class="ph ph-magnifying-glass text-xl block"></i>
-                </button>
-                <input type="text" placeholder="What are you looking for?" class="h-12 rounded-lg border border-line text-sm w-full pl-10 pr-4" required />
-            </form>
-            <div class="mt-4">
-                <ul class="nav_mobile">
-                    <li class="nav_item py-2">
-                        <a href="#!" class="text-xl font-semibold flex items-center justify-between">
-                            Homepages
-                            <span class="text-right">
-                                <i class="ph ph-caret-right text-xl"></i>
-                            </span>
-                        </a>
-                        <div class="sub_nav_mobile">
-                            <button class="back_btn flex items-center gap-3">
-                                <i class="ph ph-caret-left text-xl"></i>
-                                Back
-                            </button>
-                            <div class="list-nav-item w-full pt-2 pb-6">
-                                <ul>
-                                    <li class="nav_item">
-                                        <a href="index-2.html" class="inline-block text-xl font-semibold py-2 capitalize active"> Home Freelancer 01 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="freelancer2.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 02 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="freelancer3.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 03 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="freelancer4.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 04 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="freelancer5.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 05 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="freelancer6.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 06 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="freelancer7.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 07 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="freelancer8.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Freelancer 08 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="jobs9.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Jobs 09 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="jobs10.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Jobs 10 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="jobs11.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Jobs 11 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="jobs12.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home Jobs 12 </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="rtl13.html" class="inline-block text-xl font-semibold py-2 capitalize"> Home RTL 13 </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav_item py-2">
-                        <a href="#!" class="text-xl font-semibold flex items-center justify-between">
-                            For Candidates
-                            <span class="text-right">
-                                <i class="ph ph-caret-right text-xl"></i>
-                            </span>
-                        </a>
-                        <div class="sub_nav_mobile">
-                            <button class="back_btn flex items-center gap-3">
-                                <i class="ph ph-caret-left text-xl"></i>
-                                Back
-                            </button>
-                            <div class="list-nav-item w-full pt-2 pb-6">
-                                <ul>
-                                    <li class="nav_item">
-                                        <a href="#!" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize">
-                                            Browse jobs
-                                            <span class="text-right">
-                                                <i class="ph ph-caret-right text-xl"></i>
-                                            </span>
-                                        </a>
-                                        <div class="sub_nav_mobile2">
-                                            <button class="back_btn flex items-center gap-3">
-                                                <i class="ph ph-caret-left text-xl"></i>
-                                                Back
-                                            </button>
-                                            <div class="list-nav-item w-full pt-2 pb-6">
-                                                <ul>
-                                                    <li class="nav_item">
-                                                        <a href="jobs-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs default </a>
-                                                    </li>
-                                                    <li class="nav_item">
-                                                        <a href="jobs-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs grid </a>
-                                                    </li>
-                                                    <li class="nav_item">
-                                                        <a href="jobs-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs list </a>
-                                                    </li>
-                                                    <li class="nav_item">
-                                                        <a href="jobs-top-map.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs top map </a>
-                                                    </li>
-                                                    <li class="nav_item">
-                                                        <a href="jobs-half-map-grid1.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs half map grid 1 </a>
-                                                    </li>
-                                                    <li class="nav_item">
-                                                        <a href="jobs-half-map-grid2.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs half map grid 2 </a>
-                                                    </li>
-                                                    <li class="nav_item">
-                                                        <a href="jobs-fullwidth.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs fullwidth </a>
-                                                    </li>
-                                                    <li class="nav_item">
-                                                        <a href="jobs-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs detail 1 </a>
-                                                    </li>
-                                                    <li class="nav_item">
-                                                        <a href="jobs-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> jobs detail 2 </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="#!" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize">
-                                            Browse Projects
-                                            <span class="text-right">
-                                                <i class="ph ph-caret-right text-xl"></i>
-                                            </span>
-                                        </a>
-                                        <div class="sub_nav_mobile2">
-                                            <button class="back_btn flex items-center gap-3">
-                                                <i class="ph ph-caret-left text-xl"></i>
-                                                Back
-                                            </button>
-                                            <div class="list-nav-item w-full pt-2 pb-6">
-                                                <ul>
-                                                    <li>
-                                                        <a href="project-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> project default </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-grid-3col.html" class="inline-block text-xl font-semibold py-2 capitalize"> project grid 3 columns </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> project list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-top-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> project top map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-top-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> project top map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-half-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> project half map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-half-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> project half map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-fullwidth.html" class="inline-block text-xl font-semibold py-2 capitalize"> project fullwidth </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> project detail 1 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> project detail 2 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="project-detail3.html" class="inline-block text-xl font-semibold py-2 capitalize"> project detail 3 </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="#!" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize">
-                                            Browse Employer
-                                            <span class="text-right">
-                                                <i class="ph ph-caret-right text-xl"></i>
-                                            </span>
-                                        </a>
-                                        <div class="sub_nav_mobile2">
-                                            <button class="back_btn flex items-center gap-3">
-                                                <i class="ph ph-caret-left text-xl"></i>
-                                                Back
-                                            </button>
-                                            <div class="list-nav-item w-full pt-2 pb-6">
-                                                <ul>
-                                                    <li>
-                                                        <a href="employers-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers default </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-sidebar-grid-3cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers sidebar grid 3 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-sidebar-grid-2cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers sidebar grid 2 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-sidebar-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers sidebar list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-top-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers top map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-top-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers top map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-half-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers half map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-half-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers half map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-fullwidth.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers fullwidth </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers detail 1 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="employers-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> employers detail 2 </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="become-seller.html" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize"> Become a seller </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="candidates-dashboard.html" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize"> Candidates Dashboard </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav_item py-2">
-                        <a href="#!" class="text-xl font-semibold flex items-center justify-between">
-                            For Employers
-                            <span class="text-right">
-                                <i class="ph ph-caret-right text-xl"></i>
-                            </span>
-                        </a>
-                        <div class="sub_nav_mobile">
-                            <button class="back_btn flex items-center gap-3">
-                                <i class="ph ph-caret-left text-xl"></i>
-                                Back
-                            </button>
-                            <div class="list-nav-item w-full pt-2 pb-6">
-                                <ul>
-                                    <li class="nav_item">
-                                        <a href="#!" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize">
-                                            Browse services
-                                            <span class="text-right">
-                                                <i class="ph ph-caret-right text-xl"></i>
-                                            </span>
-                                        </a>
-                                        <div class="sub_nav_mobile2">
-                                            <button class="back_btn flex items-center gap-3">
-                                                <i class="ph ph-caret-left text-xl"></i>
-                                                Back
-                                            </button>
-                                            <div class="list-nav-item w-full pt-2 pb-6">
-                                                <ul>
-                                                    <li>
-                                                        <a href="services-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> services default </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> services grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> services list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-sidebar-grid-3cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> services sidebar grid 3 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-sidebar-grid-2cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> services sidebar grid 2 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-sidebar-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> services sidebar list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-fullwidth-grid-5cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> services fullwidth grid 5 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-fullwidth-grid-4cols.html" class="inline-block text-xl font-semibold py-2 capitalize"> services fullwidth grid 4 cols </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-fullwidth-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> services fullwidth list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> services detail 1 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="services-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> services detail 2 </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="#!" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize">
-                                            Browse candidates
-                                            <span class="text-right">
-                                                <i class="ph ph-caret-right text-xl"></i>
-                                            </span>
-                                        </a>
-                                        <div class="sub_nav_mobile2">
-                                            <button class="back_btn flex items-center gap-3">
-                                                <i class="ph ph-caret-left text-xl"></i>
-                                                Back
-                                            </button>
-                                            <div class="list-nav-item w-full pt-2 pb-6">
-                                                <ul>
-                                                    <li>
-                                                        <a href="candidates-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates default </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-sidebar-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates sidebar grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-sidebar-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates sidebar list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-top-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates top map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-top-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates top map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-half-map-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates half map grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-half-map-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates half map list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-fullwidth-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates fullwidth grid </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-fullwidth-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates fullwidth list </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates detail 1 </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="candidates-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> candidates detail 2 </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="become-buyer.html" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize"> Become a buyer </a>
-                                    </li>
-                                    <li class="nav_item">
-                                        <a href="employers-dashboard.html" class="link flex items-center justify-between w-full py-2 text-xl font-semibold capitalize"> employer Dashboard </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav_item py-2">
-                        <a href="#!" class="text-xl font-semibold flex items-center justify-between">
-                            Blogs
-                            <span class="text-right">
-                                <i class="ph ph-caret-right text-xl"></i>
-                            </span>
-                        </a>
-                        <div class="sub_nav_mobile">
-                            <button class="back_btn flex items-center gap-3">
-                                <i class="ph ph-caret-left text-xl"></i>
-                                Back
-                            </button>
-                            <div class="list-nav-item w-full pt-2 pb-6">
-                                <ul>
-                                    <li>
-                                        <a href="blog-default.html" class="inline-block text-xl font-semibold py-2 capitalize"> Blog default </a>
-                                    </li>
-                                    <li>
-                                        <a href="blog-grid.html" class="inline-block text-xl font-semibold py-2 capitalize"> Blog grid </a>
-                                    </li>
-                                    <li>
-                                        <a href="blog-list.html" class="inline-block text-xl font-semibold py-2 capitalize"> Blog list </a>
-                                    </li>
-                                    <li>
-                                        <a href="blog-detail1.html" class="inline-block text-xl font-semibold py-2 capitalize"> Blog detail 1 </a>
-                                    </li>
-                                    <li>
-                                        <a href="blog-detail2.html" class="inline-block text-xl font-semibold py-2 capitalize"> Blog detail 2 </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav_item py-2">
-                        <a href="#!" class="text-xl font-semibold flex items-center justify-between">
-                            Pages
-                            <span class="text-right">
-                                <i class="ph ph-caret-right text-xl"></i>
-                            </span>
-                        </a>
-                        <div class="sub_nav_mobile">
-                            <button class="back_btn flex items-center gap-3">
-                                <i class="ph ph-caret-left text-xl"></i>
-                                Back
-                            </button>
-                            <div class="list-nav-item w-full pt-2 pb-6">
-                                <ul>
-                                    <li>
-                                        <a href="about1.html" class="inline-block text-xl font-semibold py-2 capitalize"> About Us 1 </a>
-                                    </li>
-                                    <li>
-                                        <a href="about2.html" class="inline-block text-xl font-semibold py-2 capitalize"> About Us 2 </a>
-                                    </li>
-                                    <li>
-                                        <a href="pricing.html" class="inline-block text-xl font-semibold py-2 capitalize"> Pricing Plan </a>
-                                    </li>
-                                    <li>
-                                        <a href="contact1.html" class="inline-block text-xl font-semibold py-2 capitalize"> Contact Us 1 </a>
-                                    </li>
-                                    <li>
-                                        <a href="contact2.html" class="inline-block text-xl font-semibold py-2 capitalize"> Contact Us 2 </a>
-                                    </li>
-                                    <li>
-                                        <a href="faqs.html" class="inline-block text-xl font-semibold py-2 capitalize"> Faqs </a>
-                                    </li>
-                                    <li>
-                                        <a href="term-of-use.html" class="inline-block text-xl font-semibold py-2 capitalize"> Terms of use </a>
-                                    </li>
-                                    <li>
-                                        <a href="error-404.html" class="inline-block text-xl font-semibold py-2 capitalize"> Error 404 </a>
-                                    </li>
-                                    <li>
-                                        <a href="login.html" class="inline-block text-xl font-semibold py-2 capitalize"> Login </a>
-                                    </li>
-                                    <li>
-                                        <a href="register.html" class="inline-block text-xl font-semibold py-2 capitalize"> Register </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <div class="section-header gsap-reveal">
+            <h2>Latest Job Openings</h2>
+            <p>Find your next career opportunity from our hand-picked listings.</p>
         </div>
 
-        <script src="{{ asset('assets/js/jquery.min.js')}}"></script>
-        <script src="{{ asset('assets/js/phosphor-icons.js')}}"></script>
-        <script src="{{ asset('assets/js/slick.min.js')}}"></script>
-        <script src="{{ asset('assets/js/leaflet.js')}}"></script>
-        <script src="{{ asset('assets/js/swiper-bundle.min.js')}}"></script>
-        <script src="{{ asset('assets/js/main.js')}}"></script>
-    </body>
+        {{-- Yeh raha naya dynamic grid --}}
+        <div class="job-grid-container">
+            @forelse($latestJobs as $job)
+                <div class="job-card gsap-reveal">
+                    
+                    <div class="job-card__content">
+                        <div class="job-card__header">
+                            <div class="job-card__company-info">
+                                <div class="job-card__logo">
+                                     {{-- User ki profile picture ya initials yahan ayenge --}}
+                                     <img class="job-card__logo-img" 
+                                          src="{{ $job->user->profile_photo_url }}" 
+                                          alt="{{ $job->user->name ?? 'Company' }}'s logo">
+                                </div>
+                                <div>
+                                    <h3 class="job-card__title">
+                                        {{-- Job ka title ab database se ayega --}}
+                                        <a href="{{ route('jobs.show', $job->id) }}">{{ $job->title }}</a>
+                                    </h3>
+                                    <p class="job-card__company">{{ $job->user->name ?? 'Company Name' }}</p>
+                                </div>
+                            </div>
+                            <span class="job-card__category">{{ $job->category }}</span>
+                        </div>
 
-<!-- Mirrored from freelanhub.vercel.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 17 Aug 2025 10:57:00 GMT -->
-</html>
+                        <div class="job-card__meta">
+                            <div class="meta-item">
+                                <i class="ph ph-map-pin"></i>
+                                <span>{{ $job->location }}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="ph ph-clock"></i>
+                                <span>Full Time</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="ph ph-calendar-blank"></i>
+                                <span>{{ $job->created_at->diffForHumans() }}</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="ph ph-hourglass"></i>
+                                <span>{{ $job->duration }}</span>
+                            </div>
+                        </div>
+
+                        <div class="job-card__salary">
+                            <p>{{ $job->pay }}</p>
+                        </div>
+                    </div>
+
+                    <div class="job-card__actions">
+                        {{-- Button ab job ke detail page par jayega --}}
+                        <a href="{{ route('jobs.show', $job->id) }}" class="btn btn--apply">View Details</a>
+                    </div>
+                </div>
+            @empty
+                {{-- Agar koi job na ho to yeh message show hoga --}}
+                <div class="no-jobs-found">
+                    <p>No recent job openings found. Check back later!</p>
+                </div>
+            @endforelse
+        </div>
+
+        <div class="view-all-btn-container gsap-reveal">
+            {{-- Yeh button ab aapke Browse Jobs page par jana chahiye --}}
+            <a href="{{ route('jobs.browse') }}" class="view-all-btn">View All Jobs</a>
+        </div>
+        
+    </div>
+</section>
+
+  <!-- Categories -->
+<!-- Categories Parallax Showcase -->
+<section class="categories-parallax section">
+    <h2 class="section-title">Explore Our Top Categories</h2>
+    <p class="section-subtitle">Find skilled and verified professionals for any job, big or small. Quality service is just a click away.</p>
+
+    <div class="parallax-item" style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1500&q=80');">
+        <div class="content-box">
+            <h3>Electricians</h3>
+            <p>Connect with skilled electricians for safe and reliable electrical work.</p>
+        </div>
+    </div>
+
+    <div class="parallax-item" style="background-image: url('{{ asset('assets/images/ac tech.avif') }}')">
+        <div class="content-box right">
+            <h3>AC technicians</h3>
+            <p>Find Expert AC technicians for reliable installation, repair, and maintenance.</p>
+        </div>
+    </div>
+
+    <div class="parallax-item" style="background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1500&q=80');">
+        <div class="content-box">
+            <h3>Web Developers</h3>
+            <p>Bring your digital vision to life with our expert web developers.</p>
+        </div>
+    </div>
+</section>
+
+  <!-- Testimonials -->
+  <section class="testimonials section">
+    <h2 class="section-title">What People Say</h2>
+    <p class="section-subtitle">Real stories from job seekers</p>
+    <div class="testimonial-grid">
+      <div class="testimonial-card"><p>"JobPro helped me land my first remote job within 2 weeks. Super easy platform!"</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/women/44.jpg"><div><strong>Sarah J.</strong><br><small>Designer</small></div></div></div>
+      <div class="testimonial-card"><p>"As an employer, I found talented developers quickly. Highly recommended!"</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/men/32.jpg"><div><strong>Michael B.</strong><br><small>HR Manager</small></div></div></div>
+      <div class="testimonial-card"><p>"Clean, professional, and very intuitive to use. It saved me so much time."</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/women/68.jpg"><div><strong>Amy K.</strong><br><small>Marketing Lead</small></div></div></div>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section class="blog section">
+    <h2 class="section-title">Latest Career Advice</h2>
+    <p class="section-subtitle">Tips and guides to boost your career</p>
+    <div class="blog-grid">
+      <div class="blog-card"><img src="https://source.unsplash.com/400x200/?career,office"><div class="content"><h3>10 Tips for Acing Your Interview</h3><p>Learn the do’s and don’ts to impress your interviewer.</p></div></div>
+      <div class="blog-card"><img src="https://source.unsplash.com/400x200/?team,work"><div class="content"><h3>How to Build a Strong Resume</h3><p>Stand out with a professional and eye-catching resume.</p></div></div>
+      <div class="blog-card"><img src="https://source.unsplash.com/400x200/?success,career"><div class="content"><h3>Remote Work Productivity Hacks</h3><p>Stay focused and productive while working from home.</p></div></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready to Find Your Next Job?</h2>
+    <p>Join thousands of professionals using JobPro today.</p>
+    <button>Register Now</button>
+  </section>
+
+  <!-- Extra Sections Start -->
+
+  <!-- Stats -->
+  <section class="section">
+    <h2 class="section-title">Our Achievements</h2>
+    <div style="display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:40px">
+      <div style="text-align:center">
+        <h3 id="jobsCounter" style="font-size:2rem;color:var(--primary)">0</h3>
+        <p>Jobs Posted</p>
+      </div>
+      <div style="text-align:center">
+        <h3 id="companiesCounter" style="font-size:2rem;color:var(--primary)">0</h3>
+        <p>Companies</p>
+      </div>
+      <div style="text-align:center">
+        <h3 id="candidatesCounter" style="font-size:2rem;color:var(--primary)">0</h3>
+        <p>Candidates</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div style="max-width:800px;margin:auto">
+      <div style="margin-bottom:15px;border:1px solid #ddd;border-radius:10px;overflow:hidden">
+        <div class="faq-question" style="padding:15px;font-weight:600;cursor:pointer;background:#f9fafb">How do I apply for jobs?</div>
+        <div class="faq-answer" style="display:none;padding:15px;color:var(--text-gray)">Search and click "Apply" on any job listing. Submit your resume directly.</div>
+      </div>
+      <div style="margin-bottom:15px;border:1px solid #ddd;border-radius:10px;overflow:hidden">
+        <div class="faq-question" style="padding:15px;font-weight:600;cursor:pointer;background:#f9fafb">Is JobPro free to use?</div>
+        <div class="faq-answer" style="display:none;padding:15px;color:var(--text-gray)">Yes, job seekers can use JobPro for free. Employers can choose paid plans.</div>
+      </div>
+      <div style="margin-bottom:15px;border:1px solid #ddd;border-radius:10px;overflow:hidden">
+        <div class="faq-question" style="padding:15px;font-weight:600;cursor:pointer;background:#f9fafb">Can employers find candidates?</div>
+        <div class="faq-answer" style="display:none;padding:15px;color:var(--text-gray)">Yes, employers can browse candidates and contact them directly.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="section" style="text-align:center;background:var(--primary);color:#fff">
+    <h2 class="section-title" style="color:#fff">Stay Updated!</h2>
+    <p class="section-subtitle" style="color:#f0f0f0">Subscribe to get the latest jobs straight to your inbox</p>
+    
+    {{-- Success ya Error messages dikhane ke liye --}}
+    @if (session('success'))
+        <div style="background: #28a745; padding: 10px; border-radius: 5px; margin-bottom: 15px; display: inline-block;">{{ session('success') }}</div>
+    @endif
+    @if ($errors->any())
+        <div style="background: #dc3545; padding: 10px; border-radius: 5px; margin-bottom: 15px; display: inline-block;">{{ $errors->first('email') }}</div>
+    @endif
+
+    {{-- Form tag add kiya gaya --}}
+    <form action="{{ route('subscribe') }}" method="POST" style="margin-top: 20px;">
+        {{-- CSRF token (security ke liye zaroori) --}}
+        @csrf
+        
+        {{-- Input ko 'name="email"' diya gaya --}}
+        <input type="email" name="email" placeholder="Enter your email" style="padding:15px;border:none;border-radius:10px;width:300px;max-width:80%;color:black" required>
+        
+        {{-- Button ko 'type="submit"' kiya gaya --}}
+        <button type="submit" style="padding:15px 25px;border:none;border-radius:10px;background:#fff;color:var(--primary);font-weight:600;margin-left:10px;cursor:pointer">Subscribe</button>
+    </form>
+</section>
+
+@endsection
+
+@push('scripts')
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+
+    // Hero Animation
+  gsap.from(".hero-title", {y:50, opacity:0, duration:1});
+  gsap.from(".hero-subtitle", {y:50, opacity:0, duration:1, delay:0.3});
+  gsap.from(".search-box", {y:50, opacity:0, duration:1, delay:0.6});
+  gsap.from(".hero-image img", {x:100, opacity:0, duration:1.2, delay:0.8});
+
+  // Section Titles Animation on Scroll
+  gsap.utils.toArray(".section").forEach(section=>{
+    gsap.from(section.querySelectorAll(".section-title, .section-subtitle"),{
+      scrollTrigger:{trigger:section,start:"top 80%"},
+      y:50,opacity:0,duration:1,stagger:0.2
+    });
+  });
+
+  // Category Cards Animation
+  gsap.utils.toArray(".category-card").forEach(card=>{
+    gsap.from(card,{
+      scrollTrigger:{trigger:card,start:"top 85%"},
+      y:60,opacity:0,duration:0.8
+    });
+  });
+
+  // Testimonials Animation
+  gsap.utils.toArray(".testimonial-card").forEach(card=>{
+    gsap.from(card,{
+      scrollTrigger:{trigger:card,start:"top 85%"},
+      y:60,opacity:0,duration:0.8
+    });
+  });
+
+  // Blog Cards Animation
+  gsap.utils.toArray(".blog-card").forEach(card=>{
+    gsap.from(card,{
+      scrollTrigger:{trigger:card,start:"top 85%"},
+      y:60,opacity:0,duration:0.8
+    });
+  });
+
+  // Parallax Effect for Hero Image
+  document.addEventListener("mousemove", function(e){
+    const heroImage = document.querySelector(".hero-image");
+    if(heroImage){
+      const x = (window.innerWidth - e.pageX*2)/100;
+      const y = (window.innerHeight - e.pageY*2)/100;
+      heroImage.style.transform = `translate(${x}px, ${y}px)`;
+    }
+  });
+
+
+        // === CORRECTED ANIMATION SCRIPT ===
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+            // This observer will add the 'animated' class to elements when they enter the screen
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+
+            // Tell the observer to watch every element with the 'animate-on-scroll' class
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // Your counter animation and other scripts can go here...
+        });
+    // FAQ Toggle
+    document.querySelectorAll('.faq-question').forEach(q=>{
+      q.addEventListener('click',()=>{
+        const ans=q.nextElementSibling;
+        ans.style.display=ans.style.display==='block'?'none':'block';
+      });
+    });
+
+    // Counters
+    function animateCounter(id,target){
+      let count=0;let el=document.getElementById(id);
+      let interval=setInterval(()=>{
+        if(count<target){count+=Math.ceil(target/100);el.innerText=count;}else{el.innerText=target.toLocaleString();clearInterval(interval);}
+      },30);
+    }
+    animateCounter("jobsCounter",25000);
+    animateCounter("companiesCounter",12000);
+    animateCounter("candidatesCounter",50000);
+
+  </script>
+@endpush 
+
+@push('styles')
+    
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Scroll Animation Classes */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+}
+
+.animate-on-scroll.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+    :root {
+      --primary: #00B5AD;
+      --primary-dark: #008b84;
+      --text-dark: #111827;
+      --text-gray: #6b7280;
+      --bg-light: #ffffff;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Poppins',sans-serif;background:var(--bg-light);color:var(--text-dark);line-height:1.6}
+
+   
+    /* Hero */
+    .hero{padding:140px 20px 100px;background:#fff;color:var(--text-dark)}
+    .hero-container{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:center;gap:50px}
+    .hero-title{font-size:3.5rem;font-weight:900;line-height:1.2;margin-bottom:20px;color:var(--text-dark)}
+    .hero-subtitle{font-size:1.2rem;margin-bottom:30px;color:var(--text-gray)}
+    .search-box{display:flex;gap:10px;background:#f9fafb;padding:8px;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,.05)}
+    .search-input,.search-select{padding:15px;border:none;outline:none;border-radius:10px;font-size:1rem;flex:1}
+    .search-select{flex:.5;background:#f3f4f6}
+    .search-btn{background:var(--primary);color:#fff;padding:15px 25px;border:none;border-radius:10px;font-weight:600;cursor:pointer;transition:.3s}
+    .search-btn:hover{background:var(--primary-dark)}
+
+    /* Sections */
+    .section{padding:100px 20px}
+    .section-title{font-size:2.5rem;font-weight:800;margin-bottom:15px;text-align:center;color:var(--text-dark)}
+    .section-subtitle{max-width:650px;margin:auto;color:var(--text-gray);margin-bottom:50px;text-align:center}
+
+    /* Categories */
+    .categories{background:#f9fafb}
+    .categories-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px}
+    .category-card{background:#fff;border:1px solid #eee;border-radius:20px;padding:30px;box-shadow:0 5px 15px rgba(0,0,0,.05);transition:.3s}
+    .category-card:hover{transform:translateY(-10px)}
+    .category-icon{width:70px;height:70px;border-radius:20px;margin:auto;margin-bottom:20px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;background:var(--primary);color:#fff}
+    .category-title{font-size:1.3rem;font-weight:600}
+    .category-count{color:var(--text-gray);font-size:.9rem}
+
+    /* How it Works */
+    .how-it-works{background:#fff;text-align:center}
+    .steps{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
+    .step-card{padding:30px;border-radius:20px;background:#f9fafb;box-shadow:0 5px 15px rgba(0,0,0,.05)}
+    .step-card i{font-size:2.5rem;color:var(--primary);margin-bottom:15px}
+      
+    /* Wrapper for the animated border */
+.step-card-animation-wrapper {
+    position: relative;
+    padding: 3px; /* Yeh border ki motai (thickness) hai */
+    border-radius: 23px; /* Card se thora sa bara radius */
+    overflow: hidden; /* Zaroori hai taake animation corners se bahar na nikle */
+    /* Box shadow is for the base glow when no rotation is happening, or static glow */
+    box-shadow: 0 0 10px rgba(20, 184, 166, 0.3); /* Base halka glow */
+}
+
+/* The actual step card, apni original styling ke saath */
+.step-card {
+    padding: 30px;
+    border-radius: 20px; /* Original radius */
+    background: #f9fafb; /* Original background */
+    box-shadow: 0 5px 15px rgba(0,0,0,.05); /* Original shadow */
+    position: relative; /* Zaroori hai taake content upar rahe */
+    z-index: 2; /* Card ko animated border ke upar rakhega */
+    width: 100%;
+    height: 100%;
+}
+
+.step-card i {
+    font-size: 2.5rem;
+    color: #14b8a6; /* Original color */
+    margin-bottom: 15px;
+}
+
+.step-card h3 { /* Assuming h3 for title */
+    color: #333; /* Default text color */
+    margin-bottom: 10px;
+}
+
+.step-card p { /* Assuming p for description */
+    color: #555; /* Default text color */
+}
+
+/* The element that creates the rotating gradient light (::before pseudo-element on the wrapper) */
+.step-card-animation-wrapper::before {
+    content: '';
+    position: absolute;
+    /* Isay wrapper se 50% bahar rakhein aur 200% bara karein taake yeh ghoom sakay */
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent, /* Shuru mein transparent */
+        #14b8a6 5%, /* Teal green line ka shuru */
+        #34d399 20%, /* Lighter teal */
+        #14b8a6 35%, /* Teal green line ka aakhir */
+        transparent 50% /* Baqi area transparent */
+    );
+    animation: rotate-conic-glow 4s linear infinite; /* Animation laga dein */
+    z-index: 1; /* Card ke peeche rakhein */
+    filter: blur(40px); /* Blur effect (glow) */
+}
+
+/* Keyframes for the rotation animation */
+@keyframes rotate-conic-glow {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- YAHAN TAK NAYA CODE HAI --- */
+
+      
+     /* Job Cards */
+
+        .jobs-section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-light-color);
+        }
+
+         .job-grid-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 32px;
+        margin-top: 40px;
+    }
+
+    /* Main Job Card */
+    .job-card {
+        background-color: #ffffff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        /* border: 1px solid #f0f0f0; */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+       border: 3px solid #e0f2f2; /* Default halka sa border */
+    transition: all 0.3s ease;
+}
+
+/* Step 2: Hover par solid border dein aur glow animation shuru karein */
+.job-card:hover {
+    transform: translateY(-5px);
+
+    border: 3px solid;
+    border-color: #14b8a6; /* Solid Teal Green Border */
+    animation: border-glow 1.5s infinite alternate; /* Glow animation apply karein */
+}
+
+/* Step 3: Glow ki animation banayein */
+@keyframes border-glow {
+  from {
+    /* Shuru mein halka sa glow */
+    box-shadow: 0 0 5px rgba(20, 184, 166, 0.5), 
+                0 0 10px rgba(20, 184, 166, 0.3);
+  }
+  to {
+    /* Aakhir mein tez glow */
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.8), 
+                0 0 30px rgba(20, 184, 166, 0.6);
+  }
+}
+
+    .job-card__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .job-card__logo-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Tasveer ko distort hone se bachata hai */
+        border-radius: inherit; /* Apne parent div (job-card__logo) jaisa hi border-radius le lega */
+    }
+    
+    .job-card__company-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .job-card__logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        background-color: #ef4444; /* Red */
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .job-card__title a {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1a202c;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .job-card__title a:hover {
+        color: #14b8a6; /* Teal */
+    }
+    .job-card__company {
+        font-size: 14px;
+        color: #718096;
+        margin-top: 2px;
+    }
+
+    .job-card__category {
+        background-color: #f5f3ff;
+        color: #4338ca; /* Purple */
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        white-space: nowrap;
+    }
+
+    .job-card__meta {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        font-size: 14px;
+        color: #0d0f11ff;
+        
+    }
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .job-card__salary {
+        margin-top: 20px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #16a34a; /* Green */
+    }
+
+    .job-card__actions {
+        margin-top: 24px;
+    }
+    
+    /* Buttons */
+    .btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .btn--apply {
+        background-color: #14b8a6; /* Teal */
+        color: #ffffff;
+    }
+    .btn--apply:hover {
+        background-color: #0d9488; /* Darker Teal */
+    }
+
+        .view-all-btn-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .view-all-btn {
+            display: inline-block;
+            padding: 12px 30px;
+           background-color: #14b8a6;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        
+        /* Parallax Categories */
+/* Parallax Section ka Main Container */
+.categories-parallax {
+    background: #f7fafc; /* Thora sa off-white background */
+    padding-top: 80px;
+    padding-bottom: 40px; /* Neechay se thora kam padding */
+}
+
+/* Section Title ki styling (aapke paas pehle se ho sakti hai) */
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #111827;
+}
+.section-subtitle {
+    max-width: 650px;
+    margin: auto;
+    color: #6b7280;
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+/* Har Parallax Item ki styling */
+.parallax-item {
+    position: relative;
+    height: 580px; /* === CHANGE: Height 450px se 580px kar di hai === */
+    background-attachment: fixed; /* Yeh Parallax effect banata hai */
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 40px; /* Har section ke darmiyan fasla */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Naya design: White content box overlay */
+.parallax-item .content-box {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Vertically center karta hai */
+    left: 5%; /* Screen ke left side par */
+    width: 90%;
+    max-width: 450px; /* Box ki max chaurai */
+    background: rgba(255, 255, 255, 0.95); /* Thora sa transparent white */
+    backdrop-filter: blur(5px); /* Peechay ki image ko halka sa blur karta hai */
+    -webkit-backdrop-filter: blur(5px);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Alternate design ke liye, box ko right side par shift karega */
+.parallax-item .content-box.right {
+    left: auto;
+    right: 5%;
+}
+
+.content-box h3 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 10px 0;
+}
+
+.content-box p {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Mobile ke liye adjustments */
+@media (max-width: 768px) {
+    .parallax-item {
+        background-attachment: scroll; /* Mobile par parallax ajeeb lagta hai, isliye scroll kar diya */
+        height: 450px; /* === CHANGE: Mobile par bhi height thori barha di hai === */
+    }
+    .parallax-item .content-box,
+    .parallax-item .content-box.right {
+        left: 50%;
+        transform: translate(-50%, -50%); /* Mobile par center mein */
+        text-align: center;
+    }
+}
+        /* Responsive Grid */
+        @media (max-width: 992px) {
+            .jobs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .jobs-grid {
+                grid-template-columns: 1fr;}}
+
+    /* Companies */
+    .companies{background:#f9fafb}
+    .company-logos{max-width:1000px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;align-items:center;justify-items:center}
+    .company-logos img{max-width:120px;opacity:.8;transition:.3s}
+    .company-logos img:hover{opacity:1}
+
+    /* Testimonials */
+    .testimonials{background:#fff}
+    .testimonial-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px}
+    .testimonial-card{background:#f9fafb;border-radius:20px;padding:25px;box-shadow:0 5px 15px rgba(0,0,0,.05)}
+    .testimonial-card p{color:var(--text-gray);margin-bottom:15px}
+    .testimonial-author{display:flex;align-items:center;gap:15px}
+    .testimonial-author img{width:50px;height:50px;border-radius:50%}
+
+    /* Blog */
+    .blog{background:#f9fafb}
+    .blog-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px}
+    .blog-card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.05)}
+    .blog-card img{width:100%;height:200px;object-fit:cover}
+    .blog-card .content{padding:20px}
+    .blog-card h3{font-size:1.2rem;margin-bottom:10px}
+    .blog-card p{color:var(--text-gray);font-size:.9rem}
+
+    /* CTA */
+    .cta{background:var(--primary);color:#fff;text-align:center;padding:80px 20px}
+    .cta h2{font-size:2rem;margin-bottom:20px}
+    .cta button{background:#fff;color:var(--primary);padding:15px 30px;border:none;border-radius:10px;font-weight:600;cursor:pointer;transition:.3s}
+    .cta button:hover{background:#f3f4f6}
+   
+</style>
+@endpush

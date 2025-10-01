@@ -2,9 +2,6 @@
 
 @section('content')
 
-
-
-
 <div class="page-background-container">
     <div class="meteors"></div>
 </div>
@@ -24,29 +21,42 @@
         <div class="col-xl-3 col-md-6 mb-4 card-enter" style="--animation-order: 3;"><div class="stat-card glass-card tilt-card"><h5>Active Users</h5><p class="stat-number animated-number">{{ $activeUsers ?? 0 }}</p><i class="fas fa-user-check card-icon-bg"></i></div></div>
         <div class="col-xl-3 col-md-6 mb-4 card-enter" style="--animation-order: 4;"><div class="stat-card glass-card tilt-card"><h5>Banned Users</h5><p class="stat-number animated-number">{{ $bannedUsers ?? 0 }}</p><i class="fas fa-user-slash card-icon-bg"></i></div></div>
     </div>
-    <div class="row">
-        <div class="col-lg-4 d-flex flex-column mb-4 card-enter" style="--animation-order: 5;"><div class="content-card glass-card tilt-card"><h4>Complaints Status</h4><div class="chart-container"><canvas id="complaintsChart"></canvas></div></div></div>
-        <div class="col-lg-4 d-flex flex-column mb-4 card-enter" style="--animation-order: 6;"><div class="content-card glass-card tilt-card activity-feed-card">
-            <h4 class="mb-3">Recent Activity</h4>
-            <ul class="list-group list-group-flush">
-                @forelse($latestUsers->take(1) as $user)
-                    <li class="list-group-item"><span class="activity-icon icon-bg-primary"><i class="fas fa-user-plus"></i></span><div>New user: <strong>{{ $user->name }}</strong></div></li>
-                @empty
-                    <li class="list-group-item text-muted">No new user activity.</li>
-                @endforelse
-                @forelse($latestJobs->take(1) as $job)
-                    <li class="list-group-item"><span class="activity-icon icon-bg-success"><i class="fas fa-briefcase"></i></span><div>New job: <strong>{{ Str::limit($job->title, 20) }}</strong></div></li>
-                @empty
-                    <li class="list-group-item text-muted">No new job activity.</li>
-                @endforelse
-                @forelse($latestComplaints->take(1) as $complaint)
-                    <li class="list-group-item"><span class="activity-icon icon-bg-danger"><i class="fas fa-exclamation-triangle"></i></span><div>Complaint: <strong>{{ $complaint->user->name ?? 'N/A' }}</strong></div></li>
-                @empty
-                    <li class="list-group-item text-muted">No new complaints.</li>
-                @endforelse
-            </ul>
-        </div></div>
-        <div class="col-lg-4 d-flex flex-column mb-4 card-enter" style="--animation-order: 7;"><div class="content-card glass-card tilt-card"><h4>Users Overview</h4><div class="chart-container"><canvas id="totalUsersChart"></canvas></div></div></div>
+
+    <div class="dashboard-grid">
+        <div class="card-enter" style="--animation-order: 5;">
+            <div class="content-card glass-card tilt-card">
+                <h4>Complaints Status</h4>
+                <div class="chart-container"><canvas id="complaintsChart"></canvas></div>
+            </div>
+        </div>
+        <div class="card-enter" style="--animation-order: 6;">
+            <div class="content-card glass-card tilt-card activity-feed-card">
+                <h4 class="mb-3">Recent Activity</h4>
+                <ul class="list-group list-group-flush">
+                    @forelse($latestUsers->take(1) as $user)
+                        <li class="list-group-item"><span class="activity-icon icon-bg-primary"><i class="fas fa-user-plus"></i></span><div>New user: <strong>{{ $user->name }}</strong></div></li>
+                    @empty
+                        <li class="list-group-item text-muted">No new user activity.</li>
+                    @endforelse
+                    @forelse($latestJobs->take(1) as $job)
+                        <li class="list-group-item"><span class="activity-icon icon-bg-success"><i class="fas fa-briefcase"></i></span><div>New job: <strong>{{ Str::limit($job->title, 20) }}</strong></div></li>
+                    @empty
+                        <li class="list-group-item text-muted">No new job activity.</li>
+                    @endforelse
+                    @forelse($latestComplaints->take(1) as $complaint)
+                        <li class="list-group-item"><span class="activity-icon icon-bg-danger"><i class="fas fa-exclamation-triangle"></i></span><div>Complaint: <strong>{{ $complaint->user->name ?? 'N/A' }}</strong></div></li>
+                    @empty
+                        <li class="list-group-item text-muted">No new complaints.</li>
+                    @endforelse
+                </ul>
+            </div>
+        </div>
+        <div class="card-enter" style="--animation-order: 7;">
+            <div class="content-card glass-card tilt-card">
+                <h4>Users Overview</h4>
+                <div class="chart-container"><canvas id="totalUsersChart"></canvas></div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -97,7 +107,7 @@
     .stat-card .stat-number { font-size: 2.8rem; font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
     .stat-card .card-icon-bg { font-size: 4.5rem; opacity: 0.05; position: absolute; right: 20px; bottom: 15px; }
     .content-card { height: 100%; display: flex; flex-direction: column; }
-    .chart-container { flex-grow: 1; min-height: 250px; }
+    .chart-container { flex-grow: 1; min-height: 250px; position: relative; }
     
     .activity-feed-card .list-group {
         background-color: transparent;
@@ -110,7 +120,6 @@
         align-items: flex-start; 
         gap: 1rem; 
         padding: 0.9rem 0; 
-        /* === YAHAN PAR FIX ADD KIYA GAYA HAI === */
         color: var(--text-secondary); 
     }
     .activity-feed-card .list-group-item strong { color: var(--text-primary); }
@@ -121,7 +130,15 @@
     
     @keyframes cardEnter { from { opacity: 0; transform: translateY(50px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
     .card-enter { animation: cardEnter 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards; opacity: 0; }
-    .row > * { animation-delay: calc(0.1s * var(--animation-order, 0)); }
+    .row > *, .dashboard-grid > * { animation-delay: calc(0.1s * var(--animation-order, 0)); }
+
+    /* === RESPONSIVE GRID FIX === */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.5rem; /* Corresponds to Bootstrap's mb-4 gutter */
+    }
+    /* === END FIX === */
 </style>
 @endpush
 
@@ -134,9 +151,12 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('mousemove', (e) => {
         const posX = e.clientX;
         const posY = e.clientY;
+
         cursorDot.style.left = `${posX}px`;
+        // FIX: The semicolon was moved outside of the backticks.
         cursorDot.style.top = `${posY}px`;
         cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+
         const target = e.target;
         if (target.matches('a, button') || target.closest('.tilt-card')) {
             cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
@@ -183,6 +203,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const height = card.offsetHeight;
             const yRotation = 15 * ((x - width / 2) / width);
             const xRotation = -15 * ((y - height / 2) / height);
+            
+            // FIX: The entire string for the transform style is now correctly wrapped in backticks (`).
             const transformString = `perspective(1000px) scale(1.05) rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;
             card.style.transform = transformString;
             card.style.setProperty('--mouse-x', `${x}px`);
@@ -193,12 +215,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // --- Chart.js code (no errors here) ---
     let complaintsChart, totalUsersChart;
     const complaintsStats = @json($complaintsStats ?? [0, 0]);
     const totalUsersStats = [@json($activeUsers ?? 0), @json($bannedUsers ?? 0)];
-    const complaintsCtx = document.getElementById('complaintsChart').getContext('2d');
-    const totalUsersCtx = document.getElementById('totalUsersChart').getContext('2d');
+    const complaintsCtx = document.getElementById('complaintsChart')?.getContext('2d');
+    const totalUsersCtx = document.getElementById('totalUsersChart')?.getContext('2d');
+    
     function renderCharts() {
+        if (!complaintsCtx || !totalUsersCtx) return;
         const textColor = 'rgba(238, 242, 255, 0.8)';
         Chart.defaults.color = textColor;
         Chart.defaults.font.family = 'Poppins, sans-serif';

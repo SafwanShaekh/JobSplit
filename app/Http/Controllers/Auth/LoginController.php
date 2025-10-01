@@ -61,4 +61,17 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+
+     public function handleGetLogout()
+    {
+        // Check if a user is currently logged in
+        if (Auth::check()) {
+            // If they are logged in, just redirect them back to where they were.
+            // This prevents them from being logged out by accident.
+            return redirect()->back()->with('info', 'To log out, please use the logout button.');
+        }
+
+        // If no one is logged in, redirect them to the login page.
+        return redirect()->route('login');
+    }
 }

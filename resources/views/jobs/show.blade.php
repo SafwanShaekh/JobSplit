@@ -21,13 +21,31 @@
             </div>
     
             <div class="breadcrumb_action flex flex-col max-lg:flex-col-reverse gap-3">
-                <div class="flex max-sm:flex-wrap gap-3">
-                    <button class="add_wishlist_btn -relative -border w-12">
-                        <span class="ph ph-heart text-2xl"></span>
-                        <span class="ph-fill ph-heart text-2xl"></span>
-                    </button>
-                    <button class="btn_open_popup apply_btn button-main whitespace-nowrap" data-type="modal_apply">Apply Now</button>
-                </div>
+                
+                    @auth
+    {{-- Pehle check karein ke logged-in user job ka malik to nahi --}}
+    @if(Auth::id() != $job->user_id)
+
+        {{-- Ab check karein ke is user ne pehle se apply to nahi kiya --}}
+        @if(in_array($job->id, $appliedJobIds))
+
+            {{-- Agar apply kar chuka hai, to yeh disabled tag dikhayein --}}
+            <span class="main whitespace-nowrap bg-gray-400 cursor-not-allowed text-weight-bolder">
+                Already Applied
+            </span>
+
+        @else
+
+            {{-- Agar apply nahi kiya, to "Apply Now" ka aam button dikhayein --}}
+            <a href="{{ route('jobs.apply.create', $job->id) }}" class="button-main whitespace-nowrap">
+                Apply Now
+            </a>
+
+        @endif
+
+    @endif
+@endauth
+                
                 <div class="flex max-sm:flex-wrap gap-2 job-posted-time-placement">
                     <span class="body2 whitespace-nowrap">
                         {{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}
@@ -138,29 +156,27 @@
         <div class="jobs_sidebar lg:sticky lg:top-24 flex-shrink-0 lg:w-[380px] w-full h-fit">
             <div class="about overflow-hidden rounded-xl bg-white shadow-md duration-300">
                 <div class="flex items-center justify-between px-5 py-4 border-b border-line">
-                    <h6 class="heading6">About the Employer</h6>
+                    <h6 class="heading6">About Employer</h6>
                 </div>
                 <div class="employer_info p-5">
                     <!-- {{-- Dummy display for now --}} -->
                     <a href="#" class="flex items-center gap-5 w-full">
                         <div>
-                            ye section abhi inject hoga jo bnda employer profile banayega wo ye kam karega
                             <strong class="employers_name heading6">User Info</strong>
                         </div>
                     </a>
                     <div class="industry flex items-center justify-between w-full py-5 border-b border-line">
                         <span class="text-secondary">User Name:</span>
-                        <strong class="text-button">-----------</strong>
+                        <strong class="text-button">{{ $job->user->name }}</strong>
                     </div>
                     <div class="size flex items-center justify-between w-full py-5 border-b border-line">
                         <span class="text-secondary">Member since:</span>
-                        <strong class="text-button">registration date-----</strong>
+                        <strong class="text-button"> {{ $job->user->created_at }} </strong>
                     </div>
                     <div class="address flex items-center justify-between w-full py-5 border-b border-line">
                         <span class="text-secondary">Address:</span>
-                        <strong class="text-button">City, Country</strong>
+                        <strong class="text-button">{{ $job->user->address }}</strong>
                     </div>
-                    <a href="#" class="button-main w-full text-center">Send Message</a>
                 </div>
             </div>
         </div>

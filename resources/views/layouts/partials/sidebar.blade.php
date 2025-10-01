@@ -4,10 +4,25 @@
             <span class="px-6 text-xs font-semibold text-secondary uppercase">Overviews</span>
             <ul class="list_link flex flex-col gap-2 mt-2">
                 <li><a href="{{ route('dashboard') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background"><span class="ph-duotone ph-squares-four text-2xl text-secondary"></span><strong class="text-title">Dashboard</strong></a></li>
-                <li><a href="{{ route('chat') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background"><span class="ph-duotone ph-chats text-2xl text-secondary"></span><strong class="text-title">Messages</strong></a></li>
+                <li>
+                    <a href="{{ route('chat') }}" class="link flex items-center w-full py-3 px-6 rounded-lg duration-300 hover:bg-background">
+                        <span class="ph-duotone ph-chats text-2xl text-secondary"></span>
+
+                        {{-- Naya class 'badge-container' yahan add karein --}}
+                        <div class="badge-container flex items-center gap-2 ml-3"> 
+                            @if(Auth::check() && auth()->user()->unread_messages_count > 0)
+                                <span class="notification-pulse-badge">
+                                    {{ auth()->user()->unread_messages_count }}
+                                </span>
+                            @endif
+
+                            <strong class="text-title">Messages</strong>      
+                        </div>
+                    </a>
+                </li>
             </ul>
         </div>
-        <div class="area mt-6">
+        <div class="area mt-3">
             <span class="px-6 text-xs font-semibold text-secondary uppercase">Management</span>
             <ul class="list_link flex flex-col gap-2 mt-2">
                 <li><a href="{{ route('job-applicants.index') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background"><span class="ph-duotone ph-notepad text-2xl text-secondary"></span><strong class="text-title">Job Applicants</strong></a></li>
@@ -16,7 +31,7 @@
                 <li><a href="{{ route('applications.index') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background"><span class="ph-duotone ph-file-arrow-up text-2xl text-secondary"></span><strong class="text-title">Applied Jobs</strong></a></li>
             </ul>
         </div>
-        <div class="area mt-6">
+        <div class="area mt-4">
              <span class="px-6 text-xs font-semibold text-secondary uppercase">Support</span>
              <ul class="list_link flex flex-col gap-2 mt-2">
                 <li><a href="{{ route('complaints.index') }}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background">
@@ -29,7 +44,7 @@
                 </li>
             </ul>
         </div>
-        <div class="area mt-6">
+        <div class="area mt-4">
             <span class="px-6 text-xs font-semibold text-secondary uppercase">User</span>
             <ul class="list_link flex flex-col gap-2 mt-2">
                 <li><a href="{{ route('profile.show')}}" class="link flex items-center gap-3 w-full py-3 px-6 rounded-lg duration-300 hover:bg-background"><span class="ph-duotone ph-user-circle text-2xl text-secondary"></span><strong class="text-title">My Profile</strong></a></li>
@@ -135,3 +150,43 @@
         if (overlay) overlay.addEventListener('click', closeSidebar);
     });
 </script>
+
+<style>
+    /* Naya container jise humne relative banaya */
+.badge-container {
+    position: relative; /* Badge ab iske hisab se position hoga */
+}
+
+/* Badge ki nayi aur theek position */
+.notification-pulse-badge {
+    position: absolute;
+    top: -127px;   /* Text ke thora sa upar */
+    right: -40px; /* Text ke thora sa aagay (right mein) */
+
+    /* Baqi styling wesi hi rahegi */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+    padding-top: 9.7px !important;
+    padding-bottom: 9.5px !important;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    background-color: #ef4444;
+    border-radius: 9999px;
+    border: 2px solid white; /* Ya aapke sidebar ke background ka color */
+    animation: pulse-animation 2s infinite;
+}
+
+/* Animation wesi hi rahegi */
+@keyframes pulse-animation {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+</style>

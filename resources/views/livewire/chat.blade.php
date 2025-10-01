@@ -1,11 +1,15 @@
-<div class="chat-container view-{{ $mobileView }}" wire:poll.keep-alive.2s>
+<div id="chat-component-root" class="chat-container view-{{ $mobileView }}" wire:poll.keep-alive.2s>
 
     <div class="conversation-list">
         <div class="header">
             <button id="sidebar-toggle-btn" class="lg:hidden flex items-center gap-2 mb-4 ml-6 font-semibold text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                    <span>Menu</span>
-                </button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <span>Menu</span>
+            </button>
             <h2>Message</h2>
         </div>
         <div class="search-container">
@@ -13,19 +17,28 @@
             <i class="search-icon">🔍</i> </div>
         <ul class="users-list">
             @forelse($conversations as $conversation)
-                <li wire:key="{{ $conversation->id }}" wire:click="viewConversation({{ $conversation->id }})" class="{{ $selectedConversation && $selectedConversation->id == $conversation->id ? 'active' : '' }}">
-                    <img src="{{ $conversation->getReceiver()->profile_photo_url }}" alt="avatar" class="avatar">                    <div class="user-info">
-                        <p class="name">{{ $conversation->getReceiver()->name }}</p>
-                        <p class="last-message">{{ Str::limit($conversation->messages->last()?->body, 20) }}</p>
-                    </div>
-                    <div class="time-details">
-                        <span>{{ $conversation->messages->last()?->created_at->format('h:i A') }}</span>
-                        
-                        {{-- ✅ This will show the red dot if there are unread messages --}}
-                    @if($conversation->unreadMessagesCount() > 0)
-                        <span class="unread-dot"></span>
-                    @endif
-                </li>
+ {{-- Replace the conversation list item with this --}}
+
+<li wire:key="{{ $conversation->id }}" class="{{ $selectedConversation && $selectedConversation->id == $conversation->id ? 'active' : '' }}">
+    
+    {{-- We removed wire:click and added a class and a data-attribute --}}
+    <button type="button" 
+            class="conversation-button w-full flex items-center text-left p-4" 
+            data-conversation-id="{{ $conversation->id }}">
+        
+        <img src="{{ $conversation->getReceiver()->profile_photo_url }}" alt="avatar" class="avatar flex-shrink-0">
+        <div class="user-info flex-grow">
+            <p class="name">{{ $conversation->getReceiver()->name }}</p>
+            <p class="last-message">{{ Str::limit($conversation->messages->last()?->body, 20) }}</p>
+        </div>
+        <div class="time-details flex-shrink-0">
+            <span>{{ $conversation->messages->last()?->created_at->format('h:i A') }}</span>
+            @if($conversation->unreadMessagesCount() > 0)
+                <span class="unread-dot"></span>
+            @endif
+        </div>
+    </button>
+</li>
             @empty
                 <li>No conversations found.</li>
             @endforelse
